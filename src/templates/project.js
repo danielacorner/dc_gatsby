@@ -22,6 +22,7 @@ export const projectQuery = graphql`
       frontmatter {
         path
         title
+        radius
         tools
       }
     }

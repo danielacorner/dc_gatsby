@@ -1,6 +1,7 @@
 ---
 path: '/2017_Pave-D3'
 title: 'Pave Prototype 1: Interactive Data Visualization'
+radius: '20'
 tools: ['D3','jQuery','HTML','CSS','JavaScript']
 ---
 
