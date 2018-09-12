@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Link from "gatsby-link";
 import styled from "styled-components";
-import * as d3 from "d3";
 import Typography from "@material-ui/core/Typography";
-
+import createForceSimulation from "../components/forceSimulation";
 class IndexPage extends Component {
   state = { nodes: null };
   componentWillMount = () => {
@@ -100,36 +99,8 @@ class IndexPage extends Component {
     );
   }
   componentDidMount() {
-    this.createForceSimulation();
+    createForceSimulation(this.state.nodes);
   }
-
-  createForceSimulation() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    const simulation = d3
-      .forceSimulation(this.state.nodes)
-      .force("charge", d3.forceManyBody())
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .on("tick", this.ticked);
-  }
-
-  ticked = () => {
-    let u = d3
-      .select(".canvas")
-      .selectAll("circle")
-      .data(this.state.nodes);
-
-    u.enter()
-      .append("circle")
-      .attr("r", d => d.radius + "px")
-      .style("fill", "blue")
-      .merge(u)
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
-
-    u.exit().remove();
-  };
 }
 
 export const pageQuery = graphql`
