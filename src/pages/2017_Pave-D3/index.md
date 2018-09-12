@@ -2,6 +2,7 @@
 id: '1'
 path: '/2017_Pave-D3'
 title: 'Pave Prototype 1: Interactive Data Visualization'
+desc: 'An interactive jobs data explorer. This is the second-iteration prototype of a design that placed 3rd in the Student Pathways Challenge.'
 radius: '20'
 image: 'https://image.ibb.co/mycvKp/art_2.jpg'
 imgThumb: 'https://thumb.ibb.co/gC7HX9/art_2.jpg'

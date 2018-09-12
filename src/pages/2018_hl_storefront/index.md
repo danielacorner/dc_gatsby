@@ -1,11 +1,12 @@
 ---
 id: '3'
 path: '/2018_hl_storefront'
-title: 'Pave Prototype 1: Interactive Data Visualization'
-radius: '15'
+title: 'Hyeran Lee Art storefront'
+desc: 'Storefront using React & Material-UI. This was my first React project with styled-components.'
+radius: '35'
 image: 'https://image.ibb.co/mycvKp/art_2.jpg'
 imgThumb: 'https://thumb.ibb.co/gC7HX9/art_2.jpg'
-tools: ['D3','jQuery','HTML','CSS','JavaScript']
+tools: ['React','Material-UI','styled-components','SCSS','JavaScript']
 ---
 
 # Hello again again!

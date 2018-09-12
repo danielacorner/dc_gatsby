@@ -26,6 +26,7 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
               tools
               image
               imgThumb
+              desc
             }
           }
         }

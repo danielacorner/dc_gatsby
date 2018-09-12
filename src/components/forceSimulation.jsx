@@ -1,5 +1,7 @@
 import * as d3 from "d3";
 import React, { Component } from "react";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 
 export default class ForceSimulation extends Component {
   render() {
@@ -47,11 +49,39 @@ export default class ForceSimulation extends Component {
       .data(nodes)
       .enter()
       .append("circle")
+      .attr("id", d => "circle_" + d.id)
       .attr("r", d => d.radius + "px")
       // .style("fill", "blue")
       // .attr("fill", d => `url(#pattern_1)`)
       .attr("fill", d => `url(#pattern_${d.id})`)
-      .style("stroke", "black");
+      .style("stroke", "black")
+      .on("mouseover", d => {
+        const circle = d3.select(`#circle_${d.id}`);
+
+        circle.style("stroke-width", 2);
+
+        tooltip.style("opacity", 1).html(
+          `
+        <article>
+        <h6>${d.title}</h6>
+        <p desc>${d.desc}</p>
+        <p tools>${d.tools}</p>
+        </article>
+        `
+        );
+      })
+      .on("mouseout", d => {
+        const circle = d3.select(`#circle_${d.id}`);
+
+        tooltip.style("opacity", 0);
+
+        circle.style("stroke-width", 1);
+      })
+      .on("mousemove", () => {
+        tooltip
+          .style("left", d3.event.pageX + "px")
+          .style("top", d3.event.pageY + 10 + "px");
+      });
     // .style("stroke-width", 1)
 
     const NODE_PADDING = 4;

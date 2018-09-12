@@ -116,6 +116,7 @@ export const pageQuery = graphql`
             tools
             image
             imgThumb
+            desc
           }
         }
       }
