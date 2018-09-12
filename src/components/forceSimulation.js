@@ -36,8 +36,9 @@ export default class ForceSimulation extends Component {
       .attr("class", "tooltip")
       .style("opacity", 0);
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const canvas = document.querySelector(".canvas").getBoundingClientRect();
+    const width = canvas.width;
+    const height = canvas.height;
 
     // draw nodes
     const circles = d3
@@ -53,9 +54,15 @@ export default class ForceSimulation extends Component {
       .style("stroke", "black");
     // .style("stroke-width", 1)
 
+    const NODE_PADDING = 4;
+
     const simulation = d3
       .forceSimulation(nodes)
-      .force("charge", d3.forceManyBody())
+      .velocityDecay(0.2) // use for faster dev testing
+      .force("collide", d3.forceCollide().radius(d => d.radius * 1.04))
+      .force("charge", d3.forceManyBody().strength(d => -d.radius))
+      .force("x", d3.forceX().strength(0.3))
+      .force("y", d3.forceY().strength(0.3))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .on("tick", () => {
         circles.attr("cx", d => d.x).attr("cy", d => d.y);
