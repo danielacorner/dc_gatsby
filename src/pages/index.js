@@ -110,10 +110,13 @@ export const pageQuery = graphql`
         node {
           id
           frontmatter {
+            id
             title
             path
             radius
             tools
+            image
+            imgThumb
           }
         }
       }

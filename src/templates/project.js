@@ -20,10 +20,13 @@ export const projectQuery = graphql`
     markdownRemark(frontmatter: { path: { eq: $path } }) {
       html
       frontmatter {
+        id
         path
         title
         radius
         tools
+        image
+        imgThumb
       }
     }
   }

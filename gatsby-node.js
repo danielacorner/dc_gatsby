@@ -19,10 +19,13 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
             html
             id
             frontmatter {
+              id
               path
               title
               radius
               tools
+              image
+              imgThumb
             }
           }
         }

@@ -2,6 +2,8 @@
 path: '/2017_Pave-D3'
 title: 'Pave Prototype 1: Interactive Data Visualization'
 radius: '20'
+image: 'https://image.ibb.co/mycvKp/art_2.jpg'
+imgThumb: 'https://thumb.ibb.co/gC7HX9/art_2.jpg'
 tools: ['D3','jQuery','HTML','CSS','JavaScript']
 ---
 
