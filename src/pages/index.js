@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Link from "gatsby-link";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
-import createForceSimulation from "../components/forceSimulation";
+import ForceSimulation from "../components/forceSimulation";
 class IndexPage extends Component {
   state = { nodes: null };
   componentWillMount = () => {
@@ -89,7 +89,9 @@ class IndexPage extends Component {
         </aside>
 
         <MainContent>
-          <svg className="canvas" />
+          <svg className="canvas">
+            <ForceSimulation nodes={this.state.nodes} />
+          </svg>
           <p>
             This section contains a canvas on which d3 appends circles for each
             project. Hover the circles to highlight the sidebar, and vice versa
@@ -97,9 +99,6 @@ class IndexPage extends Component {
         </MainContent>
       </Container>
     );
-  }
-  componentDidMount() {
-    createForceSimulation(this.state.nodes);
   }
 }
 

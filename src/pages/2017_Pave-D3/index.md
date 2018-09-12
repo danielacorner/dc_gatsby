@@ -1,4 +1,5 @@
 ---
+id: '1'
 path: '/2017_Pave-D3'
 title: 'Pave Prototype 1: Interactive Data Visualization'
 radius: '20'
