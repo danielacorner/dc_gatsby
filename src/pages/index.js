@@ -107,8 +107,8 @@ class IndexPage extends Component {
     const newLinks = JSON.parse(
       JSON.stringify(
         this.props.data.allMarkdownRemark.edges.map(d => {
-          console.log(d.node);
-          console.log(d.node.frontmatter);
+          console.log("node", d.node);
+          console.log("frontmatter", d.node.frontmatter);
           return {
             source: null, //
             target: null,
