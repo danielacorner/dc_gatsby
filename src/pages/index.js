@@ -88,26 +88,39 @@ const styles = {
 };
 
 class IndexPage extends Component {
-  state = { nodes: null,
-  links: null, };
+  state = {
+    nodes: null,
+    links: null,
+  };
   componentWillMount = () => {
     const newNodes = JSON.parse(
       JSON.stringify(
         this.props.data.allMarkdownRemark.edges.map(d => d.node.frontmatter)
       )
     );
-  //   links: [
-  //     { "source": 0.0, "target": 5.0, "T": "Ba" }, { "source": 8.0, "target": 15.0, "T": "Ba" }, { "source": 8.0, "target": 16.0, "T": "Ba" }, { "source": 15.0, "target": 5.0, "T": "Ba" }, { "source": 1.0, "target": 3.0, "T": "Gy" }, { "source": 1.0, "target": 6.0, "T": "Gy" }, { "source": 1.0, "target": 14.0, "T": "Gy" }, { "source": 1.0, "target": 17.0, "T": "Gy" }, { "source": 3.0, "target": 6.0, "T": "Gy" }, { "source": 3.0, "target": 14.0, "T": "Gy" }, { "source": 3.0, "target": 17.0, "T": "Gy" }, { "source": 6.0, "target": 14.0, "T": "Gy" }, { "source": 6.0, "target": 17.0, "T": "Gy" }, { "source": 14.0, "target": 17.0, "T": "Gy" }, { "source": 7.0, "target": 13.0, "T": "Pr" }, { "source": 0, "target": 5.0, "T": "Ch" }, { "source": 2.0, "target": 12.0, "T": "Ch" }, { "source": 2.0, "target": 12.0, "T": "Br" },
-  //     { "source": 0.0, "target": 5.0, "T": "Ba" }, { "source": 0.0, "target": 5.0, "T": "Gy" }, { "source": 0.0, "target": 5.0, "T": "Br" }
-  //   ]
-  // }  
-  //     { "source": 0.0, "target": 5.0, "year": target.year }
-    const newLinks = JSON.parse(JSON.stringify(
-      this.props.data.allMarkdownRemark.edges.map(d => )
-    ))
+    //   links: [
+    //     { "source": 0.0, "target": 5.0, "T": "Ba" }, { "source": 8.0, "target": 15.0, "T": "Ba" }, { "source": 8.0, "target": 16.0, "T": "Ba" }, { "source": 15.0, "target": 5.0, "T": "Ba" }, { "source": 1.0, "target": 3.0, "T": "Gy" }, { "source": 1.0, "target": 6.0, "T": "Gy" }, { "source": 1.0, "target": 14.0, "T": "Gy" }, { "source": 1.0, "target": 17.0, "T": "Gy" }, { "source": 3.0, "target": 6.0, "T": "Gy" }, { "source": 3.0, "target": 14.0, "T": "Gy" }, { "source": 3.0, "target": 17.0, "T": "Gy" }, { "source": 6.0, "target": 14.0, "T": "Gy" }, { "source": 6.0, "target": 17.0, "T": "Gy" }, { "source": 14.0, "target": 17.0, "T": "Gy" }, { "source": 7.0, "target": 13.0, "T": "Pr" }, { "source": 0, "target": 5.0, "T": "Ch" }, { "source": 2.0, "target": 12.0, "T": "Ch" }, { "source": 2.0, "target": 12.0, "T": "Br" },
+    //     { "source": 0.0, "target": 5.0, "T": "Ba" }, { "source": 0.0, "target": 5.0, "T": "Gy" }, { "source": 0.0, "target": 5.0, "T": "Br" }
+    //   ]
+    // }
+    //     { "source": 0.0, "target": 5.0, "year": target.year }
+    const newLinks = JSON.parse(
+      JSON.stringify(
+        this.props.data.allMarkdownRemark.edges.map(d => {
+          console.log(d.node);
+          console.log(d.node.frontmatter);
+          return {
+            source: null, //
+            target: null,
+            year: null,
+          };
+        })
+      )
+    );
 
     this.setState({
       nodes: newNodes,
+      links: newLinks,
     });
   };
   render() {
