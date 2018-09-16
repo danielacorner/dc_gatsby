@@ -9,7 +9,9 @@ export default class ForceSimulation extends Component {
   }
   componentDidMount() {
     const { nodes } = this.props;
-    console.log(nodes);
+    console.log("nodes", nodes);
+    //todo: links
+
     // svg images
     const defs = d3.select(".canvas").append("defs");
     defs
@@ -65,6 +67,7 @@ export default class ForceSimulation extends Component {
         <article>
         <h6>${d.title}</h6>
         <p desc>${d.desc}</p>
+        <p caption>${d.caption}</p>
         <p tools>${d.tools}</p>
         </article>
         `

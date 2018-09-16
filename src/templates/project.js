@@ -22,12 +22,14 @@ export const projectQuery = graphql`
       frontmatter {
         id
         path
+        desc
+        caption
         title
+        year
         radius
         tools
         image
         imgThumb
-        desc
       }
     }
   }
