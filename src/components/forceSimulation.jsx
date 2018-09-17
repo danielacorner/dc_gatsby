@@ -90,6 +90,7 @@ export default class ForceSimulation extends Component {
       .attr("r", d => d.radius + "px")
       .attr("fill", d => `url(#pattern_${d.id})`)
       .style("stroke", "black")
+      .style("transform", `translate(${width / 2}px, ${height / 2}px)`)
       .on("mouseover", d => {
         d3.select(`#circle_${d.id}`).style("stroke-width", 2);
         tooltip.style("opacity", 1).html(
@@ -120,16 +121,13 @@ export default class ForceSimulation extends Component {
 
     const deepClone = d => JSON.parse(JSON.stringify(d));
 
-    graph.links =
-      // deepClone(
-      graph.nodes.map(n => {
-        return {
-          source: findRelatedNode(n.id, 0),
-          target: findRelatedNode(n.id, 1) ? findRelatedNode(n.id, 1) : null,
-          year: n.year,
-        };
-      });
-    // );
+    graph.links = graph.nodes.map(n => {
+      return {
+        source: findRelatedNode(n.id, 0) ? findRelatedNode(n.id, 0) : null,
+        target: findRelatedNode(n.id, 1) ? findRelatedNode(n.id, 1) : null,
+        year: n.year,
+      };
+    });
     console.log("nodes", graph.nodes);
     console.log("links", graph.links);
 
@@ -138,34 +136,35 @@ export default class ForceSimulation extends Component {
       .data(graph.links)
       .enter()
       .append("line")
-      .attr("class", "link");
+      .attr("class", "link")
+      .style("transform", `translate(${width / 2}px, ${height / 2}px)`);
 
     function updateLinks() {
       links
-        .attr("x1", d => {
-          // console.log(d);
-          // console.log(d.source);
-          // debugger;
-          return d.source.x;
-        })
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
+        .attr("x1", d => (d.target ? d.source.x : null))
+        .attr("y1", d => (d.target ? d.source.y : null))
+        .attr("x2", d => (d.target ? d.target.x : null))
+        .attr("y2", d => (d.target ? d.target.y : null));
     }
     function updateNodes() {
       circles.attr("cx", d => d.x).attr("cy", d => d.y);
     }
 
     const NODE_PADDING = 4;
+    const FORCE_MULTIPLIER = 3;
 
     const simulation = d3
       .forceSimulation(graph.nodes)
       .velocityDecay(0.2) // use for faster dev testing
       .force("collide", d3.forceCollide().radius(d => d.radius * 1.04))
-      .force("charge", d3.forceManyBody().strength(d => -d.radius))
-      .force("x", d3.forceX().strength(0.3))
-      .force("y", d3.forceY().strength(0.3))
-      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force(
+        "charge",
+        d3.forceManyBody().strength(d => -d.radius * 2.08 * FORCE_MULTIPLIER)
+      )
+      // .force( "link", d3 .forceLink(links) .id(d => d.id) .strength(d => d.radius * 10000) )
+      .force("x", d3.forceX().strength(0.03 * FORCE_MULTIPLIER))
+      .force("y", d3.forceY().strength(0.03 * FORCE_MULTIPLIER))
+      // .force("center", d3.forceCenter(width / 2, height / 2))
       .on("tick", () => {
         updateNodes();
         updateLinks();
