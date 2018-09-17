@@ -93,30 +93,30 @@ class IndexPage extends Component {
     links: null,
   };
   componentWillMount = () => {
-    const newNodes = JSON.parse(
-      JSON.stringify(
-        this.props.data.allMarkdownRemark.edges.map(d => d.node.frontmatter)
-      )
-    );
+    const { edges } = this.props.data.allMarkdownRemark;
+    const deepClone = d => JSON.parse(JSON.stringify(d));
+    const newNodes = deepClone(edges.map(d => d.node.frontmatter));
     //   links: [
     //     { "source": 0.0, "target": 5.0, "T": "Ba" }, { "source": 8.0, "target": 15.0, "T": "Ba" }, { "source": 8.0, "target": 16.0, "T": "Ba" }, { "source": 15.0, "target": 5.0, "T": "Ba" }, { "source": 1.0, "target": 3.0, "T": "Gy" }, { "source": 1.0, "target": 6.0, "T": "Gy" }, { "source": 1.0, "target": 14.0, "T": "Gy" }, { "source": 1.0, "target": 17.0, "T": "Gy" }, { "source": 3.0, "target": 6.0, "T": "Gy" }, { "source": 3.0, "target": 14.0, "T": "Gy" }, { "source": 3.0, "target": 17.0, "T": "Gy" }, { "source": 6.0, "target": 14.0, "T": "Gy" }, { "source": 6.0, "target": 17.0, "T": "Gy" }, { "source": 14.0, "target": 17.0, "T": "Gy" }, { "source": 7.0, "target": 13.0, "T": "Pr" }, { "source": 0, "target": 5.0, "T": "Ch" }, { "source": 2.0, "target": 12.0, "T": "Ch" }, { "source": 2.0, "target": 12.0, "T": "Br" },
     //     { "source": 0.0, "target": 5.0, "T": "Ba" }, { "source": 0.0, "target": 5.0, "T": "Gy" }, { "source": 0.0, "target": 5.0, "T": "Br" }
     //   ]
     // }
     //     { "source": 0.0, "target": 5.0, "year": target.year }
-    const newLinks = JSON.parse(
-      JSON.stringify(
-        this.props.data.allMarkdownRemark.edges.map(d => {
-          console.log("node", d.node);
-          console.log("frontmatter", d.node.frontmatter);
-          return {
-            source: null, //
-            target: null,
-            year: null,
-          };
-        })
-      )
+    // todo: Object assign for one-level-deep (shallow clone)
+    const findRelated = (id, relation) =>
+      edges.filter(edge => id === edge.node.frontmatter.id + relation);
+
+    const newLinks = deepClone(
+      edges.map(d => d.node).map(item => {
+        return {
+          source: findRelated(item.frontmatter.id, 1), // todo: check '1' if doesn't work
+          target: findRelated(item.frontmatter.id, 0), // todo: check '0' if doesn't work
+          year: item.frontmatter.year,
+        };
+      })
     );
+
+    console.log("newLinks", newLinks);
 
     this.setState({
       nodes: newNodes,

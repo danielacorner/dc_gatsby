@@ -11,6 +11,40 @@ export default class ForceSimulation extends Component {
     const { nodes } = this.props;
     console.log("nodes", nodes);
     //todo: links
+    // var g = svg.append("g")
+    // //.attr("transform", "translate(" + width / 2 + "," + height/ 2 + ")")
+    // link = g.append("g").selectAll(".link"),
+    // //Draw links colored by T
+    // //   link = g.selectAll('.link')
+    // link.data(currLinks)
+    //   .enter().append('path')
+    //   .attr('stroke', function (d) { return color(d.T); });
+
+    // //Add mouseover events to links
+    // link.attr('class', 'link')
+    //   .on('mouseover.fade', linkFade(0.1))
+    //   .on('mouseover.tooltip', function (d) {
+    //     tooltip.transition()
+    //       .duration(300)
+    //       .style("opacity", .8);
+    //     tooltip.html("Source:" + d.source.id +
+    //       "<p/>Target:" + d.target.id +
+    //       "<p/>T:" + d.T)
+    //       .style("left", (d3.event.pageX) + "px")
+    //       .style("top", (d3.event.pageY + 10) + "px");
+    //   })
+    //   .on("mouseout.tooltip", function () {
+    //     tooltip.transition()
+    //       .duration(100)
+    //       .style("opacity", 0);
+    //   })
+    //   .on('mouseout.fade', linkFade(1))
+    //   .on("mousemove", function () {
+    //     tooltip.style("left", (d3.event.pageX) + "px")
+    //       .style("top", (d3.event.pageY + 10) + "px");
+    //   });
+
+    // .force("link", d3.forceLink(currLinks).distance(200))
 
     // svg images
     const defs = d3.select(".canvas").append("defs");
