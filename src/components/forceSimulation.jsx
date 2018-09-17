@@ -8,8 +8,7 @@ export default class ForceSimulation extends Component {
     return null;
   }
   componentDidMount() {
-    const { nodes } = this.props;
-    console.log("nodes", nodes);
+    const { graph } = this.props;
     //todo: links
     // var g = svg.append("g")
     // //.attr("transform", "translate(" + width / 2 + "," + height/ 2 + ")")
@@ -50,7 +49,7 @@ export default class ForceSimulation extends Component {
     const defs = d3.select(".canvas").append("defs");
     defs
       .selectAll("pattern")
-      .data(nodes)
+      .data(graph.nodes)
       .enter()
       .append("pattern")
       // .attr("id", d => "pattern_1")
@@ -78,24 +77,21 @@ export default class ForceSimulation extends Component {
     const width = canvas.width;
     const height = canvas.height;
 
+    const svg = d3.select(".canvas");
+    const node = svg.selectAll(".node");
+
     // draw nodes
-    const circles = d3
-      .select(".canvas")
+    let circles = svg
       .selectAll("circle")
-      .data(nodes)
+      .data(graph.nodes)
       .enter()
       .append("circle")
       .attr("id", d => "circle_" + d.id)
       .attr("r", d => d.radius + "px")
-      // .style("fill", "blue")
-      // .attr("fill", d => `url(#pattern_1)`)
       .attr("fill", d => `url(#pattern_${d.id})`)
       .style("stroke", "black")
       .on("mouseover", d => {
-        const circle = d3.select(`#circle_${d.id}`);
-
-        circle.style("stroke-width", 2);
-
+        d3.select(`#circle_${d.id}`).style("stroke-width", 2);
         tooltip.style("opacity", 1).html(
           `
         <article>
@@ -108,23 +104,62 @@ export default class ForceSimulation extends Component {
         );
       })
       .on("mouseout", d => {
-        const circle = d3.select(`#circle_${d.id}`);
-
+        d3.select(`#circle_${d.id}`).style("stroke-width", 1);
         tooltip.style("opacity", 0);
-
-        circle.style("stroke-width", 1);
       })
       .on("mousemove", () => {
         tooltip
           .style("left", d3.event.pageX + "px")
           .style("top", d3.event.pageY + 10 + "px");
       });
-    // .style("stroke-width", 1)
+
+    const findRelatedNode = (id, relation) =>
+      graph.nodes.find(
+        node => parseInt(id) === parseInt(node.id) + parseInt(relation)
+      );
+
+    const deepClone = d => JSON.parse(JSON.stringify(d));
+
+    graph.links =
+      // deepClone(
+      graph.nodes.map(n => {
+        return {
+          source: findRelatedNode(n.id, 0),
+          target: findRelatedNode(n.id, 1) ? findRelatedNode(n.id, 1) : null,
+          year: n.year,
+        };
+      });
+    // );
+    console.log("nodes", graph.nodes);
+    console.log("links", graph.links);
+
+    const links = svg
+      .selectAll("line")
+      .data(graph.links)
+      .enter()
+      .append("line")
+      .attr("class", "link");
+
+    function updateLinks() {
+      links
+        .attr("x1", d => {
+          // console.log(d);
+          // console.log(d.source);
+          // debugger;
+          return d.source.x;
+        })
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+    }
+    function updateNodes() {
+      circles.attr("cx", d => d.x).attr("cy", d => d.y);
+    }
 
     const NODE_PADDING = 4;
 
     const simulation = d3
-      .forceSimulation(nodes)
+      .forceSimulation(graph.nodes)
       .velocityDecay(0.2) // use for faster dev testing
       .force("collide", d3.forceCollide().radius(d => d.radius * 1.04))
       .force("charge", d3.forceManyBody().strength(d => -d.radius))
@@ -132,7 +167,8 @@ export default class ForceSimulation extends Component {
       .force("y", d3.forceY().strength(0.3))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .on("tick", () => {
-        circles.attr("cx", d => d.x).attr("cy", d => d.y);
+        updateNodes();
+        updateLinks();
       });
 
     // add dragging behavior to nodes

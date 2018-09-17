@@ -12,7 +12,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 const Container = styled.main`
   background: aliceblue;
   height: 100%;
-
+  width: 100%;
   display: grid;
   grid-gap: 10px;
   grid-template-rows: auto repeat(3, 1fr);
@@ -52,7 +52,7 @@ const MainContent = styled.section`
     grid-area: canv;
     width: 100%;
     height: 100%;
-    background: #999;
+    background: white;
   }
   p {
     grid-area: info;
@@ -84,6 +84,10 @@ const styles = {
   projectLink: {
     textDecoration: "none",
     color: "black",
+    "&:hover": {
+      textDecoration: "underline",
+      backgroundColor: "hsl(0, 0%, 95%)",
+    },
   },
 };
 
@@ -95,32 +99,11 @@ class IndexPage extends Component {
   componentWillMount = () => {
     const { edges } = this.props.data.allMarkdownRemark;
     const deepClone = d => JSON.parse(JSON.stringify(d));
+    const shallowClone = d => Object.assign({}, ...d);
     const newNodes = deepClone(edges.map(d => d.node.frontmatter));
-    //   links: [
-    //     { "source": 0.0, "target": 5.0, "T": "Ba" }, { "source": 8.0, "target": 15.0, "T": "Ba" }, { "source": 8.0, "target": 16.0, "T": "Ba" }, { "source": 15.0, "target": 5.0, "T": "Ba" }, { "source": 1.0, "target": 3.0, "T": "Gy" }, { "source": 1.0, "target": 6.0, "T": "Gy" }, { "source": 1.0, "target": 14.0, "T": "Gy" }, { "source": 1.0, "target": 17.0, "T": "Gy" }, { "source": 3.0, "target": 6.0, "T": "Gy" }, { "source": 3.0, "target": 14.0, "T": "Gy" }, { "source": 3.0, "target": 17.0, "T": "Gy" }, { "source": 6.0, "target": 14.0, "T": "Gy" }, { "source": 6.0, "target": 17.0, "T": "Gy" }, { "source": 14.0, "target": 17.0, "T": "Gy" }, { "source": 7.0, "target": 13.0, "T": "Pr" }, { "source": 0, "target": 5.0, "T": "Ch" }, { "source": 2.0, "target": 12.0, "T": "Ch" }, { "source": 2.0, "target": 12.0, "T": "Br" },
-    //     { "source": 0.0, "target": 5.0, "T": "Ba" }, { "source": 0.0, "target": 5.0, "T": "Gy" }, { "source": 0.0, "target": 5.0, "T": "Br" }
-    //   ]
-    // }
-    //     { "source": 0.0, "target": 5.0, "year": target.year }
-    // todo: Object assign for one-level-deep (shallow clone)
-    const findRelated = (id, relation) =>
-      edges.filter(edge => id === edge.node.frontmatter.id + relation);
-
-    const newLinks = deepClone(
-      edges.map(d => d.node).map(item => {
-        return {
-          source: findRelated(item.frontmatter.id, 1), // todo: check '1' if doesn't work
-          target: findRelated(item.frontmatter.id, 0), // todo: check '0' if doesn't work
-          year: item.frontmatter.year,
-        };
-      })
-    );
-
-    console.log("newLinks", newLinks);
 
     this.setState({
       nodes: newNodes,
-      links: newLinks,
     });
   };
   render() {
@@ -135,8 +118,7 @@ class IndexPage extends Component {
     }
     const years = projects.map(p => p.frontmatter.year).filter(onlyUnique);
 
-    console.log(years);
-    console.log(projects);
+    // console.log("projects", projects);
 
     return (
       <Container>
@@ -175,7 +157,7 @@ class IndexPage extends Component {
         <MainContent>
           <svg className="canvas">
             {/* todo: links */}
-            <ForceSimulation nodes={this.state.nodes} />
+            <ForceSimulation graph={{ nodes: this.state.nodes }} />
           </svg>
           <p>
             This section contains a canvas on which d3 appends circles for each

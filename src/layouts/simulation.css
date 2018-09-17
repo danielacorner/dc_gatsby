@@ -38,3 +38,7 @@ div.tooltip p[tools] {
   font-weight: 100;
   align-self: bottom;
 }
+.link {
+  stroke: #999;
+  stroke-width: 1.5px;
+}

@@ -11,14 +11,15 @@ class Layout extends Component {
   render() {
     const Page = styled.div`
       position: absolute;
+      width: 100%;
       top: 0;
       bottom: 0;
       display: grid;
       grid-template-rows: auto 1fr auto;
       grid-template-areas:
-        "header header header header"
-        "content content content content"
-        "footer footer footer footer";
+        "header"
+        "content"
+        "footer";
     `;
     const { children, data } = this.props;
     return (
@@ -42,7 +43,7 @@ class Layout extends Component {
           style={{
             gridArea: "content",
             margin: "0 auto",
-            maxWidth: 960,
+            // maxWidth: 960,
             padding: "0px 1.0875rem 1.45rem",
             paddingTop: 0,
           }}
