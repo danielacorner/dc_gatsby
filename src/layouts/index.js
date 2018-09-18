@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import styled from "styled-components";
 
 import "./index.css";
-import "./header.css";
+import "./animations.css";
 import "./simulation.css";
 
 const Page = styled.div`

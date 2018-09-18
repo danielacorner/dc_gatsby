@@ -4,63 +4,56 @@ import { withStyles } from "@material-ui/core";
 import ForceSimulation from "../components/ForceSimulation";
 // import Paper from "@material-ui/core/Paper";
 import ProjectsList from "../components/ProjectsList";
-import Projects from "../components/Projects";
+import Project1 from "../components/Project1";
 
-const Portfolio = styled.div``;
-const Intro = styled.header`
+// Portfolio contains intro, aside, projects
+const Portfolio = styled.div`
   --black: #272727;
+
+  display: grid;
+  grid-template-areas:
+    "side intro intro intro"
+    "side intro intro intro"
+    "side intro intro intro"
+    "side intro intro intro"
+    "side proj proj proj";
+
+  // mobile
+  @media (max-width: 700px) {
+    grid-template-areas:
+      "side side side side"
+      "intro intro intro intro"
+      "intro intro intro intro"
+      "intro intro intro intro"
+      "proj proj proj proj";
+  }
+`;
+// aside contains projects list
+const Aside = styled.aside`
+  grid-area: side;
+`;
+// intro contains hero, sim
+const Intro = styled.header`
+  grid-area: intro;
   background: aliceblue;
   height: 100vh;
   width: 100vw;
   display: grid;
   grid-gap: 10px;
-  grid-template-rows: auto repeat(3, 1fr);
-  grid-template-columns: 1fr repeat(3, 25%);
-  grid-template-areas:
-    "side side side side"
-    "main main main main"
-    "main main main main"
-    "main main main main";
-  @media (min-width: 700px) {
+  grid-template-areas: "hero" "sim";
+
+  // mobile
+  @media (max-width: 700px) {
     grid-template-areas:
-      "side main main main"
-      "side main main main"
-      "side main main main"
-      "side main main main";
+      "sim"
+      "hero";
   }
-
-  aside {
-    grid-area: side;
-  }
-`;
-const D3Sim = styled.section`
-  background: var(--black);
-
-  grid-area: main;
-
-  display: grid;
-  grid-template-rows: repeat(3, 25%) 1fr;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-areas:
-    "canv canv canv canv"
-    "canv canv canv canv"
-    "canv canv canv canv"
-    "info info info info";
-
-  p {
-    grid-area: info;
-    background: #bada55;
-  }
-`;
-const StyledSvg = styled.svg`
-  grid-area: canv;
-  width: 100%;
-  height: 100%;
 `;
 const HeroDiv = styled.div`
   transition: all 1s ease-in;
-  width: 100%;
+  width: auto;
   display: grid;
+  grid-template-columns: 1fr 3fr;
   grid-template-areas: "hero text";
   @media (max-width: 700px) {
     grid-template-areas:
@@ -76,7 +69,24 @@ const HeroImg = styled.img`
   animation: transitionUp 1s, fadeIn 1s;
 `;
 const HeroText = styled.div``;
-const Aside = styled.aside``;
+
+const D3Sim = styled.section`
+  background: var(--black);
+
+  grid-area: sim;
+
+  display: grid;
+
+  p {
+    background: #bada55;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const Projects = styled.main``;
 
 const styles = {
   transitionUp: {
@@ -130,8 +140,12 @@ class IndexPage extends Component {
 
     return (
       <Portfolio>
+        {" "}
+        {/* contains: intro, aside, projects */}
         {/* header */}
         <Intro>
+          {" "}
+          {/* contains: hero, sim */}
           {/* hero */}
           <HeroDiv
             className={`${
@@ -144,27 +158,26 @@ class IndexPage extends Component {
               <p>Some text over here...</p>
             </HeroText>
           </HeroDiv>
-
           {/* simulation */}
           <D3Sim>
-            <StyledSvg className="canvas">
+            <svg className="canvas">
               {scrolled && (
                 <ForceSimulation scrolled={scrolled} graph={{ nodes: nodes }} />
               )}
-            </StyledSvg>
+            </svg>
             <p>
               Todo: hover the circles to highlight the sidebar, and vice versa
             </p>
           </D3Sim>
         </Intro>
-
         {/* projects list aside */}
         <Aside style={{ display: scrolled ? "block" : "none" }}>
           <ProjectsList projects={projects} />
         </Aside>
-
         {/* projects */}
-        <Projects />
+        <Projects>
+          <Project1 />
+        </Projects>
       </Portfolio>
     );
   }
