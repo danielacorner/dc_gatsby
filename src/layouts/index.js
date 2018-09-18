@@ -37,7 +37,7 @@ class Layout extends Component {
           ]}
         />
 
-        {/* header */}
+        {/* main */}
         <div
           style={{
             margin: "0 auto",

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core";
-import ForceSimulation from "../components/ForceSimulation";
-// import Paper from "@material-ui/core/Paper";
 import ProjectsList from "../components/ProjectsList";
 import Project1 from "../components/Project1";
 import Header from "../components/Header";
