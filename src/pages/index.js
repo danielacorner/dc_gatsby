@@ -4,13 +4,14 @@ import { withStyles } from "@material-ui/core";
 import ForceSimulation from "../components/ForceSimulation";
 // import Paper from "@material-ui/core/Paper";
 import ProjectsList from "../components/ProjectsList";
-import Paper from "@material-ui/core/Paper";
+import Projects from "../components/Projects";
 
-const Container = styled.main`
+const Portfolio = styled.div``;
+const Intro = styled.header`
   --black: #272727;
   background: aliceblue;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: grid;
   grid-gap: 10px;
   grid-template-rows: auto repeat(3, 1fr);
@@ -32,7 +33,7 @@ const Container = styled.main`
     grid-area: side;
   }
 `;
-const MainContent = styled.section`
+const D3Sim = styled.section`
   background: var(--black);
 
   grid-area: main;
@@ -57,18 +58,30 @@ const StyledSvg = styled.svg`
   height: 100%;
 `;
 const HeroDiv = styled.div`
-  transform: scale(0)
   transition: all 1s ease-in;
+  width: 100%;
+  display: grid;
+  grid-template-areas: "hero text";
+  @media (max-width: 700px) {
+    grid-template-areas:
+      "hero"
+      "text";
+  }
 `;
 const HeroImg = styled.img`
   border-radius: 100%;
   margin: 0;
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
     0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
+  animation: transitionUp 1s, fadeIn 1s;
 `;
+const HeroText = styled.div``;
 const Aside = styled.aside``;
 
 const styles = {
+  transitionUp: {
+    transition: "all 1s ease-in",
+  },
   initialHero: {
     transform: "scale(1)",
     position: "fixed",
@@ -116,27 +129,43 @@ class IndexPage extends Component {
     // console.log("projects", projects);
 
     return (
-      <Container>
+      <Portfolio>
+        {/* header */}
+        <Intro>
+          {/* hero */}
+          <HeroDiv
+            className={`${
+              !scrolled ? classes.initialHero : classes.smallHero
+            } ${classes.transitionUp}`}
+          >
+            <HeroImg src="https://image.ibb.co/g6KUSK/headshot.jpg" />
+            <HeroText>
+              <h1>Hello World!</h1>
+              <p>Some text over here...</p>
+            </HeroText>
+          </HeroDiv>
+
+          {/* simulation */}
+          <D3Sim>
+            <StyledSvg className="canvas">
+              {scrolled && (
+                <ForceSimulation scrolled={scrolled} graph={{ nodes: nodes }} />
+              )}
+            </StyledSvg>
+            <p>
+              Todo: hover the circles to highlight the sidebar, and vice versa
+            </p>
+          </D3Sim>
+        </Intro>
+
+        {/* projects list aside */}
         <Aside style={{ display: scrolled ? "block" : "none" }}>
           <ProjectsList projects={projects} />
         </Aside>
 
-        <MainContent>
-          <HeroDiv
-            className={`${!scrolled ? classes.initialHero : classes.smallHero}`}
-          >
-            <HeroImg src="https://image.ibb.co/g6KUSK/headshot.jpg" />
-          </HeroDiv>
-          <StyledSvg className="canvas">
-            {scrolled && (
-              <ForceSimulation scrolled={scrolled} graph={{ nodes: nodes }} />
-            )}
-          </StyledSvg>
-          <p>
-            Todo: hover the circles to highlight the sidebar, and vice versa
-          </p>
-        </MainContent>
-      </Container>
+        {/* projects */}
+        <Projects />
+      </Portfolio>
     );
   }
 }
