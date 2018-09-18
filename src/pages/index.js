@@ -5,37 +5,44 @@ import ProjectsList from "../components/ProjectsList";
 import Project1 from "../components/Project1";
 import Header from "../components/Header";
 
-// Portfolio contains intro, aside, projects
+// Portfolio contains header, aside, projects
 const Portfolio = styled.div`
   --black: #272727;
 
   display: grid;
   grid-template-areas:
-    "side intro intro intro"
-    "side intro intro intro"
-    "side intro intro intro"
-    "side intro intro intro"
+    "side head head head"
+    "side head head head"
+    "side head head head"
+    "side head head head"
     "side proj proj proj";
 
   // mobile
   @media (max-width: 700px) {
     grid-template-areas:
       "side side side side"
-      "intro intro intro intro"
-      "intro intro intro intro"
-      "intro intro intro intro"
+      "head head head head"
+      "head head head head"
+      "head head head head"
       "proj proj proj proj";
   }
 `;
 // aside contains projects list
 const Aside = styled.aside`
   grid-area: side;
+  @media (max-width: 700px) {
+    position: fixed;
+  }
 `;
 // intro contains hero, sim
 
 const Projects = styled.main``;
 
-const styles = {};
+const styles = {
+  header: {
+    gridArea: "head",
+  },
+};
 
 // Projects Layout (below the Site Layout)
 
@@ -75,9 +82,9 @@ class IndexPage extends Component {
     return (
       <Portfolio>
         {" "}
-        {/* contains: intro, aside, projects */}
+        {/* contains: header, aside, projects */}
         {/* header */}
-        <Header scrolled={scrolled} nodes={nodes} />
+        <Header className={classes.header} scrolled={scrolled} nodes={nodes} />
         {/* projects list aside */}
         <Aside style={{ display: scrolled ? "block" : "none" }}>
           <ProjectsList projects={projects} />
