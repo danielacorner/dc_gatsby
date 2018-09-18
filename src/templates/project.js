@@ -30,6 +30,7 @@ export const projectQuery = graphql`
         tools
         image
         imgThumb
+        website
       }
     }
   }

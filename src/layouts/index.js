@@ -1,26 +1,27 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
-import Header from "../components/header";
 import styled from "styled-components";
 
 import "./index.css";
 import "./simulation.css";
 
+const Page = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-rows: 100vh auto auto;
+  padding: 0;
+  margin: 0;
+  grid-template-areas:
+    "header"
+    "projects"
+    "footer";
+`;
+
+// Site Layout
+
 class Layout extends Component {
   render() {
-    const Page = styled.div`
-      position: absolute;
-      width: 100%;
-      top: 0;
-      bottom: 0;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      grid-template-areas:
-        "header"
-        "content"
-        "footer";
-    `;
     const { children, data } = this.props;
     return (
       <Page>
@@ -38,10 +39,11 @@ class Layout extends Component {
             },
           ]}
         />
-        <Header siteTitle={data.site.siteMetadata.title} />
+
+        {/* header */}
         <div
           style={{
-            gridArea: "content",
+            gridArea: "header",
             margin: "0 auto",
             // maxWidth: 960,
             padding: "0px 1.0875rem 1.45rem",
@@ -50,6 +52,18 @@ class Layout extends Component {
         >
           {children()}
         </div>
+
+        {/* projects */}
+        <div
+          style={{
+            gridArea: "projects",
+            color: "white",
+            width: "100%",
+            background: "#FAFAFA",
+          }}
+        />
+
+        {/* footer */}
         <footer
           style={{
             gridArea: "footer",
