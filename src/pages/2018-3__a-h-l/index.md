@@ -1,14 +1,15 @@
 ---
-id: "2"
-year: "2017"
-path: "/2017_a-h-l"
+id: "3"
+year: "2018"
+path: "/2018-3__a-h-l"
 title: "a-h-l: Portfolio Site"
-desc: "this basic portfolio site served as my introduction to HTML/CSS with a sprinkle of JavaScript to make things work."
-caption: "caption caption."
-radius: "50"
-image: "https://image.ibb.co/mycvKp/art_2.jpg"
-imgThumb: "https://thumb.ibb.co/gC7HX9/art_2.jpg"
-tools: ["HTML", "CSS", "JavaScript"]
+caption: "A very basic, minimally-responsive portfolio site."
+desc: "This basic portfolio site was my second foray into the world of HTML/CSS, with a sprinkle of JavaScript to make things work. <br/> <blockquote cite='https://twitter.com/reidhoffman/status/847142924240379904?lang=en'> If you're not embarrassed by the first version of your product, you've launched too late.</blockquote>"
+# responsibilities: ["Web development"]
+radius: "20"
+image: "https://image.ibb.co/g51onK/a_h_l.jpg"
+imgThumb: "https://thumb.ibb.co/g51onK/a_h_l.jpg"
+tools: ["HTML5", "CSS3", "JavaScript"]
 website: "https://dcorn068.github.io/a-h-l/"
 ---
 

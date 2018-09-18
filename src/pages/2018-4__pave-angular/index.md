@@ -1,14 +1,14 @@
 ---
-id: "3"
+id: "4"
 year: "2018"
-path: "/2018_pave-angular"
-title: "Pave Prototype 2: Interactive Data Visualization"
-desc: "An interactive jobs data explorer. This is the third-iteration prototype of a design that placed 3rd in the Student Pathways Challenge."
-caption: "caption caption."
-radius: "50"
-image: "https://ibb.co/eqvvCK"
-imgThumb: "https://thumb.ibb.co/eqvvCK/Pave_D3.jpg"
-tools: ["D3", "Angular", "Angular Material", "HTML", "CSS", "JavaScript"]
+path: "/2018-4__pave-angular"
+title: "Pave Prototype 3: Interactive Data Visualization"
+caption: "Pave is an interactive exploration of Canada's jobs. This third-iteration prototype was my first time writing modular code in a front-end framework."
+desc: "An interactive data visualization of Canada's jobs. <br/> Pave takes overwhelming data and allows users to quickly drill down into the areas that interest them. Now targeting international students and users of all ages, this design is more mature and compact. <br/> Using the Angular front-end framework, this project incorporates the paradigms of functional programming by remaining abstract and composable, and of object-oriented programming by encapsulating components into independent modules."
+radius: "70"
+image: "https://image.ibb.co/cOYeBe/pave_angular.jpg"
+imgThumb: "https://image.ibb.co/d9gzBe/pave_angular_logo.jpg"
+tools: ["JavaScript", "D3.js", "Angular", "Angular Material", "HTML5", "CSS3"]
 website: "https://dcorn068.github.io/pave-angular/"
 ---
 

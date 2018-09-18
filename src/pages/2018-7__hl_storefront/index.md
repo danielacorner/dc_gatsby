@@ -1,8 +1,8 @@
 ---
-id: "4"
+id: "7"
 year: "2018"
-path: "/2018_hl_storefront"
-title: "Hyeran Lee Art storefront"
+path: "/2018-7__hl_storefront"
+title: "Hyeran Lee Art"
 desc: "Storefront using React & Material-UI. This was my first React project with styled-components."
 caption: "caption caption."
 radius: "35"
