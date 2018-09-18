@@ -13,10 +13,6 @@ const Page = styled.div`
   grid-template-rows: 100vh auto auto;
   padding: 0;
   margin: 0;
-  grid-template-areas:
-    "header"
-    "projects"
-    "footer";
 `;
 
 // Site Layout
@@ -44,7 +40,6 @@ class Layout extends Component {
         {/* header */}
         <div
           style={{
-            gridArea: "header",
             margin: "0 auto",
             // maxWidth: 960,
             padding: "0px 1.0875rem 1.45rem",
@@ -53,29 +48,6 @@ class Layout extends Component {
         >
           {children()}
         </div>
-
-        {/* projects */}
-        <div
-          style={{
-            gridArea: "projects",
-            color: "white",
-            width: "100%",
-            background: "#FAFAFA",
-          }}
-        />
-
-        {/* footer */}
-        <footer
-          style={{
-            gridArea: "footer",
-
-            color: "white",
-            width: "100%",
-            background: "#333",
-          }}
-        >
-          here's a footer
-        </footer>
       </Page>
     );
 
