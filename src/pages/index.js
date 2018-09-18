@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core";
 import ForceSimulation from "../components/ForceSimulation";
 // import Paper from "@material-ui/core/Paper";
 import ProjectsList from "../components/ProjectsList";
+import Paper from "@material-ui/core/Paper";
 
 const Container = styled.main`
   --black: #272727;
@@ -50,15 +51,34 @@ const MainContent = styled.section`
     background: #bada55;
   }
 `;
-
 const StyledSvg = styled.svg`
   grid-area: canv;
   width: 100%;
   height: 100%;
 `;
+const HeroDiv = styled.div`
+  transform: scale(0)
+  transition: all 1s ease-in;
+`;
+const HeroImg = styled.img`
+  border-radius: 100%;
+  margin: 0;
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
+`;
 const Aside = styled.aside``;
 
-const styles = {};
+const styles = {
+  initialHero: {
+    transform: "scale(1)",
+    position: "fixed",
+    top: "40vh",
+    left: "30vw",
+    width: "20vw",
+    minWidth: "230px",
+  },
+  smallHero: {},
+};
 
 // Projects Layout (below the Site Layout)
 
@@ -72,21 +92,18 @@ class IndexPage extends Component {
   componentWillMount = () => {
     const { edges } = this.props.data.allMarkdownRemark;
     const deepClone = d => JSON.parse(JSON.stringify(d));
-    const shallowClone = d => Object.assign({}, ...d);
+    // const shallowClone = d => Object.assign({}, ...d);
     const newNodes = deepClone(edges.map(d => d.node.frontmatter));
 
     this.setState({
       nodes: newNodes,
     });
 
-    window.addEventListener("scroll", this.handleScroll.bind(this), {
+    window.addEventListener("scroll", () => this.setState({ scrolled: true }), {
       once: true,
     });
   };
-
-  handleScroll(e) {
-    this.setState({ scrolled: true });
-  }
+  componentDidMount = () => {};
 
   render() {
     const { data, classes } = this.props;
@@ -105,13 +122,18 @@ class IndexPage extends Component {
         </Aside>
 
         <MainContent>
+          <HeroDiv
+            className={`${!scrolled ? classes.initialHero : classes.smallHero}`}
+          >
+            <HeroImg src="https://image.ibb.co/g6KUSK/headshot.jpg" />
+          </HeroDiv>
           <StyledSvg className="canvas">
-            {/* todo: links */}
-            <ForceSimulation scrolled={scrolled} graph={{ nodes: nodes }} />
+            {scrolled && (
+              <ForceSimulation scrolled={scrolled} graph={{ nodes: nodes }} />
+            )}
           </StyledSvg>
           <p>
-            This section contains a canvas on which d3 appends circles for each
-            project. Hover the circles to highlight the sidebar, and vice versa
+            Todo: hover the circles to highlight the sidebar, and vice versa
           </p>
         </MainContent>
       </Container>
