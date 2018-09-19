@@ -10,42 +10,14 @@ const Portfolio = styled.div`
   --black: #272727;
   --opac: 99;
   /* background: var(--black); */
-  background-image: url("https://image.ibb.co/eUQPcK/ep_naturalblack.png"); /* fallback */
-  background-image: radial-gradient(circle, #02418980, #04367380, #052c5d80, #06224880, #06183480), url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
   display: grid;
 
   grid-template-rows: 100vh auto auto;
 
-  &.initialLayout {
-    grid-template-columns: 1fr;
-    grid-template-areas:
+  grid-template-columns: 1fr;
+  grid-template-areas:
     "head"
     "proj";
-
-    // mobile
-    @media (max-width: 700px) {
-      grid-template-areas:
-      "side"
-      "head"
-      "proj";
-      }
-    }
-
-  &.finalLayout {
-    grid-template-columns: 250px 1fr;
-    grid-template-areas:
-    "side head"
-    "side proj";
-
-    // mobile
-    @media (max-width: 700px) {
-      grid-template-areas:
-      "head"
-      "side"
-      "proj";
-    }
-  }
-  }
 `;
 // aside contains projects list
 const Aside = styled.aside`
@@ -87,12 +59,25 @@ class IndexPage extends Component {
     this.setState({
       nodes: newNodes,
     });
-
-    window.addEventListener("scroll", () => this.setState({ scrolled: true }), {
-      once: true,
-    });
   };
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    window.addEventListener("scroll", this.handleScroll);
+  };
+
+  handleScroll = () => {
+    if (window.pageYOffset === 0) {
+      this.setState({ scrolled: false });
+    } else {
+      this.setState({ scrolled: true });
+    }
+    const intro = document.querySelector("header div");
+    const scrollFraction =
+      (window.innerHeight - window.pageYOffset) / window.innerHeight;
+    intro.style.transform = `scale(${scrollFraction}) translateY(${(window.innerHeight -
+      scrollFraction * window.innerHeight) *
+      0.75}px) rotateX(${(1 - scrollFraction) * 90}deg)`;
+    intro.parentElement.style.perspective = `${(1 - scrollFraction) * 800}px`;
+  };
 
   render() {
     const { data, classes } = this.props;
@@ -105,7 +90,7 @@ class IndexPage extends Component {
     // console.log("projects", projects);
 
     return (
-      <Portfolio className={!scrolled ? "initialLayout" : "finalLayout"}>
+      <Portfolio>
         {/* contains: header, aside, projects */}
         {/* header */}
         <Header className={classes.header} scrolled={scrolled} nodes={nodes} />

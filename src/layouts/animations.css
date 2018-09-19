@@ -24,3 +24,21 @@
     background: rgba(234, 234, 234, 0.15);
   }
 }
+
+@keyframes typewriter {
+  from {
+    max-width: 0.5ch;
+  }
+  to {
+    max-width: 14.5ch;
+  }
+}
+
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(255, 255, 255, .75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}

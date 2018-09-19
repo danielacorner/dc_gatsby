@@ -8,17 +8,10 @@ const HeroAndSim = styled.header`
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-gap: 10px;
 
-  &.initialLayout {
-    grid-template-areas: "hero";
-    grid-template-columns: 100vw;
-    grid-template-rows: 100vh auto;
-  }
-  &.finalLayout {
-    grid-template-areas: "d3sim" "hero";
-    grid-template-columns: 100vw;
-  }
+  grid-template-areas: "hero";
+  grid-template-columns: 100vw;
+  grid-template-rows: 100vh auto;
 `;
 
 const HeroDiv = styled.div`
@@ -31,13 +24,12 @@ const HeroDiv = styled.div`
   place-items: center center;
   padding: 19% 0;
 
-  &.initialLayout {
-    grid-template-rows: 300px 2fr;
-    div {
-      margin: auto;
-      width: 70%;
-      max-width: 700px;
-    }
+  grid-template-rows: 300px 1fr;
+  div {
+    margin: 50px auto;
+    width: 70%;
+    padding-left: 10px;
+    max-width: 590px;
   }
   img {
     width: 70%;
@@ -49,14 +41,10 @@ const HeroDiv = styled.div`
       0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
     animation: transitionUp 1s, fadeIn 1s;
   }
-  h1 {
-    color: #ffca2d;
-    margin-bottom: 0;
-    font-family: "Oxygen Mono", monospace;
-  }
   p {
     color: #a6cfd5;
     font-size: 20px;
+    font-family: "Roboto", sans-serif;
     /* max-width: 40vw; */
   }
   .introText {
@@ -66,15 +54,20 @@ const HeroDiv = styled.div`
     position: relative;
     display: grid;
     place-items: center center;
-    h1 {
-      overflow: hidden;
-      left: 0;
-      background: rgb(0, 0, 0, 0.2);
-      .blink {
-        display: inline;
-        animation: blink 0.85s cubic-bezier(1, 0, 0, 1) infinite;
-      }
-    }
+    max-width: 14ch;
+    white-space: nowrap;
+    position: relative;
+    color: #ffca2d;
+    margin: 0 auto;
+    font-family: "Oxygen Mono", monospace;
+    overflow-wrap: initial;
+    overflow: hidden;
+    background: rgb(0, 0, 0, 0.2);
+    border-right: 0.5ch solid rgba(255, 255, 255, 0.75);
+  }
+  .anim-typewriter {
+    animation: typewriter 1.3s steps(14) 1s 1 normal both,
+      blinkTextCursor 500ms cubic-bezier(1, 0, 0, 1) infinite normal;
   }
 
   @media (max-width: 700px) {
@@ -96,22 +89,22 @@ const D3Sim = styled.section`
 `;
 const styles = {};
 class Header extends Component {
+  componentDidMount() {
+    const title = document.querySelector(".introText");
+    title.addEventListener("animationend", this.showDownArrow);
+  }
+  showDownArrow() {}
   render() {
     const { classes, scrolled, nodes } = this.props;
     return (
-      <HeroAndSim className={!scrolled ? "initialLayout" : "finalLayout"}>
+      <HeroAndSim>
         {/* contains: hero, d3sim */}
         {/* hero */}
-        <HeroDiv className={`${!scrolled ? "initialLayout" : "finalLayout"}`}>
+        <HeroDiv>
           <HeroImg src="https://image.ibb.co/g6KUSK/headshot.jpg" />
           <div className="introText">
-            <div className="title">
-              <h1>
-                Hello world..
-                <span className="blink">.</span>
-              </h1>
-            </div>
-            <p style={{ marginTop: 20 }}>
+            <h1 className="title anim-typewriter">Hello world...</h1>
+            <p style={{ marginTop: 30 }}>
               I'm a Junior Front-end Engineer looking to get started in the
               industry. My background is in engineering (chemical and biotech)
               -- I like to make things work.
