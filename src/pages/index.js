@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { withStyles } from "@material-ui/core";
+// import { withStyles } from "@material-ui/core";
 import ProjectsList from "../components/ProjectsList";
 import Project1 from "../components/Project1";
 import Header from "../components/Header";
@@ -16,15 +16,22 @@ const Portfolio = styled.div`
   grid-template-rows: 100vh auto;
 
   grid-template-columns: 1fr;
+
+  .header {
+    width: 100%;
+  }
+`;
+
+const GridLeftRight = styled.div`
+  display: grid;
+  grid-template-columns: 205px 1fr;
+  .gridUpDown {
+    display: grid;
+    grid-template-rows: 100vh repeat(auto-fit, 70vh);
+  }
 `;
 
 const Projects = styled.main``;
-
-const styles = {
-  header: {
-    width: "100%",
-  },
-};
 
 // Projects Layout (below the Site Layout)
 
@@ -33,6 +40,7 @@ class IndexPage extends Component {
     nodes: null,
     links: null,
     popup: false,
+    lastScrollTop: 0,
   };
 
   componentWillMount = () => {
@@ -69,6 +77,20 @@ class IndexPage extends Component {
     } else if (scrollFraction < 0.55) {
       this.setState({ popup: false });
     }
+
+    // detect scroll direction
+    const st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
+    if (st > this.state.lastScrollTop) {
+      console.log("scrolling down");
+      document.getElementById("hero").classList.remove("scrollingUp");
+      console.log(document.getElementById("hero").classList);
+      // downscroll code
+    } else {
+      document.getElementById("hero").classList.add("scrollingUp");
+      console.log("scrolling up");
+      // upscroll code
+    }
+    this.setState({ lastScrollTop: st <= 0 ? 0 : st }); // For Mobile or negative scrolling
   };
 
   warpHero = sf => {
@@ -89,7 +111,7 @@ class IndexPage extends Component {
   };
 
   render() {
-    const { data, classes } = this.props;
+    const { data } = this.props;
     const { scrolled, nodes, popup } = this.state;
 
     const projects = data.allMarkdownRemark.edges
@@ -102,14 +124,20 @@ class IndexPage extends Component {
       <Portfolio>
         {/* contains: header, aside, projects */}
         {/* header */}
-        <Header className={classes.header} popup={popup} />
-        {/* projects list aside */}
-        <ProjectsList popup={popup} projects={projects} />
-        <D3Wrapper nodes={nodes} popup={popup} />
-        {/* projects */}
-        <Projects>
-          <Project1 />
-        </Projects>
+        <Header className={"header"} popup={popup} />
+
+        <GridLeftRight>
+          {/* sticky projects list aside (left on desktop, bottom on mobile) */}
+          <ProjectsList popup={popup} projects={projects} />
+
+          <div className="gridUpDown">
+            <D3Wrapper nodes={nodes} popup={popup} />
+
+            <Projects>
+              <Project1 />
+            </Projects>
+          </div>
+        </GridLeftRight>
       </Portfolio>
     );
   }
@@ -140,4 +168,4 @@ export const pageQuery = graphql`
   }
 `;
 
-export default withStyles(styles)(IndexPage);
+export default IndexPage;

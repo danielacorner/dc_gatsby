@@ -6,7 +6,7 @@ const D3Sim = styled.section`
   height: 100vh;
   width: 100vw;
 
-  background: white;
+  background: grey;
   display: grid;
   svg {
     width: 100%;

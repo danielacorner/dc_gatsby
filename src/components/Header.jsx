@@ -20,9 +20,12 @@ const HeroWrapper = styled.header`
 `;
 
 const HeroDiv = styled.div`
-  transition: all 1s ease-out;
-
+  transition: all 1s ease-out, transform 1s linear;
+  &.scrollingUp {
+    transition: all 1s ease-out, transform 0.1s ease-out;
+  }
   height: 100%;
+  max-height: 100vh;
   display: grid;
 
   transform: scale(1);
@@ -92,7 +95,7 @@ class Header extends Component {
       <HeroWrapper>
         {/* contains: hero, d3sim */}
         {/* hero */}
-        <HeroDiv>
+        <HeroDiv id="hero">
           <HeroImg id="avatar" src="https://image.ibb.co/g6KUSK/headshot.jpg" />
           <div className="introText">
             <h1 className="title anim-typewriter">Hello world...</h1>
