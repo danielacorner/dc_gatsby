@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core";
 import ProjectsList from "../components/ProjectsList";
 import Project1 from "../components/Project1";
 import Header from "../components/Header";
+import D3Wrapper from "../components/D3Wrapper";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
@@ -12,31 +13,15 @@ const Portfolio = styled.div`
   /* background: var(--black); */
   display: grid;
 
-  grid-template-rows: 100vh auto auto;
+  grid-template-rows: 100vh auto;
 
   grid-template-columns: 1fr;
-  grid-template-areas:
-    "head"
-    "proj";
 `;
-// aside contains projects list
-const Aside = styled.aside`
-  grid-area: side;
 
-  //mobile
-  @media (max-width: 700px) {
-    position: sticky;
-  }
-`;
-// intro contains hero, sim
-
-const Projects = styled.main`
-  grid-area: proj;
-`;
+const Projects = styled.main``;
 
 const styles = {
   header: {
-    gridArea: "head",
     width: "100%",
   },
 };
@@ -47,7 +32,7 @@ class IndexPage extends Component {
   state = {
     nodes: null,
     links: null,
-    scrolled: false,
+    popup: false,
   };
 
   componentWillMount = () => {
@@ -70,18 +55,42 @@ class IndexPage extends Component {
     } else {
       this.setState({ scrolled: true });
     }
+
+    const scrollFraction = window.pageYOffset / window.innerHeight;
+
+    if (scrollFraction >= 0 && scrollFraction <= 1) {
+      this.warpHero(scrollFraction);
+    }
+
+    // pop-up force sim at scroll ~ 0.85
+    if (scrollFraction >= 0.75) {
+      console.log("popup!");
+      this.setState({ popup: true });
+    } else if (scrollFraction < 0.55) {
+      this.setState({ popup: false });
+    }
+  };
+
+  warpHero = sf => {
+    const heroImg = document.querySelector("#avatar");
     const intro = document.querySelector("header div");
-    const scrollFraction =
-      (window.innerHeight - window.pageYOffset) / window.innerHeight;
-    intro.style.transform = `scale(${scrollFraction}) translateY(${(window.innerHeight -
-      scrollFraction * window.innerHeight) *
-      0.75}px) rotateX(${(1 - scrollFraction) * 90}deg)`;
-    intro.parentElement.style.perspective = `${(1 - scrollFraction) * 800}px`;
+
+    // scale out and rotate into the page
+    intro.style.transform = `scale(${1 - Math.pow(sf, 0.85)}) translateY(${sf *
+      window.innerHeight *
+      0.5}px) rotateX(${sf * 90}deg)`;
+    heroImg.style.transform = `rotateX(${sf * 90}deg)`;
+
+    // perspective for header container
+    intro.parentElement.style.perspective = `${(sf + 0.05) * 700}px`;
+
+    // todo: trigger 'warp' animation at sf ~ 0.8
+    // todo: after warp, POP back in at scroll close to 0.1
   };
 
   render() {
     const { data, classes } = this.props;
-    const { scrolled, nodes } = this.state;
+    const { scrolled, nodes, popup } = this.state;
 
     const projects = data.allMarkdownRemark.edges
       .map(p => p.node)
@@ -93,11 +102,10 @@ class IndexPage extends Component {
       <Portfolio>
         {/* contains: header, aside, projects */}
         {/* header */}
-        <Header className={classes.header} scrolled={scrolled} nodes={nodes} />
+        <Header className={classes.header} popup={popup} />
         {/* projects list aside */}
-        <Aside style={{ display: !scrolled ? "none" : "block" }}>
-          <ProjectsList projects={projects} />
-        </Aside>
+        <ProjectsList popup={popup} projects={projects} />
+        <D3Wrapper nodes={nodes} popup={popup} />
         {/* projects */}
         <Projects>
           <Project1 />

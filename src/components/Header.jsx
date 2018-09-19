@@ -1,21 +1,26 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core";
-import ForceSimulation from "../components/ForceSimulation";
 
-const HeroAndSim = styled.header`
-  background: rgba(0, 0, 0, 0.1);
+const HeroWrapper = styled.header`
   height: 100vh;
   width: 100vw;
-  display: grid;
+  background-image: url("https://image.ibb.co/eUQPcK/ep_naturalblack.png"); /* fallback */
+  background-image: radial-gradient(
+      circle,
+      #02418980,
+      #04367380,
+      #052c5d80,
+      #06224880,
+      #06183480
+    ),
+    url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
 
-  grid-template-areas: "hero";
-  grid-template-columns: 100vw;
-  grid-template-rows: 100vh auto;
+  display: grid;
 `;
 
 const HeroDiv = styled.div`
-  transition: all 0.7s ease-out;
+  transition: all 1s ease-out;
 
   height: 100%;
   display: grid;
@@ -62,7 +67,6 @@ const HeroDiv = styled.div`
     font-family: "Oxygen Mono", monospace;
     overflow-wrap: initial;
     overflow: hidden;
-    background: rgb(0, 0, 0, 0.2);
     border-right: 0.5ch solid rgba(255, 255, 255, 0.75);
   }
   .anim-typewriter {
@@ -75,18 +79,6 @@ const HeroDiv = styled.div`
 `;
 const HeroImg = styled.img``;
 
-const D3Sim = styled.section`
-  background: var(--black);
-  grid-area: d3sim;
-  display: grid;
-  p {
-    background: #bada55;
-  }
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-`;
 const styles = {};
 class Header extends Component {
   componentDidMount() {
@@ -95,13 +87,13 @@ class Header extends Component {
   }
   showDownArrow() {}
   render() {
-    const { classes, scrolled, nodes } = this.props;
+    const { classes, scrolled, popup, nodes } = this.props;
     return (
-      <HeroAndSim>
+      <HeroWrapper>
         {/* contains: hero, d3sim */}
         {/* hero */}
         <HeroDiv>
-          <HeroImg src="https://image.ibb.co/g6KUSK/headshot.jpg" />
+          <HeroImg id="avatar" src="https://image.ibb.co/g6KUSK/headshot.jpg" />
           <div className="introText">
             <h1 className="title anim-typewriter">Hello world...</h1>
             <p style={{ marginTop: 30 }}>
@@ -115,18 +107,7 @@ class Header extends Component {
             </p>
           </div>
         </HeroDiv>
-        {/* simulation */}
-        <D3Sim>
-          <svg className="canvas">
-            {scrolled && (
-              <ForceSimulation scrolled={scrolled} graph={{ nodes: nodes }} />
-            )}
-          </svg>
-          <p>
-            Todo: hover the circles to highlight the sidebar, and vice versa
-          </p>
-        </D3Sim>
-      </HeroAndSim>
+      </HeroWrapper>
     );
   }
 }

@@ -13,16 +13,6 @@ const Page = styled.div`
   /* grid-template-rows: 100vh auto auto; */
   padding: 0;
   margin: 0;
-  background-image: url("https://image.ibb.co/eUQPcK/ep_naturalblack.png"); /* fallback */
-  background-image: radial-gradient(
-      circle,
-      #02418980,
-      #04367380,
-      #052c5d80,
-      #06224880,
-      #06183480
-    ),
-    url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
 `;
 
 // Site Layout

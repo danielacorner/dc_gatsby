@@ -8,7 +8,7 @@ export default class ForceSimulation extends Component {
     return null;
   }
   componentDidMount() {
-    const { graph } = this.props;
+    const { graph, popup } = this.props;
     //todo: links
     // var g = svg.append("g")
     // //.attr("transform", "translate(" + width / 2 + "," + height/ 2 + ")")
