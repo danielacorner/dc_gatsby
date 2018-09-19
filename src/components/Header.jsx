@@ -3,50 +3,89 @@ import styled from "styled-components";
 import { withStyles } from "@material-ui/core";
 import ForceSimulation from "../components/ForceSimulation";
 
-const Intro = styled.header`
-  grid-area: intro;
-  background: aliceblue;
+const HeroAndSim = styled.header`
+  background: rgba(0, 0, 0, 0.1);
   height: 100vh;
   width: 100vw;
   display: grid;
   grid-gap: 10px;
-  grid-template-areas: "hero" "sim";
 
-  // mobile
-  @media (max-width: 700px) {
-    grid-template-areas:
-      "sim"
-      "hero";
+  &.initialLayout {
+    grid-template-areas: "hero";
+    grid-template-columns: 100vw;
+    grid-template-rows: 100vh auto;
+  }
+  &.finalLayout {
+    grid-template-areas: "d3sim" "hero";
+    grid-template-columns: 100vw;
   }
 `;
+
 const HeroDiv = styled.div`
-  transition: all 1s ease-in;
-  width: auto;
+  transition: all 0.7s ease-out;
+
+  height: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  grid-template-areas: "hero text";
+
+  transform: scale(1);
+  place-items: center center;
+  padding: 19% 0;
+
+  &.initialLayout {
+    grid-template-rows: 300px 2fr;
+    div {
+      margin: auto;
+      width: 70%;
+      max-width: 700px;
+    }
+  }
+  img {
+    width: 70%;
+    height: auto;
+    max-width: 300px;
+    border-radius: 100%;
+    margin: 0;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+      0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
+    animation: transitionUp 1s, fadeIn 1s;
+  }
+  h1 {
+    color: #ffca2d;
+    margin-bottom: 0;
+    font-family: "Oxygen Mono", monospace;
+  }
+  p {
+    color: #a6cfd5;
+    font-size: 20px;
+    /* max-width: 40vw; */
+  }
+  .introText {
+    position: relative;
+  }
+  .title {
+    position: relative;
+    display: grid;
+    place-items: center center;
+    h1 {
+      overflow: hidden;
+      left: 0;
+      background: rgb(0, 0, 0, 0.2);
+      .blink {
+        display: inline;
+        animation: blink 0.85s cubic-bezier(1, 0, 0, 1) infinite;
+      }
+    }
+  }
+
   @media (max-width: 700px) {
-    grid-template-areas:
-      "hero"
-      "text";
   }
 `;
-const HeroImg = styled.img`
-  border-radius: 100%;
-  margin: 0;
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
-    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
-  animation: transitionUp 1s, fadeIn 1s;
-`;
-const HeroText = styled.div``;
+const HeroImg = styled.img``;
 
 const D3Sim = styled.section`
   background: var(--black);
-
-  grid-area: sim;
-
+  grid-area: d3sim;
   display: grid;
-
   p {
     background: #bada55;
   }
@@ -55,38 +94,33 @@ const D3Sim = styled.section`
     height: 100%;
   }
 `;
-const styles = {
-  transitionUp: {
-    transition: "all 1s ease-in",
-  },
-  initialHero: {
-    transform: "scale(1)",
-    position: "fixed",
-    top: "40vh",
-    left: "30vw",
-    width: "20vw",
-    minWidth: "230px",
-  },
-  smallHero: {},
-};
+const styles = {};
 class Header extends Component {
   render() {
     const { classes, scrolled, nodes } = this.props;
     return (
-      <Intro>
-        {" "}
-        {/* contains: hero, sim */}
+      <HeroAndSim className={!scrolled ? "initialLayout" : "finalLayout"}>
+        {/* contains: hero, d3sim */}
         {/* hero */}
-        <HeroDiv
-          className={`${!scrolled ? classes.initialHero : classes.smallHero} ${
-            classes.transitionUp
-          }`}
-        >
+        <HeroDiv className={`${!scrolled ? "initialLayout" : "finalLayout"}`}>
           <HeroImg src="https://image.ibb.co/g6KUSK/headshot.jpg" />
-          <HeroText>
-            <h1>Hello World!</h1>
-            <p>Some text over here...</p>
-          </HeroText>
+          <div className="introText">
+            <div className="title">
+              <h1>
+                Hello world..
+                <span className="blink">.</span>
+              </h1>
+            </div>
+            <p style={{ marginTop: 20 }}>
+              I'm a Junior Front-end Engineer looking to get started in the
+              industry. My background is in engineering (chemical and biotech)
+              -- I like to make things work.
+            </p>
+            <p>
+              I discovered my passion for web development during a data-driven
+              design competition, and I've been self-teaching ever since.
+            </p>
+          </div>
         </HeroDiv>
         {/* simulation */}
         <D3Sim>
@@ -99,7 +133,7 @@ class Header extends Component {
             Todo: hover the circles to highlight the sidebar, and vice versa
           </p>
         </D3Sim>
-      </Intro>
+      </HeroAndSim>
     );
   }
 }

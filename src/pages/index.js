@@ -8,39 +8,64 @@ import Header from "../components/Header";
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
   --black: #272727;
-
+  --opac: 99;
+  /* background: var(--black); */
+  background-image: url("https://image.ibb.co/eUQPcK/ep_naturalblack.png"); /* fallback */
+  background-image: radial-gradient(circle, #02418980, #04367380, #052c5d80, #06224880, #06183480), url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
   display: grid;
-  grid-template-areas:
-    "side head head head"
-    "side head head head"
-    "side head head head"
-    "side head head head"
-    "side proj proj proj";
 
-  // mobile
-  @media (max-width: 700px) {
+  grid-template-rows: 100vh auto auto;
+
+  &.initialLayout {
+    grid-template-columns: 1fr;
     grid-template-areas:
-      "side side side side"
-      "head head head head"
-      "head head head head"
-      "head head head head"
-      "proj proj proj proj";
+    "head"
+    "proj";
+
+    // mobile
+    @media (max-width: 700px) {
+      grid-template-areas:
+      "side"
+      "head"
+      "proj";
+      }
+    }
+
+  &.finalLayout {
+    grid-template-columns: 250px 1fr;
+    grid-template-areas:
+    "side head"
+    "side proj";
+
+    // mobile
+    @media (max-width: 700px) {
+      grid-template-areas:
+      "head"
+      "side"
+      "proj";
+    }
+  }
   }
 `;
 // aside contains projects list
 const Aside = styled.aside`
   grid-area: side;
+
+  //mobile
   @media (max-width: 700px) {
-    position: fixed;
+    position: sticky;
   }
 `;
 // intro contains hero, sim
 
-const Projects = styled.main``;
+const Projects = styled.main`
+  grid-area: proj;
+`;
 
 const styles = {
   header: {
     gridArea: "head",
+    width: "100%",
   },
 };
 
@@ -80,13 +105,12 @@ class IndexPage extends Component {
     // console.log("projects", projects);
 
     return (
-      <Portfolio>
-        {" "}
+      <Portfolio className={!scrolled ? "initialLayout" : "finalLayout"}>
         {/* contains: header, aside, projects */}
         {/* header */}
         <Header className={classes.header} scrolled={scrolled} nodes={nodes} />
         {/* projects list aside */}
-        <Aside style={{ display: scrolled ? "block" : "none" }}>
+        <Aside style={{ display: !scrolled ? "none" : "block" }}>
           <ProjectsList projects={projects} />
         </Aside>
         {/* projects */}
