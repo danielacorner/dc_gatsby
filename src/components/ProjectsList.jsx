@@ -29,8 +29,14 @@ const Wrapper = styled.aside`
     }
   }
   .listRoot {
+    --grey: rgba(121, 119, 123, 0.99);
+    --lightgreyborder: 5px solid rgba(114, 114, 114, 0.9);
+    border-top: var(--lightgreyborder);
+    border-right: var(--lightgreyborder);
+    border-bottom: var(--lightgreyborder);
+    border-style: outset;
     padding-left: 20px;
-    background: rgba(121, 119, 123, 0.99);
+    background: var(--grey);
     position: sticky;
     top: 0;
     height: 100vh;
