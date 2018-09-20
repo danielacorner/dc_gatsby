@@ -8,46 +8,21 @@ export default class ForceSimulation extends Component {
     return null;
   }
   componentDidMount() {
-    const { graph, popup } = this.props;
-    //todo: links
-    // var g = svg.append("g")
-    // //.attr("transform", "translate(" + width / 2 + "," + height/ 2 + ")")
-    // link = g.append("g").selectAll(".link"),
-    // //Draw links colored by T
-    // //   link = g.selectAll('.link')
-    // link.data(currLinks)
-    //   .enter().append('path')
-    //   .attr('stroke', function (d) { return color(d.T); });
+    const { graph } = this.props;
 
-    // //Add mouseover events to links
-    // link.attr('class', 'link')
-    //   .on('mouseover.fade', linkFade(0.1))
-    //   .on('mouseover.tooltip', function (d) {
-    //     tooltip.transition()
-    //       .duration(300)
-    //       .style("opacity", .8);
-    //     tooltip.html("Source:" + d.source.id +
-    //       "<p/>Target:" + d.target.id +
-    //       "<p/>T:" + d.T)
-    //       .style("left", (d3.event.pageX) + "px")
-    //       .style("top", (d3.event.pageY + 10) + "px");
-    //   })
-    //   .on("mouseout.tooltip", function () {
-    //     tooltip.transition()
-    //       .duration(100)
-    //       .style("opacity", 0);
-    //   })
-    //   .on('mouseout.fade', linkFade(1))
-    //   .on("mousemove", function () {
-    //     tooltip.style("left", (d3.event.pageX) + "px")
-    //       .style("top", (d3.event.pageY + 10) + "px");
-    //   });
+    const tooltip = d3
+      .select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
 
-    // .force("link", d3.forceLink(currLinks).distance(200))
+    const canvas = document.querySelector(".canvas").getBoundingClientRect();
 
-    // svg images
-    const defs = d3.select(".canvas").append("defs");
-    defs
+    const node = d3.select(".canvas").selectAll(".node");
+
+    const defs = d3
+      .select(".canvas")
+      .append("defs")
       .selectAll("pattern")
       .data(graph.nodes)
       .enter()
@@ -66,22 +41,9 @@ export default class ForceSimulation extends Component {
       .attr("x", 0)
       .attr("y", 0);
 
-    // tooltip
-    const tooltip = d3
-      .select("body")
-      .append("div")
-      .attr("class", "tooltip")
-      .style("opacity", 0);
-
-    const canvas = document.querySelector(".canvas").getBoundingClientRect();
-    const width = canvas.width;
-    const height = canvas.height;
-
-    const svg = d3.select(".canvas");
-    const node = svg.selectAll(".node");
-
     // draw nodes
-    let circles = svg
+    let circles = d3
+      .select(".canvas")
       .selectAll("circle")
       .data(graph.nodes)
       .enter()
@@ -90,7 +52,10 @@ export default class ForceSimulation extends Component {
       .attr("r", d => d.radius + "px")
       .attr("fill", d => `url(#pattern_${d.id})`)
       .style("stroke", "black")
-      .style("transform", `translate(${width / 2}px, ${height / 2}px)`)
+      .style(
+        "transform",
+        `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
+      )
       .on("mouseover", d => {
         d3.select(`#circle_${d.id}`).style("stroke-width", 2);
         tooltip.style("opacity", 1).html(
@@ -131,13 +96,17 @@ export default class ForceSimulation extends Component {
     console.log("nodes", graph.nodes);
     console.log("links", graph.links);
 
-    const links = svg
+    const links = d3
+      .select(".canvas")
       .selectAll("line")
       .data(graph.links)
       .enter()
       .append("line")
       .attr("class", "link")
-      .style("transform", `translate(${width / 2}px, ${height / 2}px)`);
+      .style(
+        "transform",
+        `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
+      );
 
     function updateLinks() {
       links
@@ -164,7 +133,7 @@ export default class ForceSimulation extends Component {
       // .force( "link", d3 .forceLink(links) .id(d => d.id) .strength(d => d.radius * 10000) )
       .force("x", d3.forceX().strength(0.03 * FORCE_MULTIPLIER))
       .force("y", d3.forceY().strength(0.03 * FORCE_MULTIPLIER))
-      // .force("center", d3.forceCenter(width / 2, height / 2))
+      // .force("center", d3.forceCenter(canvas.width / 2, canvas.height / 2))
       .on("tick", () => {
         updateNodes();
         updateLinks();

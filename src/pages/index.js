@@ -11,6 +11,17 @@ const Portfolio = styled.div`
   --black: #272727;
   --opac: 99;
   /* background: var(--black); */
+  background-image: url("https://image.ibb.co/eUQPcK/ep_naturalblack.png"); /* fallback */
+  background-image: radial-gradient(
+      circle at center 50vh,
+      #02418980,
+      #04367380,
+      #052c5d80,
+      #06224880,
+      #06183480
+    ),
+    url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
+
   display: grid;
 
   grid-template-rows: 100vh auto;
@@ -23,6 +34,8 @@ const Portfolio = styled.div`
 `;
 
 const GridLeftRight = styled.div`
+  height: 100vh;
+  width: 100vw;
   display: grid;
   grid-template-columns: 205px 1fr;
   .gridUpDown {
@@ -53,44 +66,45 @@ class IndexPage extends Component {
       nodes: newNodes,
     });
   };
+
   componentDidMount = () => {
     window.addEventListener("scroll", this.handleScroll);
+    // start the simulation after the sidenav transitions in
+    document
+      .querySelector("aside")
+      .addEventListener("transitionend", this.handleTransitionend, {
+        once: true,
+      });
   };
 
   handleScroll = () => {
-    if (window.pageYOffset === 0) {
-      this.setState({ scrolled: false });
-    } else {
-      this.setState({ scrolled: true });
-    }
-
     const scrollFraction = window.pageYOffset / window.innerHeight;
 
+    // warp hero
     if (scrollFraction >= 0 && scrollFraction <= 1) {
       this.warpHero(scrollFraction);
     }
 
-    // pop-up force sim at scroll ~ 0.85
+    // pop-up sidenav at scroll ~ 0.75
     if (scrollFraction >= 0.75) {
-      console.log("popup!");
-      this.setState({ popup: true });
+      !this.state.popup && this.setState({ popup: true });
     } else if (scrollFraction < 0.55) {
-      this.setState({ popup: false });
+      this.state.popup && this.setState({ popup: false });
     }
 
     // detect scroll direction
     const st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
     if (st > this.state.lastScrollTop) {
-      console.log("scrolling down");
       document.getElementById("hero").classList.remove("scrollingUp");
-      console.log(document.getElementById("hero").classList);
-      // downscroll code
     } else {
       document.getElementById("hero").classList.add("scrollingUp");
-      console.log("scrolling up");
-      // upscroll code
     }
     this.setState({ lastScrollTop: st <= 0 ? 0 : st }); // For Mobile or negative scrolling
+  };
+
+  handleTransitionend = () => {
+    this.setState({ simStart: true });
+    document.querySelector(".latestWorkTitle").classList.add("simStart");
   };
 
   warpHero = sf => {
@@ -111,8 +125,8 @@ class IndexPage extends Component {
   };
 
   render() {
-    const { data } = this.props;
-    const { scrolled, nodes, popup } = this.state;
+    const { data, scrollFraction } = this.props;
+    const { nodes, popup, simStart } = this.state;
 
     const projects = data.allMarkdownRemark.edges
       .map(p => p.node)
@@ -131,7 +145,7 @@ class IndexPage extends Component {
           <ProjectsList popup={popup} projects={projects} />
 
           <div className="gridUpDown">
-            <D3Wrapper nodes={nodes} popup={popup} />
+            <D3Wrapper nodes={nodes} simStart={simStart} />
 
             <Projects>
               <Project1 />

@@ -5,16 +5,6 @@ import { withStyles } from "@material-ui/core";
 const HeroWrapper = styled.header`
   height: 100vh;
   width: 100vw;
-  background-image: url("https://image.ibb.co/eUQPcK/ep_naturalblack.png"); /* fallback */
-  background-image: radial-gradient(
-      circle,
-      #02418980,
-      #04367380,
-      #052c5d80,
-      #06224880,
-      #06183480
-    ),
-    url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
 
   display: grid;
 `;
@@ -66,8 +56,8 @@ const HeroDiv = styled.div`
     white-space: nowrap;
     position: relative;
     color: #ffca2d;
-    margin: 0 auto;
     font-family: "Oxygen Mono", monospace;
+    margin: 0 auto;
     overflow-wrap: initial;
     overflow: hidden;
     border-right: 0.5ch solid rgba(255, 255, 255, 0.75);

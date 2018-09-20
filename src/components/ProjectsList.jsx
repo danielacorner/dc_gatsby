@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core";
-import Link from "gatsby-link";
+// import Link from "gatsby-link";
 import Typography from "@material-ui/core/Typography";
+import SvgIcons from "./SvgIcons";
+
+import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import styled from "styled-components";
 
 const Wrapper = styled.aside`
-  width: 205px;
+  width: 255px;
   position: sticky;
   top: 0;
   perspective: 800px;
@@ -26,12 +29,12 @@ const Wrapper = styled.aside`
   }
   .listRoot {
     padding-left: 20px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(121, 119, 123, 0.99);
     position: sticky;
     top: 0;
     max-height: 100vh;
     overflow-y: scroll;
-    transition: all 1s ease-in;
+    transition: all 0.7s ease-in-out;
     display: "grid";
   }
   .listSection {
@@ -48,12 +51,17 @@ const Wrapper = styled.aside`
         margin: 0;
         display: grid;
         .projectLink {
+          font-size: 14px;
+          text-transform: none;
           text-decoration: none;
-          color: #272727;
+          color: #eaeaea;
           &:hover {
             text-decoration: underline;
             background-color: hsl(0, 0%, 95%);
           }
+        }
+        &.selected {
+          color: black;
         }
       }
     }
@@ -84,15 +92,21 @@ class ProjectsList extends Component {
                   {projects
                     .filter(project => project.frontmatter.year === year)
                     .map(project => (
-                      <ListItem className={"listItem"} key={project.id}>
-                        <Link
+                      <ListItem
+                        divider={true}
+                        className={"listItem"}
+                        key={project.id}
+                      >
+                        <Button
                           className={"projectLink"}
                           to={project.frontmatter.path}
                         >
                           {project.frontmatter.title}
-                        </Link>
+                        </Button>
                         <Typography variant="caption">
-                          {project.frontmatter.tools.join(" | ")}
+                          {project.frontmatter.tools.map(tool => {
+                            return <SvgIcons tool={tool} />;
+                          })}
                         </Typography>
                       </ListItem>
                     ))}
