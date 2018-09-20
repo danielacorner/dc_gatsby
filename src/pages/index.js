@@ -99,7 +99,7 @@ class IndexPage extends Component {
       this.state.popup && this.setState({ popup: false });
     }
     // transition the contact form at the bottom of the page
-    console.log(scrollFraction);
+    // console.log(scrollFraction);
     if (scrollFraction >= 1.7) {
       document.getElementById("contactForm").classList.add("contactVisible");
     }
@@ -159,9 +159,9 @@ class IndexPage extends Component {
           <div className="gridVerticalSimulation">
             <D3Wrapper nodes={nodes} simStart={simStart} />
 
-            <Contact className="contact" />
           </div>
         </GridLeftRight>
+        <Contact className="contact" />
       </Portfolio>
     );
   }
