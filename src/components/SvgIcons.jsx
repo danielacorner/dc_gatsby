@@ -27,11 +27,10 @@ const TableauImg = styled.div`
   width: 150px;
   height: 24px;
   img {
+    width: 145px;
+    height: 24px;
     object-fit: cover;
-    margin-top: -37px;
-    margin-left: 10px;
-    /* position: absolute; */
-    /* clip: rectangle(20px, 140px, 60px, 10px); */
+    margin-left: -18px;
   }
 `;
 export default class SvgIcons extends Component {
@@ -44,6 +43,18 @@ export default class SvgIcons extends Component {
             <img src={tableau} />
           </TableauImg>
         );
+        break;
+      case "GraphQL":
+        return <IconImg src={graphql} />;
+        break;
+      case "es6":
+        return <IconImg src={es6} />;
+        break;
+      case "MongoDB":
+        return <IconImg src={mongodb} />;
+        break;
+      case "Node.js":
+        return <IconImg src={nodejs} />;
         break;
       case "React":
         return <IconImg src={react} />;

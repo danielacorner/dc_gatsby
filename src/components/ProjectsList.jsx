@@ -13,18 +13,16 @@ import styled from "styled-components";
 
 const Wrapper = styled.aside`
   width: 255px;
-  position: sticky;
-  top: 0;
+  /* position: sticky;
+  top: 0; */
   perspective: 800px;
-  &.exit {
-    .listRoot {
-      transform: rotateY(90deg) translateZ(-200px) translateX(50px);
-      /* transform: translateX(-100px) rotateY(90deg); */
-    }
+  /* &.exit { */
+  .listRoot {
+    transform: rotateY(90deg) translateZ(-200px) translateX(50px);
+    /* transform: translateX(-100px) rotateY(90deg); */
   }
   &.enter {
     .listRoot {
-      /* transform: translateX(0) rotateY(0); */
       transform: rotateY(0) translateX(-5px) translateZ(0);
     }
   }
@@ -44,33 +42,11 @@ const Wrapper = styled.aside`
     overflow-y: auto;
     transition: all 0.7s ease-in-out;
     display: grid;
-  }
-  .listSection {
-    display: grid;
+    /* listRoot > ul > listItem > projectLink + badges */
     .ul {
       display: grid;
-      grid-template-rows: 30px repeat(auto-fit, 115px);
+      grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
       margin: 0;
-      .subheader {
-        display: grid;
-        align-items: center;
-        grid-gap: 10px;
-        grid-template-columns: 1fr auto 1fr;
-        color: rgba(255, 255, 255, 0.9);
-        font-style: italic;
-        font-size: 16px;
-        font-family: "Roboto", sans-serif;
-        padding-left: 8px;
-        height: 40px;
-        margin: 0;
-        &:before,
-        &:after {
-          display: block;
-          content: "";
-          height: 2px;
-          background: rgba(255, 255, 255, 0.9);
-        }
-      }
       .listItem {
         grid-template-rows: repeat(auto-fit, auto);
         grid-gap: 0px;
@@ -120,43 +96,32 @@ class ProjectsList extends Component {
     const years = projects.map(p => p.frontmatter.year).filter(onlyUnique);
 
     return (
-      <Wrapper className={popup ? "enter" : "exit"}>
+      <Wrapper className={popup && "enter"}>
+        {/* listRoot > ul > listItem > projectLink + badges */}
         <List className={"listRoot"}>
-          {/* for each year, add a header, then map over that year's projects */}
-          {years.map(year => {
-            if (year) {
-              return (
-                <li key={"sticky-" + year} className={"listSection"}>
-                  <ul className={"ul"}>
-                    <ListSubheader className={"subheader"}>
-                      <span>{year}</span>
-                    </ListSubheader>
-                    {projects
-                      .filter(project => project.frontmatter.year === year)
-                      .map(project => (
-                        <ListItem
-                          divider={true}
-                          className={"listItem"}
-                          key={project.id}
-                        >
-                          <Button
-                            className={"projectLink"}
-                            to={project.frontmatter.path}
-                          >
-                            {project.frontmatter.title}
-                          </Button>
-                          <Typography className="badges" variant="caption">
-                            {project.frontmatter.tools.map(tool => {
-                              return <SvgIcons tool={tool} />;
-                            })}
-                          </Typography>
-                        </ListItem>
-                      ))}
-                  </ul>
-                </li>
-              );
-            }
-          })}
+          <ul className={"ul"}>
+            {projects
+              .sort((a, b) => a.frontmatter.id < b.frontmatter.id)
+              .map(project => (
+                <ListItem
+                  divider={true}
+                  className={"listItem"}
+                  key={project.id.toString()}
+                >
+                  <Button
+                    className={"projectLink"}
+                    // to={project.frontmatter.path}
+                  >
+                    {project.frontmatter.title}
+                  </Button>
+                  <Typography className="badges" variant="caption">
+                    {project.frontmatter.tools.map(tool => {
+                      return <SvgIcons key={tool.toString()} tool={tool} />;
+                    })}
+                  </Typography>
+                </ListItem>
+              ))}
+          </ul>
         </List>
       </Wrapper>
     );

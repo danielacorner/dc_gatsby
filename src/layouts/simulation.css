@@ -38,7 +38,20 @@ div.tooltip p[tools] {
   font-weight: 100;
   align-self: bottom;
 }
+
 .link {
   stroke: #999;
   stroke-width: 1.5px;
+  stroke-dasharray: 450;
+  stroke-dashoffset: 450;
+}
+
+.linkAppear {
+  animation: dash 1.5s linear forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
 }

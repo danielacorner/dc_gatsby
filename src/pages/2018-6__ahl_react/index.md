@@ -9,7 +9,7 @@ radius: "30"
 # TODO: images
 image: "https://image.ibb.co/mycvKp/art_2.jpg"
 imgThumb: "https://thumb.ibb.co/gC7HX9/art_2.jpg"
-tools: ["JavaScript", "React", "CSS Grid", "EmailJS", "HTML5", "CSS3"]
+tools: ["React", "HTML5", "CSS3"]
 website: "https://dcorn068.github.io/ahl_react/"
 ---
 

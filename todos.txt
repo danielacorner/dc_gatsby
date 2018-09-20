@@ -1,1 +1,7 @@
+remove sidenav sticky position after sf ~ 1.2...
+(consider removing entirely)
+
+set up projects grid with material cards
+preview captions on hover or tap (mobile)
+
 style background of sidenav (silver, slate)

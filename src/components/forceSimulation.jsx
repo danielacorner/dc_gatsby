@@ -41,15 +41,25 @@ export default class ForceSimulation extends Component {
       .attr("x", 0)
       .attr("y", 0);
 
+    const numProjects = d3.max(graph.nodes.map(d => d.id));
+
+    graph.nodes = graph.nodes.map(d => {
+      d.fx = (Math.random() - 0.5) * canvas.width * 0.6;
+      // highest ID goes to top // 8 => -0.5, 1 => 0.5
+      d.fy = (0.5 - (d.id - 1) / (numProjects - 1)) * canvas.height * 0.8;
+      return d;
+    });
+
     // draw nodes
     let circles = d3
       .select(".canvas")
       .selectAll("circle")
+      // fix the initial positions of the nodes
       .data(graph.nodes)
       .enter()
       .append("circle")
       .attr("id", d => "circle_" + d.id)
-      .attr("r", d => d.radius + "px")
+      .attr("r", "0px")
       .attr("fill", d => `url(#pattern_${d.id})`)
       .style("stroke", "black")
       .style(
@@ -79,12 +89,17 @@ export default class ForceSimulation extends Component {
           .style("top", d3.event.pageY + 10 + "px");
       });
 
+    // transition in circles
+    circles
+      .transition()
+      .delay(d => d.id * 75)
+      .duration(500)
+      .attr("r", d => d.radius + "px");
+
     const findRelatedNode = (id, relation) =>
       graph.nodes.find(
         node => parseInt(id) === parseInt(node.id) + parseInt(relation)
       );
-
-    const deepClone = d => JSON.parse(JSON.stringify(d));
 
     graph.links = graph.nodes.map(n => {
       return {
@@ -93,8 +108,6 @@ export default class ForceSimulation extends Component {
         year: n.year,
       };
     });
-    console.log("nodes", graph.nodes);
-    console.log("links", graph.links);
 
     const links = d3
       .select(".canvas")
@@ -103,10 +116,34 @@ export default class ForceSimulation extends Component {
       .enter()
       .append("line")
       .attr("class", "link")
+      .attr("id", d => `link_${d.source.id}`)
       .style(
         "transform",
         `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
       );
+
+    setTimeout(() => {
+      links.each(link => {
+        setTimeout(() => {
+          document
+            .getElementById(`link_${link.source.id}`)
+            .classList.add("linkAppear");
+        }, link.source.id * 200);
+      });
+    }, 500);
+    // links.each(link =>
+    //   setTimeout(() => {
+    //     link.attr("class", "linkAppear");
+    //   }, link.source.id * 75)
+    // );
+
+    // redraw the nodes over the links with a "use" element
+    d3.select(".canvas")
+      .selectAll("use")
+      .data(graph.nodes)
+      .enter()
+      .append("use")
+      .attr("xlink:href", d => `#circle_${d.id}`);
 
     function updateLinks() {
       links
@@ -120,54 +157,72 @@ export default class ForceSimulation extends Component {
     }
 
     const NODE_PADDING = 4;
-    const FORCE_MULTIPLIER = 3;
+    const FORCE_MULTIPLIER = 1;
 
-    const simulation = d3
-      .forceSimulation(graph.nodes)
-      .velocityDecay(0.2) // use for faster dev testing
-      .force("collide", d3.forceCollide().radius(d => d.radius * 1.04))
-      .force(
-        "charge",
-        d3.forceManyBody().strength(d => -d.radius * 2.08 * FORCE_MULTIPLIER)
-      )
-      // .force( "link", d3 .forceLink(links) .id(d => d.id) .strength(d => d.radius * 10000) )
-      .force("x", d3.forceX().strength(0.03 * FORCE_MULTIPLIER))
-      .force("y", d3.forceY().strength(0.03 * FORCE_MULTIPLIER))
-      // .force("center", d3.forceCenter(canvas.width / 2, canvas.height / 2))
-      .on("tick", () => {
-        updateNodes();
-        updateLinks();
-      });
+    d3.forceSimulation(graph.nodes);
 
-    // add dragging behavior to nodes
-    applyDragBehaviour(circles);
+    setTimeout(() => {
+      const simulation = d3
+        .forceSimulation(
+          graph.nodes.map(d => {
+            d.fx = null;
+            d.fy = null;
+            return d;
+          })
+        )
+        .velocityDecay(0.8)
+        .alphaTarget(0)
+        .force("collide", d3.forceCollide().radius(d => d.radius * 1.04))
+        .force("link", d3.forceLink(links).distance(200))
+        .force("x", d3.forceX().strength(0.0045 * FORCE_MULTIPLIER))
+        .force("y", d3.forceY().strength(0.003 * FORCE_MULTIPLIER))
+        .on("tick", () => {
+          updateNodes();
+          updateLinks();
+        });
 
-    function applyDragBehaviour(node) {
-      node.call(
-        d3
-          .drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended)
-      );
-    }
-    function dragstarted(d) {
-      if (!d3.event.active) {
-        simulation.alphaTarget(0.3).restart();
+      // add dragging behavior to nodes
+      applyDragBehaviour(circles);
+
+      // setTimeout(() => {
+      //   circles.each(d => {
+      //     d.fx = null;
+      //     d.fy = null;
+      //     console.log(d);
+      //   });
+      //   simulation
+      //     .alpha(0.1)
+      //     .alphaTarget(0.3)
+      //     .restart();
+      // }, 100);
+
+      function applyDragBehaviour(node) {
+        node.call(
+          d3
+            .drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended)
+        );
       }
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-    function dragged(d) {
-      d.fx = d3.event.x;
-      d.fy = d3.event.y;
-    }
-    function dragended(d) {
-      if (!d3.event.active) {
-        simulation.alphaTarget(0);
+      function dragstarted(d) {
+        if (!d3.event.active) {
+          simulation.alphaTarget(0.3).restart();
+        }
+        d.fx = d.x;
+        d.fy = d.y;
       }
-      d.fx = null;
-      d.fy = null;
-    }
+      function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+      }
+      function dragended(d) {
+        if (!d3.event.active) {
+          simulation.alphaTarget(0);
+        }
+        d.fx = null;
+        d.fy = null;
+      }
+    }, 100);
   }
 }

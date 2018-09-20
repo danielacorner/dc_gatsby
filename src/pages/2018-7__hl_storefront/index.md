@@ -10,12 +10,13 @@ image: "https://image.ibb.co/m9qUuz/hl_storefront.jpg"
 imgThumb: "https://image.ibb.co/j6UHge/hl_storefront_logo.jpg"
 tools:
   [
-    "JavaScript",
     "React",
     "Material-UI",
     "styled-components",
     "SCSS",
     "Materialize CSS",
+    "GraphQL",
+    "Node.js",
   ]
 website: "https://dcorn068.github.io/hl_storefront/"
 ---

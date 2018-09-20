@@ -3,8 +3,8 @@ import ForceSimulation from "./ForceSimulation";
 import styled from "styled-components";
 
 const D3Sim = styled.section`
-  margin: auto;
-  height: 100vh;
+  width: 100%;
+  height: 200vh;
   width: calc(100vw-255px);
 
   display: grid;
@@ -12,6 +12,7 @@ const D3Sim = styled.section`
 
   justify-items: center;
   h2 {
+    margin: 0 auto;
     padding: 20px;
     color: #ffca2d;
     font-family: "Oxygen Mono", monospace;
@@ -25,9 +26,9 @@ const D3Sim = styled.section`
 
   svg {
     background: #eaeaea1f;
-    height: 50vh;
-    max-height: 800px;
-    width: 50vw;
+    height: 110vh;
+    max-height: 1200px;
+    width: 100%;
     min-width: 400px;
   }
 `;

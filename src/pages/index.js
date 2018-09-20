@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 // import { withStyles } from "@material-ui/core";
 import ProjectsList from "../components/ProjectsList";
-import Project1 from "../components/Project1";
+import Contact from "../components/Contact";
 import Header from "../components/Header";
 import D3Wrapper from "../components/D3Wrapper";
 
@@ -24,12 +24,14 @@ const Portfolio = styled.div`
 
   display: grid;
 
-  grid-template-rows: 100vh auto;
+  grid-template-rows: 100vh 200vh 100vh;
+  grid-template-areas: "intro" "projects" "contact";
 
   grid-template-columns: 1fr;
 
   .header {
     width: 100%;
+    grid-area: "intro";
   }
 `;
 
@@ -37,10 +39,10 @@ const GridLeftRight = styled.div`
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-columns: 205px 1fr;
-  .gridUpDown {
+  grid-template-columns: 250px 1fr;
+  .gridVerticalSimulation {
     display: grid;
-    grid-template-rows: 100vh repeat(auto-fit, 70vh);
+    grid-template-rows: 200vh;
   }
 `;
 
@@ -86,7 +88,7 @@ class IndexPage extends Component {
     }
 
     // pop-up sidenav at scroll ~ 0.75
-    if (scrollFraction >= 0.95) {
+    if (scrollFraction >= 1 && scrollFraction < 2) {
       !this.state.popup && this.setState({ popup: true });
     } else {
       this.state.popup && this.setState({ popup: false });
@@ -144,12 +146,10 @@ class IndexPage extends Component {
           {/* sticky projects list aside (left on desktop, bottom on mobile) */}
           <ProjectsList popup={popup} projects={projects} />
 
-          <div className="gridUpDown">
+          <div className="gridVerticalSimulation">
             <D3Wrapper nodes={nodes} simStart={simStart} />
 
-            <Projects>
-              <Project1 />
-            </Projects>
+            <Contact className="contact" />
           </div>
         </GridLeftRight>
       </Portfolio>
