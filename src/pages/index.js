@@ -86,9 +86,9 @@ class IndexPage extends Component {
     }
 
     // pop-up sidenav at scroll ~ 0.75
-    if (scrollFraction >= 0.75) {
+    if (scrollFraction >= 0.95) {
       !this.state.popup && this.setState({ popup: true });
-    } else if (scrollFraction < 0.55) {
+    } else {
       this.state.popup && this.setState({ popup: false });
     }
 

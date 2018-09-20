@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+import jquery from "../../public/images/logos/jquery.svg";
+import sass from "../../public/images/logos/sass.svg";
 import angular from "../../public/images/logos/angular.svg";
 import css3 from "../../public/images/logos/css3.svg";
 import javascript from "../../public/images/logos/javascript.svg";
@@ -26,7 +28,7 @@ const TableauImg = styled.div`
   height: 24px;
   img {
     object-fit: cover;
-    margin-top: -13px;
+    margin-top: -37px;
     margin-left: 10px;
     /* position: absolute; */
     /* clip: rectangle(20px, 140px, 60px, 10px); */
@@ -35,8 +37,14 @@ const TableauImg = styled.div`
 export default class SvgIcons extends Component {
   render() {
     const { tool } = this.props;
-    console.log(tool);
     switch (tool) {
+      case "Tableau":
+        return (
+          <TableauImg>
+            <img src={tableau} />
+          </TableauImg>
+        );
+        break;
       case "React":
         return <IconImg src={react} />;
         break;
@@ -57,12 +65,21 @@ export default class SvgIcons extends Component {
       case "Excel":
         return <IconImg src={excel} />;
         break;
-      case "Tableau":
-        return (
-          <TableauImg>
-            <img src={tableau} />
-          </TableauImg>
-        );
+      case "Materialize CSS":
+        return <IconImg src={materializecss} />;
+        break;
+      case "Material-UI":
+        return <IconImg src={materialui} />;
+        break;
+      case "Sass":
+      case "SCSS":
+        return <IconImg src={sass} />;
+        break;
+      case "D3.js":
+        return <IconImg src={d3js} />;
+        break;
+      case "jQuery":
+        return <IconImg src={jquery} />;
         break;
 
       default:

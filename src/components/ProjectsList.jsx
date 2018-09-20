@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListSubheader from "@material-ui/core/ListSubheader";
+import Divider from "@material-ui/core/Divider";
 import styled from "styled-components";
 
 const Wrapper = styled.aside`
@@ -32,26 +33,49 @@ const Wrapper = styled.aside`
     background: rgba(121, 119, 123, 0.99);
     position: sticky;
     top: 0;
+    height: 100vh;
     max-height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     transition: all 0.7s ease-in-out;
-    display: "grid";
+    display: grid;
   }
   .listSection {
     display: grid;
     .ul {
-      margin: 0;
       display: grid;
+      grid-template-rows: 30px repeat(auto-fit, 115px);
+      margin: 0;
       .subheader {
-        padding-left: 0px;
-        height: 22px;
+        display: grid;
+        align-items: center;
+        grid-gap: 10px;
+        grid-template-columns: 1fr auto 1fr;
+        color: rgba(255, 255, 255, 0.9);
+        font-style: italic;
+        font-size: 16px;
+        font-family: "Roboto", sans-serif;
+        padding-left: 8px;
+        height: 40px;
         margin: 0;
+        &:before,
+        &:after {
+          display: block;
+          content: "";
+          height: 2px;
+          background: rgba(255, 255, 255, 0.9);
+        }
       }
       .listItem {
+        grid-template-rows: repeat(auto-fit, auto);
+        grid-gap: 0px;
+        padding: 0;
         margin: 0;
         display: grid;
+        justify-items: start;
+        align-content: center;
         .projectLink {
           font-size: 14px;
+          text-align: left;
           text-transform: none;
           text-decoration: none;
           color: #eaeaea;
@@ -62,6 +86,15 @@ const Wrapper = styled.aside`
         }
         &.selected {
           color: black;
+        }
+        .badges {
+          padding-left: 16px;
+          display: grid;
+          grid-template-rows: 24px;
+          grid-auto-flow: column;
+          grid-column-gap: 5px;
+          justify-items: center;
+          justify-content: center;
         }
       }
     }
@@ -82,37 +115,41 @@ class ProjectsList extends Component {
 
     return (
       <Wrapper className={popup ? "enter" : "exit"}>
-        <List className={"listRoot"} subheader={<li />}>
+        <List className={"listRoot"}>
           {/* for each year, add a header, then map over that year's projects */}
           {years.map(year => {
-            return (
-              <li key={"sticky-" + year} className={"listSection"}>
-                <ul className={"ul"}>
-                  <ListSubheader className={"subheader"}>{year}</ListSubheader>
-                  {projects
-                    .filter(project => project.frontmatter.year === year)
-                    .map(project => (
-                      <ListItem
-                        divider={true}
-                        className={"listItem"}
-                        key={project.id}
-                      >
-                        <Button
-                          className={"projectLink"}
-                          to={project.frontmatter.path}
+            if (year) {
+              return (
+                <li key={"sticky-" + year} className={"listSection"}>
+                  <ul className={"ul"}>
+                    <ListSubheader className={"subheader"}>
+                      <span>{year}</span>
+                    </ListSubheader>
+                    {projects
+                      .filter(project => project.frontmatter.year === year)
+                      .map(project => (
+                        <ListItem
+                          divider={true}
+                          className={"listItem"}
+                          key={project.id}
                         >
-                          {project.frontmatter.title}
-                        </Button>
-                        <Typography variant="caption">
-                          {project.frontmatter.tools.map(tool => {
-                            return <SvgIcons tool={tool} />;
-                          })}
-                        </Typography>
-                      </ListItem>
-                    ))}
-                </ul>
-              </li>
-            );
+                          <Button
+                            className={"projectLink"}
+                            to={project.frontmatter.path}
+                          >
+                            {project.frontmatter.title}
+                          </Button>
+                          <Typography className="badges" variant="caption">
+                            {project.frontmatter.tools.map(tool => {
+                              return <SvgIcons tool={tool} />;
+                            })}
+                          </Typography>
+                        </ListItem>
+                      ))}
+                  </ul>
+                </li>
+              );
+            }
           })}
         </List>
       </Wrapper>

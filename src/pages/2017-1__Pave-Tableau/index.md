@@ -9,7 +9,7 @@ desc: "An interactive data visualization of Canada's jobs. Using Tableau, this p
 radius: "30"
 image: "https://image.ibb.co/jSKV1e/pave_tableau.jpg"
 imgThumb: "https://thumb.ibb.co/fRdXge/pave_tableau_logo.jpg"
-tools: ["Tableau", "Excel"]
+tools: ["Excel", "Tableau"]
 website: "https://public.tableau.com/profile/daniel.corner#!/vizhome/PavePrototype4_1/Welcome"
 ---
 
