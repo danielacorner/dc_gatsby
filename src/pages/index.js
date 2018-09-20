@@ -15,10 +15,10 @@ const Portfolio = styled.div`
   background-image: radial-gradient(
       circle at center 50vh,
       #02418980,
-      #04367380,
-      #052c5d80,
-      #06224880,
-      #06183480
+      #04367373,
+      #052c5d66,
+      #06224859,
+      #0618344d
     ),
     url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
 
@@ -71,6 +71,10 @@ class IndexPage extends Component {
 
   componentDidMount = () => {
     window.addEventListener("scroll", this.handleScroll);
+
+    // check scroll height if navigating to page already-scrolled
+    this.handleScroll();
+
     // start the simulation after the sidenav transitions in
     document
       .querySelector("aside")
@@ -80,7 +84,8 @@ class IndexPage extends Component {
   };
 
   handleScroll = () => {
-    const scrollFraction = window.pageYOffset / window.innerHeight;
+    const scrollPosition = window.pageYOffset;
+    const scrollFraction = scrollPosition / window.innerHeight;
 
     // warp hero
     if (scrollFraction >= 0 && scrollFraction <= 1) {
@@ -88,10 +93,15 @@ class IndexPage extends Component {
     }
 
     // pop-up sidenav at scroll ~ 0.75
-    if (scrollFraction >= 1 && scrollFraction < 2) {
+    if (scrollFraction >= 1 && scrollFraction < 1.7) {
       !this.state.popup && this.setState({ popup: true });
     } else {
       this.state.popup && this.setState({ popup: false });
+    }
+    // transition the contact form at the bottom of the page
+    console.log(scrollFraction);
+    if (scrollFraction >= 1.7) {
+      document.getElementById("contactForm").classList.add("contactVisible");
     }
 
     // detect scroll direction

@@ -5,10 +5,9 @@ path: "/2018-6__ahl_react"
 title: "a-h-l: Portfolio Site"
 caption: "A basic, fully-responsive portfolio site using React."
 desc: "This basic portfolio site uses React components and a handful of styling libraries for a fully responsive layout. This was my first project using React. Coming from Angular, my first impression was a good one -- React is a much faster way to develop small projects by scaffolding out your requirements as you go."
-radius: "30"
-# TODO: images
-image: "https://image.ibb.co/mycvKp/art_2.jpg"
-imgThumb: "https://thumb.ibb.co/gC7HX9/art_2.jpg"
+radius: "5.5"
+image: "https://image.ibb.co/hmkysK/ahl_react.jpg"
+imgThumb: "https://thumb.ibb.co/gJyn2K/ahl2.jpg"
 tools: ["React", "HTML5", "CSS3"]
 website: "https://dcorn068.github.io/ahl_react/"
 ---

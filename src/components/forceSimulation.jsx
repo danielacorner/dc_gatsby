@@ -20,6 +20,12 @@ export default class ForceSimulation extends Component {
 
     const node = d3.select(".canvas").selectAll(".node");
 
+    // scale radius from 1-10
+    graph.nodes = graph.nodes.map(d => {
+      d.radius = Math.pow(d.radius, 0.65) * 18;
+      return d;
+    });
+
     const defs = d3
       .select(".canvas")
       .append("defs")
@@ -34,7 +40,6 @@ export default class ForceSimulation extends Component {
       .attr("height", "100%")
       .append("svg:image")
       .attr("xlink:href", d => d.imgThumb)
-      // .attr("xlink:href", "https://thumb.ibb.co/gC7HX9/art_2.jpg")
       .attr("width", d => d.radius * 2)
       .attr("height", d => d.radius * 2)
       .attr("preserveAspectRatio", "none")
@@ -43,6 +48,7 @@ export default class ForceSimulation extends Component {
 
     const numProjects = d3.max(graph.nodes.map(d => d.id));
 
+    // fix starting positions
     graph.nodes = graph.nodes.map(d => {
       d.fx = (Math.random() - 0.5) * canvas.width * 0.6;
       // highest ID goes to top // 8 => -0.5, 1 => 0.5
@@ -103,11 +109,11 @@ export default class ForceSimulation extends Component {
 
     graph.links = graph.nodes.map(n => {
       return {
-        source: findRelatedNode(n.id, 0) ? findRelatedNode(n.id, 0) : null,
-        target: findRelatedNode(n.id, 1) ? findRelatedNode(n.id, 1) : null,
-        year: n.year,
+        target: findRelatedNode(n.id, 0) ? findRelatedNode(n.id, 0) : null,
+        source: findRelatedNode(n.id, 1) ? findRelatedNode(n.id, 1) : null,
       };
     });
+    // .slice(1);
 
     const links = d3
       .select(".canvas")
@@ -116,26 +122,25 @@ export default class ForceSimulation extends Component {
       .enter()
       .append("line")
       .attr("class", "link")
-      .attr("id", d => `link_${d.source.id}`)
+      .attr("id", d => `link_${d.target.id - 1}`)
       .style(
         "transform",
         `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
       );
 
-    setTimeout(() => {
-      links.each(link => {
-        setTimeout(() => {
-          document
-            .getElementById(`link_${link.source.id}`)
-            .classList.add("linkAppear");
-        }, link.source.id * 200);
-      });
-    }, 500);
-    // links.each(link =>
-    //   setTimeout(() => {
-    //     link.attr("class", "linkAppear");
-    //   }, link.source.id * 75)
-    // );
+    // connect the dots
+    links.each(link => {
+      document
+        .getElementById(`link_${link.target.id - 1}`)
+        .addEventListener("animationend", () => {
+          startNextLine(+link.target.id);
+        });
+    });
+    function startNextLine(id) {
+      document.getElementById(`link_${id}`) &&
+        document.getElementById(`link_${id}`).classList.add("linkAppear");
+    }
+    setTimeout(startNextLine(1), 500);
 
     // redraw the nodes over the links with a "use" element
     d3.select(".canvas")
@@ -147,8 +152,8 @@ export default class ForceSimulation extends Component {
 
     function updateLinks() {
       links
-        .attr("x1", d => (d.target ? d.source.x : null))
-        .attr("y1", d => (d.target ? d.source.y : null))
+        .attr("x1", d => (d.source ? d.source.x : null))
+        .attr("y1", d => (d.source ? d.source.y : null))
         .attr("x2", d => (d.target ? d.target.x : null))
         .attr("y2", d => (d.target ? d.target.y : null));
     }
@@ -183,18 +188,6 @@ export default class ForceSimulation extends Component {
 
       // add dragging behavior to nodes
       applyDragBehaviour(circles);
-
-      // setTimeout(() => {
-      //   circles.each(d => {
-      //     d.fx = null;
-      //     d.fy = null;
-      //     console.log(d);
-      //   });
-      //   simulation
-      //     .alpha(0.1)
-      //     .alphaTarget(0.3)
-      //     .restart();
-      // }, 100);
 
       function applyDragBehaviour(node) {
         node.call(

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core";
 // import Link from "gatsby-link";
 import Typography from "@material-ui/core/Typography";
-import SvgIcons from "./SvgIcons";
+// import SvgIcons from "./SvgIcons";
 
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
@@ -116,7 +116,8 @@ class ProjectsList extends Component {
                   </Button>
                   <Typography className="badges" variant="caption">
                     {project.frontmatter.tools.map(tool => {
-                      return <SvgIcons key={tool.toString()} tool={tool} />;
+                      return null;
+                      // return <SvgIcons key={tool.toString()} tool={tool} />;
                     })}
                   </Typography>
                 </ListItem>

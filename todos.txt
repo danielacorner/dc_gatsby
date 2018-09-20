@@ -1,7 +1,9 @@
-remove sidenav sticky position after sf ~ 1.2...
-(consider removing entirely)
+create contact form and set up EmailJS
 
-set up projects grid with material cards
-preview captions on hover or tap (mobile)
+create content pages
+
+add earth image under contact form
+
+size main page grid container
 
 style background of sidenav (silver, slate)

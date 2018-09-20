@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+// todo: import icons from other computer
 import jquery from "../../public/images/logos/jquery.svg";
 import sass from "../../public/images/logos/sass.svg";
 import angular from "../../public/images/logos/angular.svg";

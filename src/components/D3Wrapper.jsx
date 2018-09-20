@@ -18,14 +18,14 @@ const D3Sim = styled.section`
     font-family: "Oxygen Mono", monospace;
     align-self: end;
     opacity: 0;
-    transition: all 0.5s;
     &.simStart {
+      animation: transitionUp 0.5s, fadeIn 0.5s;
       opacity: 1;
     }
   }
 
   svg {
-    background: #eaeaea1f;
+    /* background: #eaeaea1f; */
     height: 110vh;
     max-height: 1200px;
     width: 100%;
@@ -38,7 +38,7 @@ export default class D3Wrapper extends Component {
     const { simStart, popup, nodes } = this.props;
     return (
       <D3Sim>
-        <h2 className="latestWorkTitle">Some of my latest work</h2>
+        <h2 className="latestWorkTitle">Some of my latest work...</h2>
         {/* simulation */}
         <svg className="canvas">
           {simStart && <ForceSimulation graph={{ nodes: nodes }} />}

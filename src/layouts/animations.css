@@ -1,18 +1,26 @@
 @keyframes transitionUp {
   0% {
-    transform: scale(0.9) translateY(60px)
+    transform: scale(0.9) translateY(60px);
   }
   100% {
-    transform: scale(1) translateY(0)
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes transitionDown {
+  0% {
+    transform: scale(0.9) translateY(-60px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
   }
 }
 
 @keyframes fadeIn {
   0% {
-    opacity: 0
+    opacity: 0;
   }
   100% {
-    opacity: 1
+    opacity: 1;
   }
 }
 
@@ -36,7 +44,7 @@
 
 @keyframes blinkTextCursor {
   from {
-    border-right-color: rgba(255, 255, 255, .75);
+    border-right-color: rgba(255, 255, 255, 0.75);
   }
   to {
     border-right-color: transparent;

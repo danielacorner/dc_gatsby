@@ -42,12 +42,12 @@ div.tooltip p[tools] {
 .link {
   stroke: #999;
   stroke-width: 1.5px;
-  stroke-dasharray: 450;
-  stroke-dashoffset: 450;
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
 }
 
 .linkAppear {
-  animation: dash 1.5s linear forwards;
+  animation: dash 0.5s linear forwards;
 }
 
 @keyframes dash {
