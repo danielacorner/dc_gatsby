@@ -7,8 +7,16 @@ caption: "My first portfolio as a developer, hastily thrown together with Angula
 desc: "Having learned enough Angular to shake a stick at, I decided to explore the Google Material component libraries while whipping myself up a crude developer portfolio. <br/> Hooray!"
 radius: "3.5"
 image: "https://image.ibb.co/gQpxxK/profile_material.jpg"
-imgThumb: "https://image.ibb.co/f8tCWe/profile_material_logo.jpg"
-tools: ["JavaScript", "Angular", "Angular Material", "Materialize CSS", "HTML", "CSS",]
+imgThumb: "https://preview.ibb.co/jZfCMe/profile_material_logo.jpg"
+tools:
+  [
+    "JavaScript",
+    "Angular",
+    "Angular Material",
+    "Materialize CSS",
+    "HTML",
+    "CSS",
+  ]
 website: "https://dcorn068.github.io/profile-material/profile"
 ---
 

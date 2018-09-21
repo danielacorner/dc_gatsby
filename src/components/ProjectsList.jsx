@@ -27,19 +27,20 @@ const Wrapper = styled.aside`
     }
   }
   .listRoot {
-    --grey: rgba(121, 119, 123, 0.99);
-    --lightgreyborder: 5px solid rgba(114, 114, 114, 0.9);
-    border-top: var(--lightgreyborder);
+    --grey: rgba(100, 100, 200, 0.09);
+    --lightgreyborder: 3px solid rgba(114, 114, 114, 0.9);
+    /* border-top: var(--lightgreyborder);
     border-right: var(--lightgreyborder);
-    border-bottom: var(--lightgreyborder);
-    border-style: outset;
-    padding-left: 20px;
+    border-bottom: var(--lightgreyborder); */
+    /* border-style: outset; */
+    padding: 0;
     background: var(--grey);
     position: sticky;
     top: 0;
     height: 100vh;
     max-height: 100vh;
     overflow-y: auto;
+    overflow-x: hidden;
     transition: all 0.7s ease-in-out;
     display: grid;
     /* listRoot > ul > listItem > projectLink + badges */
@@ -48,13 +49,19 @@ const Wrapper = styled.aside`
       grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
       margin: 0;
       .listItem {
+        /* border-top: var(--lightgreyborder);
+        border-right: var(--lightgreyborder);
+        border-bottom: var(--lightgreyborder);
+        border-style: outset; */
+        display: grid;
         grid-template-rows: repeat(auto-fit, auto);
         grid-gap: 0px;
-        padding: 0;
-        margin: 0;
-        display: grid;
         justify-items: start;
         align-content: center;
+        padding: 0;
+        margin: 0;
+        transition: all ease-in-out 0.15s;
+        cursor: pointer;
         .projectLink {
           font-size: 14px;
           text-align: left;
@@ -62,8 +69,15 @@ const Wrapper = styled.aside`
           text-decoration: none;
           color: #eaeaea;
           &:hover {
+            background-color: rgba(0, 0, 0, 0);
+          }
+        }
+        &.glow {
+          padding-left: 4px;
+          border-left: 10px solid #ffca2d;
+          background: rgba(255, 255, 255, 0.1);
+          .projectLink {
             text-decoration: underline;
-            background-color: hsl(0, 0%, 95%);
           }
         }
         &.selected {
@@ -86,6 +100,28 @@ const Wrapper = styled.aside`
 const styles = {};
 
 class ProjectsList extends Component {
+  componentDidMount() {
+    const listItems = Array.from(document.querySelectorAll(".listItem"));
+
+    listItems.forEach(item => {
+      item.addEventListener("mouseover", this.highlightProject);
+      item.addEventListener("mouseout", this.unhighlightProject);
+    });
+  }
+  highlightProject(e) {
+    const listItem = e.path.find(d => d.id.includes("listItem"));
+    listItem.classList.add("glow");
+
+    const circleID = listItem.id.slice("listItem_".length);
+    document.getElementById(`circle_${circleID}`).style.filter = "url(#glow)";
+  }
+  unhighlightProject(e) {
+    const listItem = e.path.find(d => d.id.includes("listItem"));
+    listItem.classList.remove("glow");
+
+    const circleID = listItem.id.slice("listItem_".length);
+    document.getElementById(`circle_${circleID}`).style.filter = null;
+  }
   render() {
     const { projects, classes, popup } = this.props;
 
@@ -105,11 +141,13 @@ class ProjectsList extends Component {
               .map(project => (
                 <ListItem
                   divider={true}
-                  className={"listItem"}
-                  key={project.id.toString()}
+                  className="listItem"
+                  key={project.toString()}
+                  id={`listItem_${project.frontmatter.id}`}
+                  data-circle={`circle_${project.frontmatter.id}`}
                 >
                   <Button
-                    className={"projectLink"}
+                    className="projectLink"
                     // to={project.frontmatter.path}
                   >
                     {project.frontmatter.title}

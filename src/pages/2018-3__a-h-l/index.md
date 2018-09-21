@@ -8,7 +8,7 @@ desc: "This basic portfolio site was my second foray into the world of HTML/CSS,
 radius: "3"
 image: "https://image.ibb.co/g51onK/a_h_l.jpg"
 imgThumb: "https://thumb.ibb.co/ngi4hK/ahl.jpg"
-tools: ["HTML5", "CSS3", "JavaScript"]
+tools: ["JavaScript", "HTML5", "CSS3"]
 website: "https://dcorn068.github.io/a-h-l/"
 ---
 

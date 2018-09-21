@@ -40,9 +40,9 @@ export default class ForceSimulation extends Component {
       .attr("height", "100%")
       .append("svg:image")
       .attr("xlink:href", d => d.imgThumb)
-      .attr("width", d => d.radius * 2)
+      // .attr("width", d => d.radius * 2)
       .attr("height", d => d.radius * 2)
-      .attr("preserveAspectRatio", "none")
+      .attr("preserveAspectRatio", "xMidYMid")
       .attr("x", 0)
       .attr("y", 0);
 
@@ -67,27 +67,21 @@ export default class ForceSimulation extends Component {
       .attr("id", d => "circle_" + d.id)
       .attr("r", "0px")
       .attr("fill", d => `url(#pattern_${d.id})`)
-      .style("stroke", "black")
+      .attr("class", "projectCircle")
       .style(
         "transform",
         `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
       )
       .on("mouseover", d => {
-        d3.select(`#circle_${d.id}`).style("stroke-width", 2);
-        tooltip.style("opacity", 1).html(
-          `
-        <article>
-        <h6>${d.title}</h6>
-        <p desc>${d.desc}</p>
-        <p caption>${d.caption}</p>
-        <p tools>${d.tools}</p>
-        </article>
-        `
-        );
+        // yellow glow
+        d3.select(`#circle_${d.id}`).style("filter", "url(#glow)");
+        // highlight project list item
+        document.getElementById(`listItem_${d.id}`).classList.add("glow");
       })
       .on("mouseout", d => {
-        d3.select(`#circle_${d.id}`).style("stroke-width", 1);
-        tooltip.style("opacity", 0);
+        // remove glow
+        d3.select(`#circle_${d.id}`).style("filter", null);
+        document.getElementById(`listItem_${d.id}`).classList.remove("glow");
       })
       .on("mousemove", () => {
         tooltip

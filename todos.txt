@@ -1,3 +1,5 @@
+highlight project list item
+
 create contact form and set up EmailJS
 
 create content pages

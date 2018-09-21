@@ -24,12 +24,12 @@ const D3Sim = styled.section`
     }
   }
 
-  svg {
+  svg.canvas {
     /* background: #eaeaea1f; */
-    height: 110vh;
+    height: 100vh;
     max-height: 1200px;
     width: 100%;
-    min-width: 400px;
+    /* min-width: 400px; */
   }
 `;
 
@@ -41,6 +41,21 @@ export default class D3Wrapper extends Component {
         <h2 className="latestWorkTitle">Some of my latest work...</h2>
         {/* simulation */}
         <svg className="canvas">
+          {/* <!-- a transparent glow that takes on the colour of the object it's applied to --> */}
+          <filter id="glow">
+            <feColorMatrix
+              type="matrix"
+              values="1     0     0     0     0
+              0     0.79     0     0     0
+              0     0     0.18     0     0
+              0     0     0     0.9     0 "
+            />
+            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
           {simStart && <ForceSimulation graph={{ nodes: nodes }} />}
         </svg>
       </D3Sim>
