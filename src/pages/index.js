@@ -42,6 +42,9 @@ const GridLeftRight = styled.div`
   width: 100vw;
   display: grid;
   grid-template-columns: 250px 1fr;
+  @media (max-width: 540px) {
+    grid-template-columns: 200px 1fr;
+  }
   .gridVerticalSimulation {
     display: grid;
     grid-template-rows: 200vh;
@@ -54,7 +57,6 @@ const EarthIMG = styled.img`
   bottom: 0;
   margin: 0;
   opacity: 0.6;
-  /* filter: blur(0.5px); */
 `;
 
 const Projects = styled.main``;

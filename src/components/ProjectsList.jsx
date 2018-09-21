@@ -12,14 +12,9 @@ import Divider from "@material-ui/core/Divider";
 import styled from "styled-components";
 
 const Wrapper = styled.aside`
-  width: 255px;
-  /* position: sticky;
-  top: 0; */
   perspective: 800px;
-  /* &.exit { */
   .listRoot {
     transform: rotateY(90deg) translateZ(-200px) translateX(50px);
-    /* transform: translateX(-100px) rotateY(90deg); */
   }
   &.enter {
     .listRoot {
@@ -29,10 +24,6 @@ const Wrapper = styled.aside`
   .listRoot {
     --grey: rgba(100, 100, 200, 0.09);
     --lightgreyborder: 3px solid rgba(114, 114, 114, 0.9);
-    /* border-top: var(--lightgreyborder);
-    border-right: var(--lightgreyborder);
-    border-bottom: var(--lightgreyborder); */
-    /* border-style: outset; */
     padding: 0;
     background: var(--grey);
     position: sticky;
@@ -45,6 +36,7 @@ const Wrapper = styled.aside`
     display: grid;
     /* listRoot > ul > listItem > projectLink + badges */
     .ul {
+      height: 99vh;
       display: grid;
       grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
       margin: 0;
@@ -87,6 +79,13 @@ const Wrapper = styled.aside`
           justify-items: center;
           justify-content: center;
         }
+      }
+    }
+    width: 255px;
+    @media (max-width: 540px) {
+      width: 200px;
+      .listItem {
+        padding: 0;
       }
     }
   }
@@ -137,14 +136,11 @@ class ProjectsList extends Component {
                 <ListItem
                   divider={true}
                   className="listItem"
-                  key={project.toString()}
+                  key={JSON.stringify(project)}
                   id={`listItem_${project.frontmatter.id}`}
                   data-circle={`circle_${project.frontmatter.id}`}
                 >
-                  <Button
-                    className="projectLink"
-                    // to={project.frontmatter.path}
-                  >
+                  <Button className="projectLink">
                     {project.frontmatter.title}
                   </Button>
                   <Typography className="badges" variant="caption">

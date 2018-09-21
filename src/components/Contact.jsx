@@ -88,7 +88,6 @@ export default class Contact extends Component {
     this.setState({
       [name]: event.target.value,
     });
-    console.table(this.state);
   };
 
   sendEmail = (templateId, senderEmail, senderName, receiverEmail, message) => {

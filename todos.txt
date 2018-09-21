@@ -1,8 +1,6 @@
-highlight project list item
-
-create contact form and set up EmailJS
-
+click to reveal "more info | open site" under sidenav:
 create content pages
+sweet side-swipe transition back and forth from content pages
 
 add earth image under contact form
 

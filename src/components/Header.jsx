@@ -55,6 +55,7 @@ const HeroDiv = styled.div`
       }
     }
     ul {
+      margin: 0;
       list-style-type: none;
       text-align: center;
       li {
@@ -63,13 +64,15 @@ const HeroDiv = styled.div`
         &.revealed {
           opacity: 1;
         }
+        &:first-child {
+          margin: 0 10px;
+        }
       }
     }
     .listCaption {
       text-align: center;
       font-size: 15px;
-      line-height: 0.25em;
-      margin-bottom: 1.5em;
+      margin-bottom: 2em;
     }
   }
   .title {
