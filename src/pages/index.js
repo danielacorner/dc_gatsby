@@ -9,6 +9,7 @@ import _ from "lodash";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
+  position: relative;
   --black: #272727;
   --opac: 99;
   /* background: var(--black); */
@@ -25,7 +26,7 @@ const Portfolio = styled.div`
 
   display: grid;
 
-  grid-template-rows: 100vh 200vh 100vh;
+  grid-template-rows: 100vh 150vh 100vh;
   grid-template-areas: "intro" "projects" "contact";
 
   grid-template-columns: 1fr;
@@ -45,6 +46,15 @@ const GridLeftRight = styled.div`
     display: grid;
     grid-template-rows: 200vh;
   }
+`;
+
+const EarthIMG = styled.img`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  margin: 0;
+  opacity: 0.6;
+  /* filter: blur(0.5px); */
 `;
 
 const Projects = styled.main``;
@@ -172,6 +182,7 @@ class IndexPage extends Component {
 
     return (
       <Portfolio>
+        <EarthIMG src="https://image.ibb.co/ehP91e/earth_crop_burned.png" />
         {/* contains: header, aside, projects */}
         {/* header */}
         <Header className={"header"} popup={popup} />

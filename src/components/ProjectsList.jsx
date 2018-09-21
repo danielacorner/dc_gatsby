@@ -49,16 +49,12 @@ const Wrapper = styled.aside`
       grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
       margin: 0;
       .listItem {
-        /* border-top: var(--lightgreyborder);
-        border-right: var(--lightgreyborder);
-        border-bottom: var(--lightgreyborder);
-        border-style: outset; */
         display: grid;
         grid-template-rows: repeat(auto-fit, auto);
         grid-gap: 0px;
         justify-items: start;
         align-content: center;
-        padding: 0;
+        padding: 0 0 0 4px;
         margin: 0;
         transition: all ease-in-out 0.15s;
         cursor: pointer;
@@ -73,7 +69,6 @@ const Wrapper = styled.aside`
           }
         }
         &.glow {
-          padding-left: 4px;
           border-left: 10px solid #ffca2d;
           background: rgba(255, 255, 255, 0.1);
           .projectLink {

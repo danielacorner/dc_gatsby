@@ -5,13 +5,14 @@ import TextField from "@material-ui/core/TextField";
 // import Icon from '@material-ui/core/Icon';
 
 const ContactForm = styled.div`
-    width: 80%;
-    max-width: 800px;
-    margin: auto;
+  width: 80%;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 4px;
 
-    display: grid;
-    background: white;
-    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+  display: grid;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
     0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
   h2 {
     margin: 0 auto;
@@ -21,24 +22,32 @@ const ContactForm = styled.div`
     align-self: end;
   }
   form {
-    margin: 10px 40px;
-    padding: 20px;
-    background: grey;
+    border-radius: 4px;
+    margin: 0 40px 10px 40px;
+    padding: 5px 20px 20px 20px;
     display: grid;
     grid-auto-flow: row;
-    grid-gap: 15px;
+    background: rgba(255, 255, 255, 0.4);
     * {
       margin: 0;
-      background: lightgrey;
+    }
+    .textField input {
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .textField div {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0;
     }
   }
   button {
     width: 50%;
     margin: 10px auto 20px auto;
+    background: rgba(255, 255, 255, 0.45);
+    &:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
   }
-                    
 `;
-
 
 export default class Contact extends Component {
   state = {
@@ -91,13 +100,50 @@ export default class Contact extends Component {
       <ContactForm id="contactForm">
         <h2>✨ Get in touch! 🚀</h2>
         <form noValidate autoComplete="off">
-          <TextField id="name" label="Name" className="textField" value={this.state.name} onChange={this.handleChange("name")} margin="normal" fullWidth={true} required={true} />
-          <TextField id="email" label="Email" className="textField" value={this.state.email} onChange={this.handleChange("email")} margin="normal" fullWidth={true} required={true} />
-          <TextField id="message" label="Message" multiline rows="10" className="textFieldMultiline" value={this.state.message} onChange={this.handleChange("message")} margin="normal" fullWidth={true} required={true} />
+          <TextField
+            id="name"
+            label="Name"
+            className="textField"
+            value={this.state.name}
+            onChange={this.handleChange("name")}
+            margin="normal"
+            fullWidth={true}
+            required={true}
+          />
+          <TextField
+            id="email"
+            label="Email"
+            className="textField"
+            value={this.state.email}
+            onChange={this.handleChange("email")}
+            margin="normal"
+            fullWidth={true}
+            required={true}
+          />
+          <TextField
+            id="message"
+            label="Message"
+            multiline
+            rows="10"
+            className="textField textFieldMultiline"
+            value={this.state.message}
+            onChange={this.handleChange("message")}
+            margin="normal"
+            fullWidth={true}
+            required={true}
+          />
         </form>
-        <Button id="sendButton" variant="outlined" color="primary" className="sendButton" type="submit" onClick={this.handleSubmit}>
+        <Button
+          id="sendButton"
+          variant="outlined"
+          color="primary"
+          className="sendButton"
+          type="submit"
+          onClick={this.handleSubmit}
+        >
           {this.state.formSubmitted ? "Sending..." : "Send"}
         </Button>
-      </ContactForm>)
+      </ContactForm>
+    );
   }
 }
