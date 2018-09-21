@@ -46,6 +46,10 @@ const ContactForm = styled.div`
     &:hover {
       background: rgba(255, 255, 255, 0.8);
     }
+    &.sent {
+      background: rgba(255, 255, 255, 0.125);
+      color: rgba(0, 0, 0, 0.6);
+    }
   }
 `;
 
@@ -55,17 +59,23 @@ export default class Contact extends Component {
     email: "",
     message: "",
     formSubmitted: false,
+    emailSent: false,
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
-    const receiverEmail = "adriannehlee@gmail.com",
-      template = "adrianneportfolio";
+    (function() {
+      window.emailjs.init("user_Q33dPgBWZuQnRTaTJfkVq");
+    })();
+
+    const receiverEmail = "danielcorner7@gmail.com",
+      template_id = "danielcornerportfolio";
 
     this.sendEmail(
-      template,
+      template_id,
       this.state.email,
+      this.state.name,
       receiverEmail,
       this.state.message
     );
@@ -78,18 +88,20 @@ export default class Contact extends Component {
     this.setState({
       [name]: event.target.value,
     });
+    console.table(this.state);
   };
 
-  sendEmail = (templateId, senderEmail, receiverEmail, message) => {
+  sendEmail = (templateId, senderEmail, senderName, receiverEmail, message) => {
     window.emailjs
       .send("gmail", templateId, {
-        senderEmail,
-        receiverEmail,
-        message,
+        from_email: senderEmail,
+        from_name: senderName,
+        to_name: receiverEmail,
+        message_html: message,
       })
       .then(res => {
-        this.setState({ open: false });
-        window.alert("Thanks for reaching out!");
+        window.alert("Thanks for reaching out! 🎉");
+        this.setState({ emailSent: true });
       })
       // Handle errors here however you like, or use a React error boundary
       .catch(err => console.error("Failed to send email. Error: ", err));
@@ -137,11 +149,16 @@ export default class Contact extends Component {
           id="sendButton"
           variant="outlined"
           color="primary"
-          className="sendButton"
+          className={"sendButton " + (this.state.emailSent && "sent")}
           type="submit"
+          disabled={this.state.emailSent}
           onClick={this.handleSubmit}
         >
-          {this.state.formSubmitted ? "Sending..." : "Send"}
+          {!this.state.formSubmitted
+            ? "Send"
+            : !this.state.emailSent
+              ? "Sending"
+              : "Sent"}
         </Button>
       </ContactForm>
     );

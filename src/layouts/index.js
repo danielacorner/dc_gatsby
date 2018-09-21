@@ -44,6 +44,15 @@ class Layout extends Component {
             href="https://fonts.googleapis.com/css?family=Oxygen"
             rel="stylesheet"
           />
+          <script
+            type="text/javascript"
+            src="https://cdn.emailjs.com/sdk/2.2.4/email.min.js"
+          />
+          {/* <script type="text/javascript">
+            (function()
+            {emailjs.init("user_Q33dPgBWZuQnRTaTJfkVq")}
+            )();
+          </script> */}
         </Helmet>
 
         {/* main */}
