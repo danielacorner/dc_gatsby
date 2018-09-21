@@ -1,23 +1,22 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-// todo: import icons from other computer
-import jquery from "../../public/images/logos/jquery.svg";
-import sass from "../../public/images/logos/sass.svg";
-import angular from "../../public/images/logos/angular.svg";
-import css3 from "../../public/images/logos/css3.svg";
-import javascript from "../../public/images/logos/javascript.svg";
-import graphql from "../../public/images/logos/graphql.svg";
-import d3js from "../../public/images/logos/d3.svg";
-import es6 from "../../public/images/logos/es6.svg";
-import html5 from "../../public/images/logos/html5.svg";
-import materialui from "../../public/images/logos/material-ui.svg";
-import materializecss from "../../public/images/logos/materializecss.svg";
-import mongodb from "../../public/images/logos/mongodb.svg";
-import nodejs from "../../public/images/logos/nodejs.svg";
-import react from "../../public/images/logos/react.svg";
-import excel from "../../public/images/logos/excel.svg";
-import tableau from "../../public/images/logos/tableau.svg";
+import jquery from "../images/logos/jquery.svg";
+import sass from "../images/logos/sass.svg";
+import angular from "../images/logos/angular.svg";
+import css3 from "../images/logos/css3.svg";
+import javascript from "../images/logos/javascript.svg";
+import graphql from "../images/logos/graphql.svg";
+import d3js from "../images/logos/d3.svg";
+import es6 from "../images/logos/es6.svg";
+import html5 from "../images/logos/html5.svg";
+import materialui from "../images/logos/material-ui.svg";
+import materializecss from "../images/logos/materializecss.svg";
+import mongodb from "../images/logos/mongodb.svg";
+import nodejs from "../images/logos/nodejs.svg";
+import react from "../images/logos/react.svg";
+import excel from "../images/logos/excel.svg";
+import tableau from "../images/logos/tableau.svg";
 
 const IconImg = styled.img`
   height: 24px;
