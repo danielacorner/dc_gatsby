@@ -95,12 +95,17 @@ export default class ForceSimulation extends Component {
           .style("top", d3.event.pageY + 10 + "px");
       });
 
-    // transition in circles
+    // transition in circles, then animate links
     circles
       .transition()
       .delay(d => d.id * 75)
       .duration(500)
-      .attr("r", d => d.radius + "px");
+      .attr("r", d => d.radius + "px")
+      .on("end", d => {
+        if (d.id === numProjects) {
+          startNextLine(1);
+        }
+      });
 
     const findRelatedNode = (id, relation) =>
       graph.nodes.find(
@@ -140,7 +145,6 @@ export default class ForceSimulation extends Component {
       document.getElementById(`link_${id}`) &&
         document.getElementById(`link_${id}`).classList.add("linkAppear");
     }
-    setTimeout(startNextLine(1), 500);
 
     // redraw the nodes over the links with a "use" element
     d3.select(".canvas")

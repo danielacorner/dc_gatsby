@@ -40,14 +40,14 @@ div.tooltip p[tools] {
 }
 
 .link {
-  stroke: #999;
+  stroke: whitesmoke;
   stroke-width: 1.5px;
   stroke-dasharray: 500;
   stroke-dashoffset: 500;
 }
 
 .linkAppear {
-  animation: dash 0.5s linear forwards;
+  animation: dash 0.3s ease-in-out forwards;
 }
 
 @keyframes dash {

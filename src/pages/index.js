@@ -5,6 +5,7 @@ import ProjectsList from "../components/ProjectsList";
 import Contact from "../components/Contact";
 import Header from "../components/Header";
 import D3Wrapper from "../components/D3Wrapper";
+import _ from "lodash";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
@@ -71,6 +72,7 @@ class IndexPage extends Component {
 
   componentDidMount = () => {
     window.addEventListener("scroll", this.handleScroll);
+    // window.addEventListener("scroll", window.requestAnimationFrame(this.handleScroll));
 
     // check scroll height if navigating to page already-scrolled
     this.handleScroll();
@@ -85,24 +87,33 @@ class IndexPage extends Component {
 
   handleScroll = () => {
     const scrollPosition = window.pageYOffset;
-    const scrollFraction = scrollPosition / window.innerHeight;
+    const sf = scrollPosition / window.innerHeight;
 
     // warp hero
-    if (scrollFraction >= 0 && scrollFraction <= 1) {
-      this.warpHero(scrollFraction);
+    if (sf >= 0 && sf <= 1) {
+      this.warpHero(sf);
+    }
+
+    // reveal interests
+    if (sf > 0.05) {
+      document.getElementById("interests").classList.add("revealed");
+    }
+    if (sf > 0.2) {
+      document.getElementById("interest1").classList.add("revealed");
+    }
+    if (sf > 0.35) {
+      document.getElementById("interest2").classList.add("revealed");
+    }
+    if (sf > 0.5) {
+      document.getElementById("interest3").classList.add("revealed");
     }
 
     // pop-up sidenav at scroll ~ 0.75
-    if (scrollFraction >= 1 && scrollFraction < 1.7) {
+    if (sf >= 1 && sf < 1.7) {
       !this.state.popup && this.setState({ popup: true });
     } else {
       this.state.popup && this.setState({ popup: false });
     }
-    // transition the contact form at the bottom of the page
-    // console.log(scrollFraction);
-    // if (scrollFraction >= 1.7) {
-    //   document.getElementById("contactForm").classList.add("contactVisible");
-    // }
 
     // detect scroll direction
     const st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
@@ -124,13 +135,26 @@ class IndexPage extends Component {
     const intro = document.querySelector("header div");
 
     // scale out and rotate into the page
-    intro.style.transform = `scale(${1 - Math.pow(sf, 0.85)}) translateY(${sf *
-      window.innerHeight *
-      0.5}px) rotateX(${sf * 90}deg)`;
-    heroImg.style.transform = `rotateX(${sf * 90}deg)`;
+    window.requestAnimationFrame(
+      () =>
+        (intro.style.transform = `translateY(${-sf *
+          window.innerHeight *
+          0.5}px) rotateX(${sf * 90 > 30 ? 30 : sf * 90}deg) translateZ(${-sf *
+          window.innerHeight *
+          0.5}px)`)
+    );
+
+    window.requestAnimationFrame(
+      () =>
+        (heroImg.style.transform = `rotateX(${sf * 90 > 30 ? 30 : sf * 90}deg)`)
+    );
 
     // perspective for header container
-    intro.parentElement.style.perspective = `${(sf + 0.05) * 700}px`;
+    if (intro.parentElement.style.perspective !== "500px") {
+      window.requestAnimationFrame(() => {
+        intro.parentElement.style.perspective = `500px`;
+      });
+    }
 
     // todo: trigger 'warp' animation at sf ~ 0.8
     // todo: after warp, POP back in at scroll close to 0.1
@@ -158,7 +182,6 @@ class IndexPage extends Component {
 
           <div className="gridVerticalSimulation">
             <D3Wrapper nodes={nodes} simStart={simStart} />
-
           </div>
         </GridLeftRight>
         <Contact className="contact" />

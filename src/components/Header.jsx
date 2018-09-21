@@ -10,9 +10,9 @@ const HeroWrapper = styled.header`
 `;
 
 const HeroDiv = styled.div`
-  transition: all 1s ease-out, transform 1s linear;
+  transition: perspective 0.2s ease-in-out, transform 0.5s ease-out;
   &.scrollingUp {
-    transition: all 1s ease-out, transform 0.1s ease-out;
+    transition: perspective 0.1s ease-out, transform 0.1s ease-out;
   }
   height: 100%;
   max-height: 100vh;
@@ -47,6 +47,30 @@ const HeroDiv = styled.div`
   }
   .introText {
     position: relative;
+    p#interests {
+      opacity: 0;
+      transition: opacity 0.2s ease-in;
+      &.revealed {
+        opacity: 1;
+      }
+    }
+    ul {
+      list-style-type: none;
+      text-align: center;
+      li {
+        opacity: 0;
+        transition: opacity 0.2s ease-in;
+        &.revealed {
+          opacity: 1;
+        }
+      }
+    }
+    .listCaption {
+      text-align: center;
+      font-size: 15px;
+      line-height: 0.25em;
+      margin-bottom: 1.5em;
+    }
   }
   .title {
     position: relative;
@@ -98,6 +122,23 @@ class Header extends Component {
               I discovered my passion for web development during a data-driven
               design competition, and I've been self-teaching ever since.
             </p>
+            <p id="interests">Some of my interests:</p>
+            <ul>
+              <li id="interest1">
+                <p>Data visualization and wrangling</p>
+                <p className="listCaption">Excel | JavaScript</p>
+              </li>
+              <li id="interest2">
+                <p>Front-end and CSS frameworks </p>
+                <p className="listCaption">
+                  React | Angular | Vue | Materialize | CSS Grid
+                </p>
+              </li>
+              <li id="interest3">
+                <p>Accelerated learning techniques</p>
+                <p className="listCaption">MMS | mnemonics | memory palaces</p>
+              </li>
+            </ul>
           </div>
         </HeroDiv>
       </HeroWrapper>
