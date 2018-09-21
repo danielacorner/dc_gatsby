@@ -9,13 +9,11 @@ const ContactForm = styled.div`
     max-width: 800px;
     margin: auto;
 
-    opacity: 0;
     display: grid;
     background: white;
     box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
     0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
   h2 {
-    opacity: 0;
     margin: 0 auto;
     padding: 20px;
     color: #ffca2d;
@@ -25,7 +23,6 @@ const ContactForm = styled.div`
   form {
     margin: 10px 40px;
     padding: 20px;
-    opacity: 0;
     background: grey;
     display: grid;
     grid-auto-flow: row;
@@ -38,14 +35,6 @@ const ContactForm = styled.div`
   button {
     width: 50%;
     margin: 10px auto 20px auto;
-  }
-  &.contactVisible {
-    animation: transitionDown 0.5s, fadeIn 0.5s;
-    opacity: 1;
-    * {
-      animation: transitionDown 0.5s, fadeIn 0.5s;
-      opacity: 1;
-    }
   }
                     
 `;
@@ -100,7 +89,7 @@ export default class Contact extends Component {
   render() {
     return (
       <ContactForm id="contactForm">
-        <h2>✨Get in touch!🚀</h2>
+        <h2>✨ Get in touch! 🚀</h2>
         <form noValidate autoComplete="off">
           <TextField id="name" label="Name" className="textField" value={this.state.name} onChange={this.handleChange("name")} margin="normal" fullWidth={true} required={true} />
           <TextField id="email" label="Email" className="textField" value={this.state.email} onChange={this.handleChange("email")} margin="normal" fullWidth={true} required={true} />

@@ -100,9 +100,9 @@ class IndexPage extends Component {
     }
     // transition the contact form at the bottom of the page
     // console.log(scrollFraction);
-    if (scrollFraction >= 1.7) {
-      document.getElementById("contactForm").classList.add("contactVisible");
-    }
+    // if (scrollFraction >= 1.7) {
+    //   document.getElementById("contactForm").classList.add("contactVisible");
+    // }
 
     // detect scroll direction
     const st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
