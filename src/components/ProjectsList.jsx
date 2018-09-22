@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core";
 // import Link from "gatsby-link";
 import Typography from "@material-ui/core/Typography";
 import SvgIcons from "./SvgIcons";
-
+import { navigateTo } from "gatsby-link";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -167,7 +167,6 @@ class ProjectsList extends Component {
     document.getElementById(`circle_${circleID}`) &&
       (document.getElementById(`circle_${circleID}`).style.filter = null);
   }
-  handleClickMoreInfo = project => {};
   handleClickOpenSite = url => {
     window.open(url, "_blank");
   };
@@ -215,7 +214,8 @@ class ProjectsList extends Component {
                       size="small"
                       color="primary"
                       variant="outlined"
-                      onClick={() => this.handleClickMoreInfo(project)}
+                      onClick={() => navigateTo(project.frontmatter.path)}
+                      role="link"
                     >
                       <span>More Info</span>
                       <InfoIcon />
