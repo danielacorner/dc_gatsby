@@ -5,13 +5,21 @@ import TextField from "@material-ui/core/TextField";
 // import Icon from '@material-ui/core/Icon';
 
 const ContactForm = styled.div`
+  --darkgrey: rgba(255, 255, 255, 0.06);
+  --lightgrey: rgba(255, 255, 255, 0.6);
+  --lightestgrey: rgba(255, 255, 255, 0.5);
   width: 80%;
   max-width: 800px;
   margin: auto;
+  justify-self: center;
+  @media (max-width: 435px) {
+    margin: auto 0;
+    width: 100%;
+  }
   border-radius: 4px;
 
   display: grid;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--darkgrey);
   box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
     0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
   h2 {
@@ -20,6 +28,9 @@ const ContactForm = styled.div`
     color: #ffca2d;
     font-family: "Oxygen Mono", monospace;
     align-self: end;
+    @media (max-width: 435px) {
+      font-size: 20px;
+    }
   }
   form {
     border-radius: 4px;
@@ -27,22 +38,23 @@ const ContactForm = styled.div`
     padding: 5px 20px 20px 20px;
     display: grid;
     grid-auto-flow: row;
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--lightgrey);
     * {
       margin: 0;
     }
-    .textField input {
-      background: rgba(255, 255, 255, 0.08);
-    }
     .textField div {
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--lightestgrey);
       padding: 0;
+    }
+    label {
+      color: black;
     }
   }
   button {
     width: 50%;
     margin: 10px auto 20px auto;
-    background: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.6);
+    color: #2336a0;
     &:hover {
       background: rgba(255, 255, 255, 0.8);
     }

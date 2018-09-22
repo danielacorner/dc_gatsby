@@ -30,15 +30,15 @@ const Wrapper = styled.aside`
     background: var(--grey);
     position: sticky;
     top: 0;
-    height: 100vh;
-    max-height: 100vh;
-    overflow-y: auto;
+    height: 99.9vh;
+    max-height: 99.9vh;
+    overflow-y: hidden;
     overflow-x: hidden;
-    transition: all 0.7s ease-in-out;
+    transition: all 0.5s ease-in-out;
     display: grid;
     /* listRoot > ul > listItem > projectLink + badges */
     .ul {
-      height: 99vh;
+      height: 100%;
       display: grid;
       grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
       margin: 0;
@@ -62,8 +62,18 @@ const Wrapper = styled.aside`
             background-color: rgba(0, 0, 0, 0);
           }
         }
+          div.actionButtons{
+            transition: all 0.15s ease-in-out;
+            transform: translateX(0px);
+          }
         &.glow {
-          border-left: 10px solid #ffca2d;
+          div.actionButtons{
+            transform: translateX(-5px);
+          }
+          box-sizing: border-box;
+          transform: translateX(5px);
+          border-left: 5px solid #ffca2d;
+          /* margin-right: -10px; */
           background: rgba(255, 255, 255, 0.1);
           .projectLink {
             text-decoration: underline;
@@ -107,11 +117,30 @@ const ActionButtons = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 10px;
-  margin-left: 10px;
+  margin-left: 18px;
+  @media (max-width: 540px) {
+    grid-gap: 0px;
+    margin-left: 5px;
+    button {
+      transform: scale(0.9);}
+    span {
+    font-size: 12px;
+    svg {
+      transform: scale(0.8);
+    }
+  }
+  }
   button {
     text-transform: none;
     background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.7);
+    color: lightpink;
+    &:first-child {
+      text-decoration: underline;
+      color: #569cd6;
+      &:hover {
+        background: #00008033;
+      }
+    }
     span {
       margin-bottom: 1px;
       svg {
@@ -167,9 +196,6 @@ class ProjectsList extends Component {
     document.getElementById(`circle_${circleID}`) &&
       (document.getElementById(`circle_${circleID}`).style.filter = null);
   }
-  handleClickOpenSite = url => {
-    window.open(url, "_blank");
-  };
   render() {
     const { projects, classes, popup, moreInfo, visibleButtonsID } = this.props;
 
@@ -225,10 +251,10 @@ class ProjectsList extends Component {
                       color="secondary"
                       variant="outlined"
                       onClick={() =>
-                        this.handleClickOpenSite(project.frontmatter.website)
+                        window.open(project.frontmatter.website, "_blank")
                       }
                     >
-                      <span>Open Site</span>
+                      <span>Visit Site</span>
                       <OpenIcon />
                     </Button>
                   </ActionButtons>

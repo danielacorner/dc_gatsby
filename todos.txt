@@ -1,9 +1,29 @@
-click to reveal "more info | open site" under sidenav:
-create content pages
-sweet side-swipe transition back and forth from content pages
+projects pages:
+- page height  background auto
+- visit site button
+- extract 'desc' into main markdown paragraphs
+- scroll to projects list height on "back" button click
 
-add earth image under contact form
+style:
+- sweet side-swipe transition back and forth from content pages
+- check why projectslist can't be 100vh? 100%?
 
-size main page grid container
+simulation:
+- reduce velocitydecay just a tad
+- display simple tooltip on click
 
-style background of sidenav (silver, slate)
+responsive:
+- increase height of header
+- increase spacing and reveal of interests
+- check mobile, tablet, wide desktop views
+-desktop: set max-width of canvas to prevent link breaks
+- size main page grid container
+- size projects pages
+
+deployed version:
+-error occurs when path name incorrent (add /dc_gatsby/ until deployed to dcorn068.github.io)
+- check styles when deployed
+- button mouseover cursor pointer
+
+finally:
+- set as main github page

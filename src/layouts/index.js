@@ -6,6 +6,7 @@ import styled from "styled-components";
 import "./index.css";
 import "./animations.css";
 import "./simulation.css";
+import SvgIcons from "../components/SvgIcons";
 
 const Page = styled.div`
   width: 100%;
@@ -13,6 +14,24 @@ const Page = styled.div`
   /* grid-template-rows: 100vh auto auto; */
   padding: 0;
   margin: 0;
+  position: relative;
+  .gatsby {
+    color: rgba(255, 255, 255, 0.4);
+    font-family: "Spectral", "Georgia", "Times New Roman", "Times", serif;
+    font-weight: 100;
+    :before {
+      display: block;
+      margin: 0 0 -3px 4px;
+      font-size: 10px;
+      content: "powered by";
+    }
+    position: absolute;
+    bottom: 0;
+    left: 5px;
+    img {
+      margin: 0 0 5px 0;
+    }
+  }
 `;
 
 // Site Layout
@@ -57,6 +76,9 @@ class Layout extends Component {
 
         {/* main */}
         {children()}
+        <div className="gatsby">
+          <SvgIcons tool="Gatsby" />
+        </div>
       </Page>
     );
 

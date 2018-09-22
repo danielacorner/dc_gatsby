@@ -6,6 +6,7 @@ import Contact from "./Contact";
 import Header from "./Header";
 import D3Wrapper from "./D3Wrapper";
 import _ from "lodash";
+import SvgIcons from "./SvgIcons";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
@@ -48,6 +49,11 @@ const GridLeftRight = styled.div`
   .gridVerticalSimulation {
     display: grid;
     grid-template-rows: 200vh;
+  }
+  .gatsby {
+    position: absolute;
+    bottom: 10;
+    left: 10;
   }
 `;
 
@@ -162,7 +168,11 @@ export default class MainPortfolio extends Component {
     );
 
     // perspective for header container
-    if (intro.parentElement.style.perspective !== "500px") {
+
+    if (
+      intro &&
+      intro.parentElement.style.perspective !== "500px"
+    ) {
       window.requestAnimationFrame(() => {
         intro.parentElement.style.perspective = `500px`;
       });
