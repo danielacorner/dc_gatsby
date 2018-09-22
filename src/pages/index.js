@@ -16,7 +16,6 @@ export const pageQuery = graphql`
           frontmatter {
             id
             title
-            desc
             caption
             year
             path

@@ -169,10 +169,7 @@ export default class MainPortfolio extends Component {
 
     // perspective for header container
 
-    if (
-      intro &&
-      intro.parentElement.style.perspective !== "500px"
-    ) {
+    if (intro && intro.parentElement.style.perspective !== "500px") {
       window.requestAnimationFrame(() => {
         intro.parentElement.style.perspective = `500px`;
       });
@@ -233,7 +230,6 @@ export default class MainPortfolio extends Component {
 //           frontmatter {
 //             id
 //             title
-//             desc
 //             caption
 //             year
 //             path

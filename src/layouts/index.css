@@ -661,3 +661,14 @@ pre code:before, pre code:after, pre tt:before, pre tt:after {
     font-size: 100%;
   }
 }
+
+div[role="tooltip"] {
+  max-width: 200px;
+}
+
+@media (max-width: 540px) {
+  div[role="tooltip"] {
+    max-width: 170px;
+    margin-left: 8px;
+  }
+}

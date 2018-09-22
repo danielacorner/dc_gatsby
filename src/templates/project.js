@@ -145,7 +145,6 @@ export default function Template({ data }) {
           })}
         </Typography>
 
-        {/* <p>{project.frontmatter.desc}</p> */}
         <div style={{ margin: 0 }}>
           <div
             style={{ margin: 0 }}
@@ -185,7 +184,6 @@ export const projectQuery = graphql`
       frontmatter {
         id
         path
-        desc
         caption
         title
         year

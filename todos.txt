@@ -1,16 +1,13 @@
 projects pages:
-- page height  background auto
-- visit site button
-- extract 'desc' into main markdown paragraphs
 - scroll to projects list height on "back" button click
 
 style:
 - sweet side-swipe transition back and forth from content pages
-- check why projectslist can't be 100vh? 100%?
 
 simulation:
+- elevate tooltip state from projectslist to mainportfolio, add to handleChangeVisibility function
+- work on arrow :after element
 - reduce velocitydecay just a tad
-- display simple tooltip on click
 
 responsive:
 - increase height of header

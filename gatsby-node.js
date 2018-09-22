@@ -21,7 +21,6 @@ exports.createPages = ({ boundActionCreators, graphql }) => {
             frontmatter {
               id
               path
-              desc
               caption
               year
               title

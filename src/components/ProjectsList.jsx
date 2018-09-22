@@ -7,11 +7,12 @@ import { navigateTo } from "gatsby-link";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import Divider from "@material-ui/core/Divider";
 import styled from "styled-components";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import OpenIcon from "@material-ui/icons/OpenInNewOutlined";
+
+import Tooltip from "@material-ui/core/Tooltip";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 const Wrapper = styled.aside`
   perspective: 800px;
@@ -39,57 +40,59 @@ const Wrapper = styled.aside`
     /* listRoot > ul > listItem > projectLink + badges */
     .ul {
       height: 100%;
-      display: grid;
-      grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
       margin: 0;
-      .listItem {
+      &:first-child {
         display: grid;
-        grid-template-rows: repeat(auto-fit, auto);
-        grid-gap: 0px;
-        justify-items: start;
-        align-content: center;
-        padding: 0 0 0 4px;
-        margin: 0;
-        transition: all ease-in-out 0.15s;
-        cursor: pointer;
-        .projectLink {
-          font-size: 14px;
-          text-align: left;
-          text-transform: none;
-          text-decoration: none;
-          color: #eaeaea;
-          &:hover {
-            background-color: rgba(0, 0, 0, 0);
+        grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+        .listItem {
+          display: grid;
+          grid-template-rows: repeat(auto-fit, auto);
+          grid-gap: 0px;
+          justify-items: start;
+          align-content: center;
+          padding: 0 0 0 4px;
+          margin: 0;
+          transition: all ease-in-out 0.15s;
+          cursor: pointer;
+          .projectLink {
+            font-size: 14px;
+            text-align: left;
+            text-transform: none;
+            text-decoration: none;
+            color: #eaeaea;
+            &:hover {
+              background-color: rgba(0, 0, 0, 0);
+            }
           }
-        }
-          div.actionButtons{
+          div.actionButtons {
             transition: all 0.15s ease-in-out;
             transform: translateX(0px);
           }
-        &.glow {
-          div.actionButtons{
-            transform: translateX(-5px);
+          &.glow {
+            div.actionButtons {
+              transform: translateX(-5px);
+            }
+            box-sizing: border-box;
+            transform: translateX(5px);
+            border-left: 5px solid #ffca2d;
+            /* margin-right: -10px; */
+            background: rgba(255, 255, 255, 0.1);
+            .projectLink {
+              text-decoration: underline;
+            }
           }
-          box-sizing: border-box;
-          transform: translateX(5px);
-          border-left: 5px solid #ffca2d;
-          /* margin-right: -10px; */
-          background: rgba(255, 255, 255, 0.1);
-          .projectLink {
-            text-decoration: underline;
+          &.selected {
+            color: black;
           }
-        }
-        &.selected {
-          color: black;
-        }
-        .badges {
-          padding-left: 16px;
-          display: grid;
-          grid-template-rows: 24px;
-          grid-auto-flow: column;
-          grid-column-gap: 5px;
-          justify-items: center;
-          justify-content: center;
+          .badges {
+            padding-left: 16px;
+            display: grid;
+            grid-template-rows: 24px;
+            grid-auto-flow: column;
+            grid-column-gap: 5px;
+            justify-items: center;
+            justify-content: center;
+          }
         }
       }
     }
@@ -122,13 +125,14 @@ const ActionButtons = styled.div`
     grid-gap: 0px;
     margin-left: 5px;
     button {
-      transform: scale(0.9);}
-    span {
-    font-size: 12px;
-    svg {
-      transform: scale(0.8);
+      transform: scale(0.9);
     }
-  }
+    span {
+      font-size: 12px;
+      svg {
+        transform: scale(0.8);
+      }
+    }
   }
   button {
     text-transform: none;
@@ -153,13 +157,79 @@ const ActionButtons = styled.div`
       grid-template-columns: auto auto;
     }
   }
+  /* .arrowArrow {
+    position: absolute;
+    font-size: 7;
+    width: 3em;
+    height: 3em;
+    &::before {
+      content: "";
+      margin: auto;
+      display: block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+  } */
 `;
 
-const styles = {};
+const styles = theme => ({
+  lightTooltip: {
+    background: theme.palette.common.white,
+    color: theme.palette.text.primary,
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+  arrowPopper: {
+    '&[x-placement*="top"] $arrowArrow': {
+      bottom: 0,
+      left: 0,
+      marginBottom: "-0.9em",
+      width: "3em",
+      height: "1em",
+      "&::before": {
+        borderWidth: "1em 1em 0 1em",
+        borderColor: `${
+          theme.palette.grey[700]
+        } transparent transparent transparent`,
+      },
+    },
+  },
+  arrowArrow: {
+    position: "absolute",
+    fontSize: 7,
+    width: "3em",
+    height: "3em",
+    "&::before": {
+      content: '""',
+      margin: "auto",
+      display: "block",
+      width: 0,
+      height: 0,
+      borderStyle: "solid",
+    },
+  },
+});
 
 class ProjectsList extends Component {
   state = {
     visibleButtonsID: null,
+    open: null,
+    arrowRef: null,
+  };
+
+  handleTooltipClose = () => {
+    this.setState({ open: null });
+  };
+
+  handleTooltipOpen = id => {
+    this.setState({ open: id });
+  };
+
+  handleArrowRef = node => {
+    this.setState({
+      arrowRef: node,
+    });
   };
 
   componentDidMount() {
@@ -213,52 +283,92 @@ class ProjectsList extends Component {
             {projects
               .sort((a, b) => a.frontmatter.id < b.frontmatter.id)
               .map(project => (
-                <ListItem
-                  divider={true}
-                  className="listItem"
+                <ClickAwayListener
                   key={JSON.stringify(project)}
-                  id={`listItem_${project.frontmatter.id}`}
-                  data-circle={`circle_${project.frontmatter.id}`}
-                  onClick={() =>
-                    this.props.onChangeVisibility(project.frontmatter.id)
-                  }
+                  onClickAway={this.handleTooltipClose}
                 >
-                  <Button className="projectLink">
-                    {project.frontmatter.title}
-                  </Button>
-                  <Typography className="badges" variant="caption">
-                    {project.frontmatter.tools.map(tool => {
-                      return <SvgIcons key={tool.toString()} tool={tool} />;
-                    })}
-                  </Typography>
-                  <ActionButtons
-                    className={`${visibleButtonsID === project.frontmatter.id &&
-                      `visible`} actionButtons`}
-                    id={`actionButtons_${project.frontmatter.id}`}
+                  {/* <div> */}
+                  <Tooltip
+                    classes={{ popper: classes.arrowPopper }}
+                    PopperProps={{
+                      popperOptions: {
+                        modifiers: {
+                          arrow: {
+                            enabled: Boolean(this.state.arrowRef),
+                            element: this.state.arrowRef,
+                          },
+                        },
+                      },
+                    }}
+                    // PopperProps={{
+                    //   disablePortal: true,
+                    // }}
+                    onClose={this.handleTooltipClose}
+                    open={this.state.open === project.frontmatter.id}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    // placement="right"
+                    title={
+                      <React.Fragment>
+                        {project.frontmatter.caption}
+                        <span
+                          className={classes.arrowArrow}
+                          ref={this.handleArrowRef}
+                        />
+                      </React.Fragment>
+                    }
+                    // style={{ pointerEvents: "none" }}
                   >
-                    <Button
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                      onClick={() => navigateTo(project.frontmatter.path)}
-                      role="link"
+                    <ListItem
+                      divider={true}
+                      className="listItem"
+                      id={`listItem_${project.frontmatter.id}`}
+                      data-circle={`circle_${project.frontmatter.id}`}
+                      onClick={() => {
+                        this.props.onChangeVisibility(project.frontmatter.id);
+                        this.handleTooltipOpen(project.frontmatter.id);
+                      }}
                     >
-                      <span>More Info</span>
-                      <InfoIcon />
-                    </Button>
-                    <Button
-                      size="small"
-                      color="secondary"
-                      variant="outlined"
-                      onClick={() =>
-                        window.open(project.frontmatter.website, "_blank")
-                      }
-                    >
-                      <span>Visit Site</span>
-                      <OpenIcon />
-                    </Button>
-                  </ActionButtons>
-                </ListItem>
+                      <Button className="projectLink">
+                        {project.frontmatter.title}
+                      </Button>
+                      <Typography className="badges" variant="caption">
+                        {project.frontmatter.tools.map(tool => {
+                          return <SvgIcons key={tool.toString()} tool={tool} />;
+                        })}
+                      </Typography>
+                      <ActionButtons
+                        className={`${visibleButtonsID ===
+                          project.frontmatter.id && `visible`} actionButtons`}
+                        id={`actionButtons_${project.frontmatter.id}`}
+                      >
+                        <Button
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                          onClick={() => navigateTo(project.frontmatter.path)}
+                          role="link"
+                        >
+                          <span>More Info</span>
+                          <InfoIcon />
+                        </Button>
+                        <Button
+                          size="small"
+                          color="secondary"
+                          variant="outlined"
+                          onClick={() =>
+                            window.open(project.frontmatter.website, "_blank")
+                          }
+                        >
+                          <span>Visit Site</span>
+                          <OpenIcon />
+                        </Button>
+                      </ActionButtons>
+                    </ListItem>
+                  </Tooltip>
+                  {/* </div> */}
+                </ClickAwayListener>
               ))}
           </ul>
         </List>
