@@ -40,57 +40,65 @@ export default class SvgIcons extends Component {
       case "Tableau":
         return (
           <TableauImg>
-            <img src={tableau} />
+            <img src={tableau} alt="Tableau" title="Tableau" />
           </TableauImg>
         );
         break;
       case "GraphQL":
-        return <IconImg src={graphql} />;
+        return <IconImg src={graphql} alt="GraphQL" title="GraphQL" />;
         break;
       case "es6":
-        return <IconImg src={es6} />;
+        return <IconImg src={es6} alt="es6" title="es6" />;
         break;
       case "MongoDB":
-        return <IconImg src={mongodb} />;
+        return <IconImg src={mongodb} alt="MongoDB" title="MongoDB" />;
         break;
       case "Node.js":
-        return <IconImg src={nodejs} />;
+        return <IconImg src={nodejs} alt="Node.js" title="Node.js" />;
         break;
       case "React":
-        return <IconImg src={react} />;
+        return <IconImg src={react} alt="React" title="React" />;
         break;
       case "Angular":
-        return <IconImg src={angular} />;
+        return <IconImg src={angular} alt="Angular" title="Angular" />;
         break;
       case "JavaScript":
-        return <IconImg src={javascript} />;
+        return <IconImg src={javascript} alt="JavaScript" title="JavaScript" />;
         break;
       case "CSS":
       case "CSS3":
-        return <IconImg src={css3} />;
+        return <IconImg src={css3} alt="CSS3" title="CSS3" />;
         break;
       case "HTML":
       case "HTML5":
-        return <IconImg src={html5} />;
+        return <IconImg src={html5} alt="HTML5" title="HTML5" />;
         break;
       case "Excel":
-        return <IconImg src={excel} />;
+        return <IconImg src={excel} alt="Excel" title="Excel" />;
         break;
       case "Materialize CSS":
-        return <IconImg src={materializecss} />;
+        return (
+          <IconImg
+            src={materializecss}
+            alt="Materialize CSS"
+            title="Materialize CSS"
+          />
+        );
         break;
       case "Material-UI":
-        return <IconImg src={materialui} />;
+        return (
+          <IconImg src={materialui} alt="Material-UI" title="Material-UI" />
+        );
         break;
       case "Sass":
       case "SCSS":
-        return <IconImg src={sass} />;
+        return <IconImg src={sass} alt="Sass" title="Sass" />;
         break;
       case "D3.js":
-        return <IconImg src={d3js} />;
+        return <IconImg src={d3js} alt="D3.js" title="D3.js" />;
         break;
       case "jQuery":
-        return <IconImg src={jquery} />;
+        return <IconImg src={jquery} alt="jQuery" title="jQuery" />;
         break;
 
       default:
