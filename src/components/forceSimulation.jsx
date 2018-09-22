@@ -8,7 +8,7 @@ export default class ForceSimulation extends Component {
     return null;
   }
   componentDidMount() {
-    const { graph } = this.props;
+    const { graph, onNodeClick } = this.props;
 
     const tooltip = d3
       .select("body")
@@ -72,21 +72,36 @@ export default class ForceSimulation extends Component {
         "transform",
         `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
       )
-      .on("mouseover", d => {
+      .on("mouseover", function(d) {
+        // remove all glows
+        document.querySelectorAll(".glow").forEach(item => {
+          Array.from(item.classList).includes("glow") &&
+            item.classList.remove("glow");
+        });
+        d3.selectAll(".projectCircle").style("filter", null);
+        // add glow on mouseover
+        d3.select(this).style("filter", "url(#glow)");
+        // bug: this doesn't work...
         // yellow glow
-        d3.select(`#circle_${d.id}`).style("filter", "url(#glow)");
-        // highlight project list item
-        document.getElementById(`listItem_${d.id}`).classList.add("glow");
+        // document.getElementById(`circle_${d.id}`) &&
+        //   // (!Array.from(
+        //   //   document.getElementById(`circle_${d.id}`).classList
+        //   // ).includes("glow") &&
+        //   document.getElementById(`circle_${d.id}`).classList.add("glow");
+        // );
+        document.getElementById(`listItem_${d.id}`) &&
+          // (!Array.from(
+          //   document.getElementById(`listItem_${d.id}`).classList
+          // ).includes("glow") &&
+          document.getElementById(`listItem_${d.id}`).classList.add("glow");
+        // );
       })
       .on("mouseout", d => {
-        // remove glow
-        d3.select(`#circle_${d.id}`).style("filter", null);
-        document.getElementById(`listItem_${d.id}`).classList.remove("glow");
-      })
-      .on("mousemove", () => {
-        tooltip
-          .style("left", d3.event.pageX + "px")
-          .style("top", d3.event.pageY + 10 + "px");
+        // remove all glows
+        document.querySelectorAll(".glow").forEach(item => {
+          Array.from(item.classList).includes("glow") &&
+            item.classList.remove("glow");
+        });
       });
 
     // transition in circles, then animate links
@@ -197,6 +212,8 @@ export default class ForceSimulation extends Component {
         );
       }
       function dragstarted(d) {
+        onNodeClick(d.id);
+
         if (!d3.event.active) {
           simulation.alphaTarget(0.3).restart();
         }

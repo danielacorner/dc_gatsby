@@ -35,7 +35,7 @@ const D3Sim = styled.section`
 
 export default class D3Wrapper extends Component {
   render() {
-    const { simStart, popup, nodes } = this.props;
+    const { simStart, popup, nodes, onNodeClick } = this.props;
     return (
       <D3Sim>
         <h2 className="latestWorkTitle">Some of my latest work...</h2>
@@ -56,7 +56,12 @@ export default class D3Wrapper extends Component {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          {simStart && <ForceSimulation graph={{ nodes: nodes }} />}
+          {simStart && (
+            <ForceSimulation
+              onNodeClick={id => onNodeClick(id)}
+              graph={{ nodes: nodes }}
+            />
+          )}
         </svg>
       </D3Sim>
     );

@@ -57,6 +57,7 @@ const EarthIMG = styled.img`
   bottom: 0;
   margin: 0;
   opacity: 0.6;
+  filter: drop-shadow(0px -8px 15px rgba(150, 230, 255, 0.7));
 `;
 
 const Projects = styled.main``;
@@ -69,6 +70,7 @@ class IndexPage extends Component {
     links: null,
     popup: false,
     lastScrollTop: 0,
+    visibleButtonsID: null,
   };
 
   componentWillMount = () => {
@@ -172,15 +174,17 @@ class IndexPage extends Component {
     // todo: after warp, POP back in at scroll close to 0.1
   };
 
+  handleChangeVisibility = id => {
+    this.setState({ visibleButtonsID: id });
+  };
+
   render() {
     const { data, scrollFraction } = this.props;
-    const { nodes, popup, simStart } = this.state;
+    const { nodes, popup, simStart, visibleButtonsID } = this.state;
 
     const projects = data.allMarkdownRemark.edges
       .map(p => p.node)
       .sort((a, b) => a.frontmatter.year < b.frontmatter.year);
-
-    // console.log("projects", projects);
 
     return (
       <Portfolio>
@@ -191,10 +195,19 @@ class IndexPage extends Component {
 
         <GridLeftRight>
           {/* sticky projects list aside (left on desktop, bottom on mobile) */}
-          <ProjectsList popup={popup} projects={projects} />
+          <ProjectsList
+            popup={popup}
+            projects={projects}
+            visibleButtonsID={visibleButtonsID}
+            onChangeVisibility={id => this.handleChangeVisibility(id)}
+          />
 
           <div className="gridVerticalSimulation">
-            <D3Wrapper nodes={nodes} simStart={simStart} />
+            <D3Wrapper
+              onNodeClick={id => this.handleChangeVisibility(id)}
+              nodes={nodes}
+              simStart={simStart}
+            />
           </div>
         </GridLeftRight>
         <Contact className="contact" />

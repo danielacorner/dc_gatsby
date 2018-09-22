@@ -10,6 +10,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Divider from "@material-ui/core/Divider";
 import styled from "styled-components";
+import InfoIcon from "@material-ui/icons/InfoOutlined";
+import OpenIcon from "@material-ui/icons/OpenInNewOutlined";
 
 const Wrapper = styled.aside`
   perspective: 800px;
@@ -91,9 +93,46 @@ const Wrapper = styled.aside`
   }
 `;
 
+const ActionButtons = styled.div`
+  height: 0px;
+  opacity: 0;
+  transition: all 0.1s ease-in-out;
+  pointer-events: none;
+  &.visible {
+    pointer-events: auto;
+    margin-top: 10px;
+    height: 38px;
+    opacity: 1;
+  }
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 10px;
+  margin-left: 10px;
+  button {
+    text-transform: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    span {
+      margin-bottom: 1px;
+      svg {
+        color: inherit;
+        margin-top: -1px;
+        margin-right: -2px;
+      }
+      display: grid;
+      grid-gap: 2px;
+      grid-template-columns: auto auto;
+    }
+  }
+`;
+
 const styles = {};
 
 class ProjectsList extends Component {
+  state = {
+    visibleButtonsID: null,
+  };
+
   componentDidMount() {
     const listItems = Array.from(document.querySelectorAll(".listItem"));
 
@@ -103,21 +142,37 @@ class ProjectsList extends Component {
     });
   }
   highlightProject(e) {
+    // remove all glow
+    document.querySelectorAll(".glow").forEach(item => {
+      item.classList.remove("glow");
+    });
+    document
+      .querySelectorAll(".projectCircle")
+      .forEach(circle => (circle.style.filter = null));
+
+    // add glow to list item
     const listItem = e.path.find(d => d.id.includes("listItem"));
     listItem.classList.add("glow");
-
+    // add glow to node
     const circleID = listItem.id.slice("listItem_".length);
-    document.getElementById(`circle_${circleID}`).style.filter = "url(#glow)";
+    document.getElementById(`circle_${circleID}`) &&
+      (document.getElementById(`circle_${circleID}`).style.filter =
+        "url(#glow)");
   }
   unhighlightProject(e) {
     const listItem = e.path.find(d => d.id.includes("listItem"));
     listItem.classList.remove("glow");
 
     const circleID = listItem.id.slice("listItem_".length);
-    document.getElementById(`circle_${circleID}`).style.filter = null;
+    document.getElementById(`circle_${circleID}`) &&
+      (document.getElementById(`circle_${circleID}`).style.filter = null);
   }
+  handleClickMoreInfo = project => {};
+  handleClickOpenSite = url => {
+    window.open(url, "_blank");
+  };
   render() {
-    const { projects, classes, popup } = this.props;
+    const { projects, classes, popup, moreInfo, visibleButtonsID } = this.props;
 
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
@@ -139,6 +194,9 @@ class ProjectsList extends Component {
                   key={JSON.stringify(project)}
                   id={`listItem_${project.frontmatter.id}`}
                   data-circle={`circle_${project.frontmatter.id}`}
+                  onClick={() =>
+                    this.props.onChangeVisibility(project.frontmatter.id)
+                  }
                 >
                   <Button className="projectLink">
                     {project.frontmatter.title}
@@ -148,6 +206,32 @@ class ProjectsList extends Component {
                       return <SvgIcons key={tool.toString()} tool={tool} />;
                     })}
                   </Typography>
+                  <ActionButtons
+                    className={`${visibleButtonsID === project.frontmatter.id &&
+                      `visible`} actionButtons`}
+                    id={`actionButtons_${project.frontmatter.id}`}
+                  >
+                    <Button
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                      onClick={() => this.handleClickMoreInfo(project)}
+                    >
+                      <span>More Info</span>
+                      <InfoIcon />
+                    </Button>
+                    <Button
+                      size="small"
+                      color="secondary"
+                      variant="outlined"
+                      onClick={() =>
+                        this.handleClickOpenSite(project.frontmatter.website)
+                      }
+                    >
+                      <span>Open Site</span>
+                      <OpenIcon />
+                    </Button>
+                  </ActionButtons>
                 </ListItem>
               ))}
           </ul>

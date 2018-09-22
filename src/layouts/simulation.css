@@ -41,6 +41,11 @@ div.tooltip p[tools] {
 
 .projectCircle {
   stroke: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+}
+
+.projectCircle.glow {
+  filter: url(#glow);
 }
 
 .link {

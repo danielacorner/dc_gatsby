@@ -5,6 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@material-ui/core": "^3.0.3",
+    "@material-ui/icons": "^3.0.1",
     "babel-plugin-styled-components": "^1.6.3",
     "d3": "^5.7.0",
     "emailjs-com": "^2.2.4",
