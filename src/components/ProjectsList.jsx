@@ -201,6 +201,12 @@ class ProjectsList extends Component {
     document.getElementById(`circle_${circleID}`) &&
       (document.getElementById(`circle_${circleID}`).style.filter = null);
   }
+  handleNavigate = path => {
+    // add swoosh animation then navigate
+    const projectsGrid = document.getElementById("projectsGrid");
+    projectsGrid.addEventListener("transitionend", () => navigateTo(path));
+    projectsGrid.classList.add("swoosh");
+  };
   render() {
     const { projects, classes, popup, moreInfo, visibleButtonsID } = this.props;
 
@@ -245,7 +251,9 @@ class ProjectsList extends Component {
                       size="small"
                       color="primary"
                       variant="outlined"
-                      onClick={() => navigateTo(project.frontmatter.path)}
+                      onClick={() =>
+                        this.handleNavigate(project.frontmatter.path)
+                      }
                       role="link"
                     >
                       <span>More Info</span>

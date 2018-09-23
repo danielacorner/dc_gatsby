@@ -188,7 +188,7 @@ export default class ForceSimulation extends Component {
             return d;
           })
         )
-        .velocityDecay(0.8)
+        .velocityDecay(0.75)
         .alphaTarget(0)
         .force("collide", d3.forceCollide().radius(d => d.radius * 1.04))
         .force("link", d3.forceLink(links).distance(200))

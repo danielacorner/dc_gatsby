@@ -28,6 +28,11 @@ const ProjectPage = styled.main`
     url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
   /* place-items: center center; */
   .wrapper {
+    animation: swooshInLeft 0.25s ease-in;
+    &.unmounting {
+      animation: swooshOutLeft 0.25s ease-in;
+    }
+
     padding: 5%;
     max-width: 720px;
     margin: auto;
@@ -136,7 +141,7 @@ export default function Template({ data }) {
   const { markdownRemark: project } = data;
   // const project = data.markdownRemark;
   return (
-    <ProjectPage>
+    <ProjectPage id="projectPage">
       <div className="wrapper">
         <HeroImg src={project.frontmatter.image} />
         <h1>{project.frontmatter.title}</h1>
@@ -153,9 +158,18 @@ export default function Template({ data }) {
           />
           <div className="actionButtons">
             <Button
-              onClick={() =>
-                navigateTo("/", { state: { scrollToProjects: true } })
-              }
+              onClick={() => {
+                // store previousUrl in cookie
+                document.cookie = `previousUrl=${
+                  window.location.href
+                }; path=/;`;
+
+                const wrapper = document.querySelector(".wrapper");
+
+                wrapper.addEventListener("animationend", () => navigateTo("/"));
+
+                wrapper.classList.add("unmounting");
+              }}
               role="link"
               variant="outlined"
               color="primary"

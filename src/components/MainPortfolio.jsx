@@ -31,7 +31,11 @@ const Portfolio = styled.div`
   grid-template-rows: 115vh 10vh 150vh 100vh;
 
   grid-template-columns: 1fr;
-
+  #hero {
+    opacity: 0;
+    animation: fadeIn 2s;
+    opacity: 1;
+  }
   .header {
     width: 100%;
   }
@@ -67,6 +71,11 @@ const GridLeftRight = styled.div`
     bottom: 10;
     left: 10;
   }
+  &.swoosh {
+    transition: all 0.25s ease-in;
+    transform: translateX(-20px);
+    opacity: 0;
+  }
 `;
 
 const EarthIMG = styled.img`
@@ -88,6 +97,21 @@ export default class MainPortfolio extends Component {
     lastScrollTop: 0,
     visibleButtonsID: null,
   };
+  getCookie = cname => {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  };
 
   componentWillMount = () => {
     const { edges } = this.props.data.allMarkdownRemark;
@@ -99,17 +123,13 @@ export default class MainPortfolio extends Component {
       nodes: newNodes,
     });
   };
+
   componentWillUnmount = () => {
     window.removeEventListener("scroll", this.handleScroll);
   };
 
   componentDidMount = () => {
-    console.log("scrolling", this.state.scrollToProjects);
-    this.state.scrollToProjects &&
-      window.scrollTo(document.querySelector("aside").offsetTop);
-
     window.addEventListener("scroll", this.handleScroll);
-    // window.addEventListener("scroll", window.requestAnimationFrame(this.handleScroll));
 
     // check scroll height if navigating to page already-scrolled
     this.handleScroll();
@@ -120,6 +140,13 @@ export default class MainPortfolio extends Component {
       .addEventListener("transitionend", this.handleTransitionend, {
         once: true,
       });
+
+    // if navigating from project page, scroll back to projects grid
+    const previousUrl = this.getCookie("previousUrl");
+    previousUrl !== "" &&
+      setTimeout(() => document.querySelector(".canvas").scrollIntoView(), 0);
+    // clear cookie (to only scroll after navigating back from project)
+    document.cookie = `previousUrl=; path=/;`;
   };
 
   handleScroll = () => {
@@ -134,18 +161,28 @@ export default class MainPortfolio extends Component {
     // reveal interests
     if (sf > 0.1) {
       document.getElementById("interests").classList.add("revealed");
+    } else {
+      document.getElementById("interests").classList.remove("revealed");
     }
     if (sf > 0.3) {
       document.getElementById("interest1").classList.add("revealed");
+    } else {
+      document.getElementById("interest1").classList.remove("revealed");
     }
     if (sf > 0.5) {
       document.getElementById("interest2").classList.add("revealed");
+    } else {
+      document.getElementById("interest2").classList.remove("revealed");
     }
     if (sf > 0.7) {
       document.getElementById("interest3").classList.add("revealed");
+    } else {
+      document.getElementById("interest3").classList.remove("revealed");
     }
     if (sf > 1) {
       document.querySelector(".latestWorkTitle").classList.add("simStart");
+    } else {
+      document.querySelector(".latestWorkTitle").classList.remove("simStart");
     }
 
     // pop-up sidenav at scroll ~ 0.75
@@ -156,15 +193,15 @@ export default class MainPortfolio extends Component {
     }
 
     // detect scroll direction
-    const st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
-    if (st > this.state.lastScrollTop) {
-      document.getElementById("hero") &&
-        document.getElementById("hero").classList.remove("scrollingUp");
-    } else {
-      document.getElementById("hero") &&
-        document.getElementById("hero").classList.add("scrollingUp");
-    }
-    this.setState({ lastScrollTop: st <= 0 ? 0 : st }); // For Mobile or negative scrolling
+    // const st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
+    // if (st > this.state.lastScrollTop) {
+    //   document.getElementById("hero") &&
+    //     document.getElementById("hero").classList.remove("scrollingUp");
+    // } else {
+    //   document.getElementById("hero") &&
+    //     document.getElementById("hero").classList.add("scrollingUp");
+    // }
+    // this.setState({ lastScrollTop: st <= 0 ? 0 : st }); // For Mobile or negative scrolling
   };
 
   handleTransitionend = () => {
@@ -222,7 +259,7 @@ export default class MainPortfolio extends Component {
           Some of my latest work...
         </LatestWorkTitle>
 
-        <GridLeftRight>
+        <GridLeftRight id="projectsGrid">
           {/* sticky projects list aside (left on desktop, bottom on mobile) */}
           <ProjectsList
             popup={popup}
