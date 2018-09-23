@@ -6,10 +6,11 @@ import Contact from "./Contact";
 import Header from "./Header";
 import D3Wrapper from "./D3Wrapper";
 import _ from "lodash";
-import SvgIcons from "./SvgIcons";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
+  /* overflow-x: hidden; */
+  margin-bottom: -4px;
   position: relative;
   --black: #272727;
   --opac: 99;
@@ -27,19 +28,30 @@ const Portfolio = styled.div`
 
   display: grid;
 
-  grid-template-rows: 115vh 150vh 100vh;
-  grid-template-areas: "intro" "projects" "contact";
+  grid-template-rows: 115vh 10vh 150vh 100vh;
 
   grid-template-columns: 1fr;
 
   .header {
     width: 100%;
-    grid-area: "intro";
+  }
+`;
+
+const LatestWorkTitle = styled.h2`
+  margin: 0 auto;
+  padding: 20px 0;
+  color: #ffca2d;
+  font-family: "Oxygen Mono", monospace;
+  align-self: end;
+  opacity: 0;
+  &.simStart {
+    animation: transitionUp 0.5s, fadeIn 0.5s;
+    opacity: 1;
   }
 `;
 
 const GridLeftRight = styled.div`
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   display: grid;
   grid-template-columns: 250px 1fr;
@@ -87,8 +99,15 @@ export default class MainPortfolio extends Component {
       nodes: newNodes,
     });
   };
+  componentWillUnmount = () => {
+    window.removeEventListener("scroll", this.handleScroll);
+  };
 
   componentDidMount = () => {
+    console.log("scrolling", this.state.scrollToProjects);
+    this.state.scrollToProjects &&
+      window.scrollTo(document.querySelector("aside").offsetTop);
+
     window.addEventListener("scroll", this.handleScroll);
     // window.addEventListener("scroll", window.requestAnimationFrame(this.handleScroll));
 
@@ -119,15 +138,18 @@ export default class MainPortfolio extends Component {
     if (sf > 0.3) {
       document.getElementById("interest1").classList.add("revealed");
     }
-    if (sf > 0.45) {
+    if (sf > 0.5) {
       document.getElementById("interest2").classList.add("revealed");
     }
-    if (sf > 0.6) {
+    if (sf > 0.7) {
       document.getElementById("interest3").classList.add("revealed");
+    }
+    if (sf > 1) {
+      document.querySelector(".latestWorkTitle").classList.add("simStart");
     }
 
     // pop-up sidenav at scroll ~ 0.75
-    if (sf >= 1 && sf < 1.7) {
+    if (sf >= 1.2 && sf < 1.7) {
       !this.state.popup && this.setState({ popup: true });
     } else {
       this.state.popup && this.setState({ popup: false });
@@ -136,16 +158,17 @@ export default class MainPortfolio extends Component {
     // detect scroll direction
     const st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
     if (st > this.state.lastScrollTop) {
-      document.getElementById("hero").classList.remove("scrollingUp");
+      document.getElementById("hero") &&
+        document.getElementById("hero").classList.remove("scrollingUp");
     } else {
-      document.getElementById("hero").classList.add("scrollingUp");
+      document.getElementById("hero") &&
+        document.getElementById("hero").classList.add("scrollingUp");
     }
     this.setState({ lastScrollTop: st <= 0 ? 0 : st }); // For Mobile or negative scrolling
   };
 
   handleTransitionend = () => {
     this.setState({ simStart: true });
-    document.querySelector(".latestWorkTitle").classList.add("simStart");
   };
 
   warpHero = sf => {
@@ -194,6 +217,10 @@ export default class MainPortfolio extends Component {
         {/* contains: header, aside, projects */}
         {/* header */}
         <Header className={"header"} popup={popup} />
+
+        <LatestWorkTitle className="latestWorkTitle">
+          Some of my latest work...
+        </LatestWorkTitle>
 
         <GridLeftRight>
           {/* sticky projects list aside (left on desktop, bottom on mobile) */}

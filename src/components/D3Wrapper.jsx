@@ -3,26 +3,14 @@ import ForceSimulation from "./ForceSimulation";
 import styled from "styled-components";
 
 const D3Sim = styled.section`
+  margin-top: 10vh;
+  display: grid;
+  grid-template-rows: 1fr;
   width: 100%;
   height: 200vh;
   width: calc(100vw-255px);
 
-  display: grid;
-  grid-template-rows: 30vh 1fr;
-
   justify-items: center;
-  h2 {
-    margin: 0 auto;
-    padding: 20px;
-    color: #ffca2d;
-    font-family: "Oxygen Mono", monospace;
-    align-self: end;
-    opacity: 0;
-    &.simStart {
-      animation: transitionUp 0.5s, fadeIn 0.5s;
-      opacity: 1;
-    }
-  }
 
   svg.canvas {
     /* background: #eaeaea1f; */
@@ -38,7 +26,6 @@ export default class D3Wrapper extends Component {
     const { simStart, popup, nodes, onNodeClick } = this.props;
     return (
       <D3Sim>
-        <h2 className="latestWorkTitle">Some of my latest work...</h2>
         {/* simulation */}
         <svg className="canvas">
           {/* <!-- a transparent glow that takes on the colour of the object it's applied to --> */}

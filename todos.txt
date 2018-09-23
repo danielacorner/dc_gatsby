@@ -5,12 +5,9 @@ style:
 - sweet side-swipe transition back and forth from content pages
 
 simulation:
-- work on arrow :after element
 - reduce velocitydecay just a tad
 
 responsive:
-- increase height of header
-- increase spacing and reveal of interests
 - check mobile, tablet, wide desktop views
 -desktop: set max-width of canvas to prevent link breaks
 - size main page grid container

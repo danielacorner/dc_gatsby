@@ -10,6 +10,8 @@ const HeroWrapper = styled.header`
 `;
 
 const HeroDiv = styled.div`
+  overflow-x: visible;
+  overflow-y: visible;
   transition: perspective 0.2s ease-in-out, transform 0.5s ease-out;
   &.scrollingUp {
     transition: perspective 0.1s ease-out, transform 0.1s ease-out;
@@ -91,13 +93,16 @@ const HeroDiv = styled.div`
     overflow-wrap: initial;
     overflow: hidden;
     border-right: 0.5ch solid rgba(255, 255, 255, 0.75);
+    @media (max-width: 376px) {
+      font-size: 28px;
+    }
+    @media (max-width: 330px) {
+      font-size: 24px;
+    }
   }
   .anim-typewriter {
     animation: typewriter 1.3s steps(14) 1s 1 normal both,
       blinkTextCursor 500ms cubic-bezier(1, 0, 0, 1) infinite normal;
-  }
-
-  @media (max-width: 700px) {
   }
 `;
 const HeroImg = styled.img``;

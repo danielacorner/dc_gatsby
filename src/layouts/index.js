@@ -21,7 +21,7 @@ const Page = styled.div`
     font-weight: 100;
     :before {
       display: block;
-      margin: 0 0 -3px 4px;
+      margin: 0 0 -9px 4px;
       font-size: 10px;
       content: "powered by";
     }
@@ -29,7 +29,7 @@ const Page = styled.div`
     bottom: 0;
     left: 5px;
     img {
-      margin: 0 0 5px 0;
+      margin: 0;
     }
   }
 `;

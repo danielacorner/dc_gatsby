@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import OpenIcon from "@material-ui/icons/OpenInNewOutlined";
 
 const ProjectPage = styled.main`
+  margin-bottom: -4px;
   * {
     margin-left: 5%;
     margin-right: 5%;
@@ -152,7 +153,9 @@ export default function Template({ data }) {
           />
           <div className="actionButtons">
             <Button
-              onClick={() => navigateTo("/")}
+              onClick={() =>
+                navigateTo("/", { state: { scrollToProjects: true } })
+              }
               role="link"
               variant="outlined"
               color="primary"
