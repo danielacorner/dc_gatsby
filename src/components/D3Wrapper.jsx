@@ -29,7 +29,7 @@ const D3Sim = styled.section`
     height: 100vh;
     max-height: 1200px;
     width: 100%;
-    /* min-width: 400px; */
+    max-width: 900px;
   }
 `;
 
