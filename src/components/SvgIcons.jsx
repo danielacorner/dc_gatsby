@@ -19,6 +19,8 @@ import excel from "../images/logos/excel.svg";
 import tableau from "../images/logos/tableau.svg";
 import gatsby from "../images/logos/gatsby.svg";
 
+import Tooltip from "@material-ui/core/Tooltip";
+
 const IconImg = styled.img`
   height: 24px;
   width: 24px;
@@ -40,66 +42,120 @@ export default class SvgIcons extends Component {
     switch (tool) {
       case "Tableau":
         return (
-          <TableauImg>
-            <img src={tableau} alt="Tableau" title="Tableau" />
-          </TableauImg>
+          <Tooltip title="Tableau">
+            <TableauImg>
+              <img src={tableau} alt="Tableau" />
+            </TableauImg>
+          </Tooltip>
         );
         break;
       case "GraphQL":
-        return <IconImg src={graphql} alt="GraphQL" title="GraphQL" />;
+        return (
+          <Tooltip title="GraphQL">
+            <IconImg src={graphql} alt="GraphQL" />
+          </Tooltip>
+        );
         break;
       case "es6":
-        return <IconImg src={es6} alt="es6" title="es6" />;
+        return (
+          <Tooltip title="ES6">
+            <IconImg src={es6} alt="ES6" />
+          </Tooltip>
+        );
         break;
       case "MongoDB":
-        return <IconImg src={mongodb} alt="MongoDB" title="MongoDB" />;
+        return (
+          <Tooltip title="MongoDB">
+            <IconImg src={mongodb} alt="MongoDB" />
+          </Tooltip>
+        );
         break;
       case "Node.js":
-        return <IconImg src={nodejs} alt="Node.js" title="Node.js" />;
+        return (
+          <Tooltip title="Node.js">
+            <IconImg src={nodejs} alt="Node.js" />
+          </Tooltip>
+        );
         break;
       case "React":
-        return <IconImg src={react} alt="React" title="React" />;
+        return (
+          <Tooltip title="React">
+            <IconImg src={react} alt="React" />
+          </Tooltip>
+        );
         break;
       case "Angular":
-        return <IconImg src={angular} alt="Angular" title="Angular" />;
+        return (
+          <Tooltip title="Angular">
+            <IconImg src={angular} alt="Angular" />
+          </Tooltip>
+        );
         break;
       case "JavaScript":
-        return <IconImg src={javascript} alt="JavaScript" title="JavaScript" />;
+        return (
+          <Tooltip title="JavaScript">
+            <IconImg src={javascript} alt="JavaScript" />
+          </Tooltip>
+        );
         break;
       case "CSS":
       case "CSS3":
-        return <IconImg src={css3} alt="CSS3" title="CSS3" />;
+        return (
+          <Tooltip title="CSS3">
+            <IconImg src={css3} alt="CSS3" />
+          </Tooltip>
+        );
         break;
       case "HTML":
       case "HTML5":
-        return <IconImg src={html5} alt="HTML5" title="HTML5" />;
+        return (
+          <Tooltip title="HTML5">
+            <IconImg src={html5} alt="HTML5" />
+          </Tooltip>
+        );
         break;
       case "Excel":
-        return <IconImg src={excel} alt="Excel" title="Excel" />;
+        return (
+          <Tooltip title="Excel">
+            <IconImg src={excel} alt="Excel" />
+          </Tooltip>
+        );
         break;
       case "Materialize CSS":
         return (
-          <IconImg
-            src={materializecss}
-            alt="Materialize CSS"
-            title="Materialize CSS"
-          />
+          <Tooltip title="Materialize CSS">
+            <IconImg src={materializecss} alt="Materialize CSS" />
+          </Tooltip>
         );
         break;
       case "Material-UI":
         return (
-          <IconImg src={materialui} alt="Material-UI" title="Material-UI" />
+          <Tooltip title="Material-UI">
+            <IconImg src={materialui} alt="Material-UI" />
+          </Tooltip>
         );
         break;
       case "Sass":
       case "SCSS":
-        return <IconImg src={sass} alt="Sass" title="Sass" />;
+        return (
+          <Tooltip title="Sass">
+            <IconImg src={sass} alt="Sass" />
+          </Tooltip>
+        );
         break;
       case "D3.js":
-        return <IconImg src={d3js} alt="D3.js" title="D3.js" />;
+        return (
+          <Tooltip title="D3.js">
+            <IconImg src={d3js} alt="D3.js" />
+          </Tooltip>
+        );
         break;
       case "jQuery":
-        return <IconImg src={jquery} alt="jQuery" title="jQuery" />;
+        return (
+          <Tooltip title="jQuery">
+            <IconImg src={jquery} alt="jQuery" />
+          </Tooltip>
+        );
         break;
       case "Gatsby":
         return (

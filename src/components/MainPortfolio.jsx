@@ -27,7 +27,7 @@ const Portfolio = styled.div`
 
   display: grid;
 
-  grid-template-rows: 100vh 150vh 100vh;
+  grid-template-rows: 115vh 150vh 100vh;
   grid-template-areas: "intro" "projects" "contact";
 
   grid-template-columns: 1fr;
@@ -113,16 +113,16 @@ export default class MainPortfolio extends Component {
     }
 
     // reveal interests
-    if (sf > 0.05) {
+    if (sf > 0.1) {
       document.getElementById("interests").classList.add("revealed");
     }
-    if (sf > 0.2) {
+    if (sf > 0.3) {
       document.getElementById("interest1").classList.add("revealed");
     }
-    if (sf > 0.35) {
+    if (sf > 0.45) {
       document.getElementById("interest2").classList.add("revealed");
     }
-    if (sf > 0.5) {
+    if (sf > 0.6) {
       document.getElementById("interest3").classList.add("revealed");
     }
 
@@ -168,15 +168,12 @@ export default class MainPortfolio extends Component {
     );
 
     // perspective for header container
-
+    // todo: increase perspective for mobile width
     if (intro && intro.parentElement.style.perspective !== "500px") {
       window.requestAnimationFrame(() => {
         intro.parentElement.style.perspective = `500px`;
       });
     }
-
-    // todo: trigger 'warp' animation at sf ~ 0.8
-    // todo: after warp, POP back in at scroll close to 0.1
   };
 
   handleChangeVisibility = id => {

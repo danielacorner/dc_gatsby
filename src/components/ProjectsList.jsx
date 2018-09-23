@@ -11,11 +11,12 @@ import styled from "styled-components";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import OpenIcon from "@material-ui/icons/OpenInNewOutlined";
 
-import Tooltip from "@material-ui/core/Tooltip";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-
 const Wrapper = styled.aside`
+  /* todo: increase mobile perspective */
   perspective: 800px;
+  @media (max-width: 540px) {
+    perspective: 600px;
+  }
   .listRoot {
     transform: rotateY(90deg) translateZ(-200px) translateX(50px);
   }
@@ -157,79 +158,13 @@ const ActionButtons = styled.div`
       grid-template-columns: auto auto;
     }
   }
-  /* .arrowArrow {
-    position: absolute;
-    font-size: 7;
-    width: 3em;
-    height: 3em;
-    &::before {
-      content: "";
-      margin: auto;
-      display: block;
-      width: 0;
-      height: 0;
-      border-style: solid;
-    }
-  } */
 `;
 
-const styles = theme => ({
-  lightTooltip: {
-    background: theme.palette.common.white,
-    color: theme.palette.text.primary,
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-  },
-  arrowPopper: {
-    '&[x-placement*="top"] $arrowArrow': {
-      bottom: 0,
-      left: 0,
-      marginBottom: "-0.9em",
-      width: "3em",
-      height: "1em",
-      "&::before": {
-        borderWidth: "1em 1em 0 1em",
-        borderColor: `${
-          theme.palette.grey[700]
-        } transparent transparent transparent`,
-      },
-    },
-  },
-  arrowArrow: {
-    position: "absolute",
-    fontSize: 7,
-    width: "3em",
-    height: "3em",
-    "&::before": {
-      content: '""',
-      margin: "auto",
-      display: "block",
-      width: 0,
-      height: 0,
-      borderStyle: "solid",
-    },
-  },
-});
+const styles = {};
 
 class ProjectsList extends Component {
   state = {
     visibleButtonsID: null,
-    open: null,
-    arrowRef: null,
-  };
-
-  handleTooltipClose = () => {
-    this.setState({ open: null });
-  };
-
-  handleTooltipOpen = id => {
-    this.setState({ open: id });
-  };
-
-  handleArrowRef = node => {
-    this.setState({
-      arrowRef: node,
-    });
   };
 
   componentDidMount() {
@@ -283,92 +218,52 @@ class ProjectsList extends Component {
             {projects
               .sort((a, b) => a.frontmatter.id < b.frontmatter.id)
               .map(project => (
-                <ClickAwayListener
+                <ListItem
                   key={JSON.stringify(project)}
-                  onClickAway={this.handleTooltipClose}
+                  divider={true}
+                  className="listItem"
+                  id={`listItem_${project.frontmatter.id}`}
+                  data-circle={`circle_${project.frontmatter.id}`}
+                  onClick={() => {
+                    this.props.onChangeVisibility(project.frontmatter.id);
+                  }}
                 >
-                  {/* <div> */}
-                  <Tooltip
-                    classes={{ popper: classes.arrowPopper }}
-                    PopperProps={{
-                      popperOptions: {
-                        modifiers: {
-                          arrow: {
-                            enabled: Boolean(this.state.arrowRef),
-                            element: this.state.arrowRef,
-                          },
-                        },
-                      },
-                    }}
-                    // PopperProps={{
-                    //   disablePortal: true,
-                    // }}
-                    onClose={this.handleTooltipClose}
-                    open={this.state.open === project.frontmatter.id}
-                    disableFocusListener
-                    disableHoverListener
-                    disableTouchListener
-                    // placement="right"
-                    title={
-                      <React.Fragment>
-                        {project.frontmatter.caption}
-                        <span
-                          className={classes.arrowArrow}
-                          ref={this.handleArrowRef}
-                        />
-                      </React.Fragment>
-                    }
-                    // style={{ pointerEvents: "none" }}
+                  <Button className="projectLink">
+                    {project.frontmatter.title}
+                  </Button>
+                  <Typography className="badges" variant="caption">
+                    {project.frontmatter.tools.map(tool => {
+                      return <SvgIcons key={tool.toString()} tool={tool} />;
+                    })}
+                  </Typography>
+                  <ActionButtons
+                    className={`${visibleButtonsID === project.frontmatter.id &&
+                      `visible`} actionButtons`}
+                    id={`actionButtons_${project.frontmatter.id}`}
                   >
-                    <ListItem
-                      divider={true}
-                      className="listItem"
-                      id={`listItem_${project.frontmatter.id}`}
-                      data-circle={`circle_${project.frontmatter.id}`}
-                      onClick={() => {
-                        this.props.onChangeVisibility(project.frontmatter.id);
-                        this.handleTooltipOpen(project.frontmatter.id);
-                      }}
+                    <Button
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                      onClick={() => navigateTo(project.frontmatter.path)}
+                      role="link"
                     >
-                      <Button className="projectLink">
-                        {project.frontmatter.title}
-                      </Button>
-                      <Typography className="badges" variant="caption">
-                        {project.frontmatter.tools.map(tool => {
-                          return <SvgIcons key={tool.toString()} tool={tool} />;
-                        })}
-                      </Typography>
-                      <ActionButtons
-                        className={`${visibleButtonsID ===
-                          project.frontmatter.id && `visible`} actionButtons`}
-                        id={`actionButtons_${project.frontmatter.id}`}
-                      >
-                        <Button
-                          size="small"
-                          color="primary"
-                          variant="outlined"
-                          onClick={() => navigateTo(project.frontmatter.path)}
-                          role="link"
-                        >
-                          <span>More Info</span>
-                          <InfoIcon />
-                        </Button>
-                        <Button
-                          size="small"
-                          color="secondary"
-                          variant="outlined"
-                          onClick={() =>
-                            window.open(project.frontmatter.website, "_blank")
-                          }
-                        >
-                          <span>Visit Site</span>
-                          <OpenIcon />
-                        </Button>
-                      </ActionButtons>
-                    </ListItem>
-                  </Tooltip>
-                  {/* </div> */}
-                </ClickAwayListener>
+                      <span>More Info</span>
+                      <InfoIcon />
+                    </Button>
+                    <Button
+                      size="small"
+                      color="secondary"
+                      variant="outlined"
+                      onClick={() =>
+                        window.open(project.frontmatter.website, "_blank")
+                      }
+                    >
+                      <span>Visit Site</span>
+                      <OpenIcon />
+                    </Button>
+                  </ActionButtons>
+                </ListItem>
               ))}
           </ul>
         </List>

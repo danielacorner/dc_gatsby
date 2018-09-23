@@ -48,6 +48,8 @@ const HeroDiv = styled.div`
   .introText {
     position: relative;
     p#interests {
+      margin-top: 3.5em;
+      margin-bottom: 4.5em;
       opacity: 0;
       transition: opacity 0.2s ease-in;
       &.revealed {
@@ -59,6 +61,7 @@ const HeroDiv = styled.div`
       list-style-type: none;
       text-align: center;
       li {
+        margin-top: 4.5em;
         opacity: 0;
         transition: opacity 0.2s ease-in;
         &.revealed {

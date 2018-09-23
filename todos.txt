@@ -5,7 +5,6 @@ style:
 - sweet side-swipe transition back and forth from content pages
 
 simulation:
-- elevate tooltip state from projectslist to mainportfolio, add to handleChangeVisibility function
 - work on arrow :after element
 - reduce velocitydecay just a tad
 
