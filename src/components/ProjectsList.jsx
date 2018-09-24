@@ -29,6 +29,7 @@ const Wrapper = styled.aside`
     --grey: rgba(100, 100, 200, 0.09);
     --lightgreyborder: 3px solid rgba(114, 114, 114, 0.9);
     padding: 0;
+    margin-left: 0;
     background: var(--grey);
     position: sticky;
     top: 0;
@@ -47,6 +48,7 @@ const Wrapper = styled.aside`
         display: grid;
         grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
         .listItem {
+          opacity: 1;
           display: grid;
           grid-template-rows: repeat(auto-fit, auto);
           grid-gap: 0px;
@@ -145,16 +147,6 @@ const ActionButtons = styled.div`
     cursor: pointer;
     padding: 0;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.08);
-    &.btnMoreInfo {
-      border: 1px solid rgba(63, 81, 181, 0.5);
-    }
-    &.btnVisitSite {
-      border: 1px solid rgba(245, 0, 87, 0.5);
-      &:hover {
-        background: rgba(245, 0, 87, 0.08);
-      }
-    }
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 14px;
     border-radius: 4px;
@@ -164,6 +156,9 @@ const ActionButtons = styled.div`
     background: rgba(255, 255, 255, 0.08);
     color: lightpink;
     border: 1px solid rgba(245, 0, 87, 0.5);
+    &:hover {
+      background: rgba(245, 0, 87, 0.08);
+    }
     svg {
       fill: lightpink;
     }
@@ -190,6 +185,9 @@ const ActionButtons = styled.div`
       display: grid;
       grid-gap: 2px;
       grid-template-columns: auto auto;
+    }
+    .jss72 {
+      display: none;
     }
   }
 `;
@@ -253,7 +251,7 @@ class ProjectsList extends Component {
     return (
       <Wrapper className={popup && "enter"}>
         {/* listRoot > ul > listItem > projectLink + badges */}
-        <List className={"listRoot"}>
+        <List className="listRoot">
           <ul className="ul" style={{ margin: "0" }}>
             {projects
               .sort((a, b) => a.frontmatter.id < b.frontmatter.id)
@@ -291,16 +289,20 @@ class ProjectsList extends Component {
                       }
                       role="link"
                     >
-                      <span>More Info</span>
-                      <InfoIcon />
+                      <span>
+                        More Info
+                        <InfoIcon />
+                      </span>
                     </Button>
                     <Button
                       onClick={() =>
                         window.open(project.frontmatter.website, "_blank")
                       }
                     >
-                      <span>Visit Site</span>
-                      <OpenIcon />
+                      <span>
+                        Visit Site
+                        <OpenIcon />
+                      </span>
                     </Button>
                   </ActionButtons>
                 </ListItem>
