@@ -117,7 +117,7 @@ const Wrapper = styled.aside`
     }
     width: 255px;
     @media (max-width: 540px) {
-      width: 220px;
+      width: 225px;
       .listItem {
         padding: 0;
         transform: translateX(-5px) scale(0.85);
