@@ -14,6 +14,8 @@ const Page = styled.div`
   /* grid-template-rows: 100vh auto auto; */
   padding: 0;
   margin: 0;
+  margin-bottom: -4px;
+
   position: relative;
   .gatsby {
     color: rgba(255, 255, 255, 0.4);
@@ -47,7 +49,7 @@ class Layout extends Component {
             {
               name: "description",
               content:
-                "A web developer portfolio page for Daniel Corner, using Gatsby and React.",
+                "This is a web developer portfolio page for Daniel Corner, using Gatsby and React.",
             },
             {
               name: "keywords",
@@ -67,6 +69,11 @@ class Layout extends Component {
             type="text/javascript"
             src="https://cdn.emailjs.com/sdk/2.2.4/email.min.js"
           />
+          {/* <script type="text/javascript">
+            (function()
+            {emailjs.init("user_Q33dPgBWZuQnRTaTJfkVq")}
+            )();
+          </script> */}
         </Helmet>
 
         {/* main */}

@@ -29,11 +29,14 @@ const Wrapper = styled.aside`
     --grey: rgba(100, 100, 200, 0.09);
     --lightgreyborder: 3px solid rgba(114, 114, 114, 0.9);
     padding: 0;
+    margin-left: 0;
     background: var(--grey);
     position: sticky;
     top: 0;
     height: 99.9vh;
     max-height: 99.9vh;
+    @media (max-height: 860px) {
+    }
     overflow-y: hidden;
     overflow-x: hidden;
     transition: all 0.5s ease-in-out;
@@ -42,20 +45,32 @@ const Wrapper = styled.aside`
     .ul {
       height: 100%;
       margin: 0;
+      margin-left: 0px;
       &:first-child {
         display: grid;
         grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+        @media (max-height: 860px) {
+          grid-template-rows: none;
+          height: auto;
+        }
         .listItem {
+          opacity: 1;
           display: grid;
           grid-template-rows: repeat(auto-fit, auto);
           grid-gap: 0px;
           justify-items: start;
-          align-content: center;
+          align-content: space-evenly;
           padding: 0 0 0 4px;
           margin: 0;
           transition: all ease-in-out 0.15s;
-          cursor: pointer;
+          @media (max-height: 860px) {
+            /* grid-template-rows: repeat(auto-fit, minmax(100px, 1fr)); */
+            height: auto;
+          }
           .projectLink {
+            cursor: default;
+            border: none;
+            background: none;
             padding-left: 16px;
             margin-bottom: 5px;
             font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -102,9 +117,19 @@ const Wrapper = styled.aside`
     }
     width: 255px;
     @media (max-width: 540px) {
-      width: 200px;
+      width: 225px;
       .listItem {
         padding: 0;
+        transform: translateX(-5px) scale(0.85);
+        .projectLink {
+          max-width: 200px;
+        }
+      }
+    }
+    @media (max-height: 860px) {
+      overflow-y: scroll;
+      .listItem {
+        transform: translateX(-5px) scale(0.85);
       }
     }
   }
@@ -138,17 +163,10 @@ const ActionButtons = styled.div`
       }
     }
   }
-  .btnMoreInfo {
-    border: 1px solid rgba(63, 81, 181, 0.5);
-  }
-  .btnVisitSite {
-    /* color: lightpink; */
-    border: 1px solid rgba(245, 0, 87, 0.5);
-    &:hover {
-      background: rgba(245, 0, 87, 0.08);
-    }
-  }
   button {
+    cursor: pointer;
+    padding: 0;
+    border-radius: 4px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 14px;
     border-radius: 4px;
@@ -157,18 +175,29 @@ const ActionButtons = styled.div`
     text-transform: none;
     background: rgba(255, 255, 255, 0.08);
     color: lightpink;
+    border: 1px solid rgba(245, 0, 87, 0.5);
+    &:hover {
+      background: rgba(245, 0, 87, 0.08);
+    }
+    svg {
+      fill: lightpink;
+    }
     &:first-child {
       text-decoration: underline;
       color: #569cd6;
+      border: 1px solid rgba(63, 81, 181, 0.5);
+      svg {
+        fill: #569cd6;
+      }
       &:hover {
         background: #00008033;
       }
     }
-    cursor: pointer;
     span {
-      margin-left: 3px;
-      margin-bottom: 1.5px;
+      align-items: center;
+      place-content: center center;
       svg {
+        height: 24px;
         color: inherit;
         margin-top: -1px;
         margin-right: -2px;
@@ -176,8 +205,9 @@ const ActionButtons = styled.div`
       display: grid;
       grid-gap: 2px;
       grid-template-columns: auto auto;
-      align-items: center;
-      justify-items: center;
+    }
+    .jss72 {
+      display: none;
     }
   }
 `;
@@ -241,8 +271,8 @@ class ProjectsList extends Component {
     return (
       <Wrapper className={popup && "enter"}>
         {/* listRoot > ul > listItem > projectLink + badges */}
-        <List className={"listRoot"}>
-          <ul className={"ul"}>
+        <List className="listRoot">
+          <ul className="ul" style={{ margin: "0" }}>
             {projects
               .sort((a, b) => a.frontmatter.id < b.frontmatter.id)
               .map(project => (
@@ -256,7 +286,13 @@ class ProjectsList extends Component {
                     this.props.onChangeVisibility(project.frontmatter.id);
                   }}
                 >
-                  <p className="projectLink">{project.frontmatter.title}</p>
+                  <Button
+                    className="projectLink"
+                    disableRipple={true}
+                    disableTouchRipple={true}
+                  >
+                    {project.frontmatter.title}
+                  </Button>
                   <Typography className="badges" variant="caption">
                     {project.frontmatter.tools.map(tool => {
                       return <SvgIcons key={tool.toString()} tool={tool} />;
@@ -267,11 +303,7 @@ class ProjectsList extends Component {
                       `visible`} actionButtons`}
                     id={`actionButtons_${project.frontmatter.id}`}
                   >
-                    <button
-                      className="btnMoreInfo"
-                      // size="small"
-                      // color="primary"
-                      // variant="outlined"
+                    <Button
                       onClick={() =>
                         this.handleNavigate(project.frontmatter.path)
                       }
@@ -281,12 +313,8 @@ class ProjectsList extends Component {
                         More Info
                         <InfoIcon />
                       </span>
-                    </button>
-                    <button
-                      className="btnVisitSite"
-                      // size="small"
-                      // color="secondary"
-                      // variant="outlined"
+                    </Button>
+                    <Button
                       onClick={() =>
                         window.open(project.frontmatter.website, "_blank")
                       }
@@ -295,7 +323,7 @@ class ProjectsList extends Component {
                         Visit Site
                         <OpenIcon />
                       </span>
-                    </button>
+                    </Button>
                   </ActionButtons>
                 </ListItem>
               ))}

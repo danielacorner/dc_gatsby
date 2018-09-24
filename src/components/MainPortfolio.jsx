@@ -28,13 +28,16 @@ const Portfolio = styled.div`
 
   display: grid;
 
-  grid-template-rows: 115vh 10vh 150vh 100vh;
+  /* grid-template-rows: header title works contact; */
+  grid-template-rows:
+    minmax(1400px, 135vh) minmax(90px, 10vh) minmax(1333px, 150vh)
+    minmax(888px, 100vh);
 
   grid-template-columns: 1fr;
   #hero {
-    /* opacity: 0; */
-    /* animation: fadeIn 2s; */
-    /* opacity: 1; */
+    opacity: 0;
+    animation: fadeIn 2s;
+    opacity: 1;
   }
   .header {
     width: 100%;
@@ -42,6 +45,7 @@ const Portfolio = styled.div`
 `;
 
 const LatestWorkTitle = styled.h2`
+  transition: opacity 0.5s;
   margin: 0 auto;
   padding: 20px 0;
   color: #ffca2d;
@@ -153,9 +157,16 @@ export default class MainPortfolio extends Component {
     const scrollPosition = window.pageYOffset;
     const sf = scrollPosition / window.innerHeight;
 
+    const latestWorkTitle = document
+      .querySelector(".latestWorkTitle")
+      .getBoundingClientRect();
+
     // warp hero
-    if (sf >= 0 && sf <= 1) {
-      this.warpHero(sf);
+    if (sf >= 0 && latestWorkTitle.top > 0) {
+      // only on tablet+
+      if (window.innerWidth > 480) {
+        this.warpHero(sf);
+      }
     }
 
     // reveal interests
@@ -179,14 +190,17 @@ export default class MainPortfolio extends Component {
     } else {
       document.getElementById("interest3").classList.remove("revealed");
     }
-    if (sf > 1) {
+
+    if (latestWorkTitle.top < window.innerHeight / 2) {
       document.querySelector(".latestWorkTitle").classList.add("simStart");
     } else {
       document.querySelector(".latestWorkTitle").classList.remove("simStart");
     }
 
     // pop-up sidenav at scroll ~ 0.75
-    if (sf >= 1.2 && sf < 1.7) {
+    const aside = document.querySelector("aside").getBoundingClientRect();
+
+    if (aside.top < 200 && aside.top > -500) {
       !this.state.popup && this.setState({ popup: true });
     } else {
       this.state.popup && this.setState({ popup: false });
@@ -213,6 +227,7 @@ export default class MainPortfolio extends Component {
     const intro = document.querySelector("header div");
 
     // scale out and rotate into the page
+
     window.requestAnimationFrame(
       () =>
         (intro.style.transform = `translateY(${-sf *
@@ -228,7 +243,6 @@ export default class MainPortfolio extends Component {
     );
 
     // perspective for header container
-    // todo: increase perspective for mobile width
     if (intro && intro.parentElement.style.perspective !== "500px") {
       window.requestAnimationFrame(() => {
         intro.parentElement.style.perspective = `500px`;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-// import Icon from '@material-ui/core/Icon';
+import SendIcon from "@material-ui/icons/SendRounded";
 
 const ContactForm = styled.div`
   --darkgrey: rgba(255, 255, 255, 0.06);
@@ -50,17 +50,48 @@ const ContactForm = styled.div`
       color: black;
     }
   }
+  #sendButton span {
+    display: grid;
+    grid-auto-flow: column;
+    place-items: center stretch;
+    margin-top: 1px;
+  }
   button {
-    width: 50%;
+    pointer-events: auto;
+    border: none;
+    font-size: 17px;
+    background: rgb(6, 140, 251, 0.9);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: right;
+    padding: 0;
+    border-radius: 4px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 200px;
     margin: 10px auto 20px auto;
-    background: rgba(255, 255, 255, 0.6);
-    color: #2336a0;
+    display: grid;
+    place-items: center center;
+    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+      0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+    svg {
+      fill: rgba(255, 255, 255, 0.6);
+      height: 24px;
+      margin-bottom: 0;
+      justify-self: center;
+      margin-right: -76px;
+    }
     &:hover {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgb(6, 140, 251, 0.7);
     }
     &.sent {
       background: rgba(255, 255, 255, 0.125);
       color: rgba(0, 0, 0, 0.6);
+    }
+    .jss72 {
+      display: none;
     }
   }
 `;
@@ -158,18 +189,19 @@ export default class Contact extends Component {
         </form>
         <Button
           id="sendButton"
-          variant="outlined"
-          color="primary"
           className={"sendButton " + (this.state.emailSent && "sent")}
           type="submit"
           disabled={this.state.emailSent}
           onClick={this.handleSubmit}
         >
-          {!this.state.formSubmitted
-            ? "Send"
-            : !this.state.emailSent
-              ? "Sending"
-              : "Sent"}
+          {!this.state.formSubmitted ? (
+            <span>Send</span>
+          ) : !this.state.emailSent ? (
+            <span>Sending</span>
+          ) : (
+            <span>Sent</span>
+          )}
+          <SendIcon />
         </Button>
       </ContactForm>
     );

@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import OpenIcon from "@material-ui/icons/OpenInNewOutlined";
 
 const ProjectPage = styled.main`
-  margin-bottom: -4px;
   * {
     margin-left: 5%;
     margin-right: 5%;
