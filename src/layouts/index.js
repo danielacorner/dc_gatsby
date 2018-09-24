@@ -14,6 +14,8 @@ const Page = styled.div`
   /* grid-template-rows: 100vh auto auto; */
   padding: 0;
   margin: 0;
+  margin-bottom: -4px;
+
   position: relative;
   .gatsby {
     color: rgba(255, 255, 255, 0.4);
