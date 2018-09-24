@@ -1,16 +1,18 @@
-index or layout index:
-- find out what's causing that initial grid with border to appear
+- add links to social, resume, github, linkedin
+- on desktop (only?), increase spacing after header
+- apply to jobs!!!
 
 responsive:
 - check mobile, tablet, wide desktop views
 -desktop: set max-width of canvas to prevent link breaks
 - size main page grid container
 - size projects pages
+u
 
-deployed version:
--error occurs when path name incorrent (add /dc_gatsby/ until deployed to dcorn068.github.io)
-- check styles when deployed
-- button mouseover cursor pointer
+
+
+
+
 
 finally:
 - set as main github page

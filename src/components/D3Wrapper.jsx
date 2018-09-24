@@ -8,6 +8,7 @@ const D3Sim = styled.section`
   grid-template-rows: 1fr;
   width: 100%;
   height: 200vh;
+  min-height: 800px;
   width: calc(100vw-255px);
 
   justify-items: center;
@@ -15,6 +16,7 @@ const D3Sim = styled.section`
   svg.canvas {
     /* background: #eaeaea1f; */
     height: 100vh;
+    min-height: 800px;
     max-height: 1200px;
     width: 100%;
     max-width: 900px;

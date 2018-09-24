@@ -50,15 +50,21 @@ const ContactForm = styled.div`
       color: black;
     }
   }
+  #sendButton span {
+    display: grid;
+    grid-auto-flow: column;
+    place-items: center stretch;
+    margin-top: 1px;
+  }
   button {
     pointer-events: auto;
     border: none;
     font-size: 17px;
-    background: rgb(6, 140, 251);
+    background: rgb(6, 140, 251, 0.9);
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     text-transform: uppercase;
-    text-align: center;
+    text-align: right;
     padding: 0;
     border-radius: 4px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -66,7 +72,6 @@ const ContactForm = styled.div`
     border-radius: 4px;
     width: 200px;
     margin: 10px auto 20px auto;
-    background: rgba(255, 255, 255, 0.6);
     display: grid;
     place-items: center center;
     box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
@@ -75,6 +80,8 @@ const ContactForm = styled.div`
       fill: rgba(255, 255, 255, 0.6);
       height: 24px;
       margin-bottom: 0;
+      justify-self: center;
+      margin-right: -76px;
     }
     &:hover {
       background: rgb(6, 140, 251, 0.7);
@@ -85,11 +92,6 @@ const ContactForm = styled.div`
     }
     .jss72 {
       display: none;
-    }
-    &:first-child {
-      display: grid;
-      grid-auto-flow: column;
-      place-items: center stretch;
     }
   }
 `;
@@ -192,11 +194,13 @@ export default class Contact extends Component {
           disabled={this.state.emailSent}
           onClick={this.handleSubmit}
         >
-          {!this.state.formSubmitted
-            ? "Send"
-            : !this.state.emailSent
-              ? "Sending"
-              : "Sent"}
+          {!this.state.formSubmitted ? (
+            <span>Send</span>
+          ) : !this.state.emailSent ? (
+            <span>Sending</span>
+          ) : (
+            <span>Sent</span>
+          )}
           <SendIcon />
         </Button>
       </ContactForm>

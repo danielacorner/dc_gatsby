@@ -35,6 +35,8 @@ const Wrapper = styled.aside`
     top: 0;
     height: 99.9vh;
     max-height: 99.9vh;
+    @media (max-height: 860px) {
+    }
     overflow-y: hidden;
     overflow-x: hidden;
     transition: all 0.5s ease-in-out;
@@ -47,6 +49,10 @@ const Wrapper = styled.aside`
       &:first-child {
         display: grid;
         grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+        @media (max-height: 860px) {
+          grid-template-rows: none;
+          height: auto;
+        }
         .listItem {
           opacity: 1;
           display: grid;
@@ -57,6 +63,10 @@ const Wrapper = styled.aside`
           padding: 0 0 0 4px;
           margin: 0;
           transition: all ease-in-out 0.15s;
+          @media (max-height: 860px) {
+            /* grid-template-rows: repeat(auto-fit, minmax(100px, 1fr)); */
+            height: auto;
+          }
           .projectLink {
             cursor: default;
             border: none;
@@ -107,9 +117,19 @@ const Wrapper = styled.aside`
     }
     width: 255px;
     @media (max-width: 540px) {
-      width: 200px;
+      width: 220px;
       .listItem {
         padding: 0;
+        transform: translateX(-5px) scale(0.85);
+        .projectLink {
+          max-width: 200px;
+        }
+      }
+    }
+    @media (max-height: 860px) {
+      overflow-y: scroll;
+      .listItem {
+        transform: translateX(-5px) scale(0.85);
       }
     }
   }
