@@ -66,6 +66,10 @@ export default class ForceSimulation extends Component {
       .append("circle")
       .attr("id", d => "circle_" + d.id)
       .attr("r", "0px")
+      .style(
+        "cursor",
+        "url('http://www.rw-designer.com/cursor-view/54513.png'), pointer"
+      )
       .attr("fill", d => `url(#pattern_${d.id})`)
       .attr("class", "projectCircle")
       .style(

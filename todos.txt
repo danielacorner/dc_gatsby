@@ -1,11 +1,5 @@
-projects pages:
-- scroll to projects list height on "back" button click
-
-style:
-- sweet side-swipe transition back and forth from content pages
-
-simulation:
-- reduce velocitydecay just a tad
+index or layout index:
+- find out what's causing that initial grid with border to appear
 
 responsive:
 - check mobile, tablet, wide desktop views
@@ -20,3 +14,12 @@ deployed version:
 
 finally:
 - set as main github page
+  pathPrefix: `/`,
+https://www.gatsbyjs.org/docs/how-gatsby-works-with-github-pages/#github-organization-or-user-page
+
+1.     "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+  pathPrefix: `/dc_gatsby`,
+    "url": "https://dcorn068.github.io/dc_gatsby/"
+
+2.     "deploy": "gatsby build && gh-pages -d public -b master"
+    "url": "https://dcorn068.github.io/"

@@ -42,6 +42,7 @@ const Wrapper = styled.aside`
     .ul {
       height: 100%;
       margin: 0;
+      margin-left: 0px;
       &:first-child {
         display: grid;
         grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
@@ -50,12 +51,17 @@ const Wrapper = styled.aside`
           grid-template-rows: repeat(auto-fit, auto);
           grid-gap: 0px;
           justify-items: start;
-          align-content: center;
+          align-content: space-evenly;
           padding: 0 0 0 4px;
           margin: 0;
           transition: all ease-in-out 0.15s;
-          cursor: pointer;
           .projectLink {
+            cursor: default;
+            border: none;
+            background: none;
+            padding-left: 16px;
+            margin-bottom: 5px;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
             font-size: 14px;
             text-align: left;
             text-transform: none;
@@ -136,19 +142,47 @@ const ActionButtons = styled.div`
     }
   }
   button {
+    cursor: pointer;
+    padding: 0;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    &.btnMoreInfo {
+      border: 1px solid rgba(63, 81, 181, 0.5);
+    }
+    &.btnVisitSite {
+      border: 1px solid rgba(245, 0, 87, 0.5);
+      &:hover {
+        background: rgba(245, 0, 87, 0.08);
+      }
+    }
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 14px;
+    border-radius: 4px;
+    width: 105px;
+    height: 38px;
     text-transform: none;
     background: rgba(255, 255, 255, 0.08);
     color: lightpink;
+    border: 1px solid rgba(245, 0, 87, 0.5);
+    svg {
+      fill: lightpink;
+    }
     &:first-child {
       text-decoration: underline;
       color: #569cd6;
+      border: 1px solid rgba(63, 81, 181, 0.5);
+      svg {
+        fill: #569cd6;
+      }
       &:hover {
         background: #00008033;
       }
     }
     span {
-      margin-bottom: 1px;
+      align-items: center;
+      place-content: center center;
       svg {
+        height: 24px;
         color: inherit;
         margin-top: -1px;
         margin-right: -2px;
@@ -220,7 +254,7 @@ class ProjectsList extends Component {
       <Wrapper className={popup && "enter"}>
         {/* listRoot > ul > listItem > projectLink + badges */}
         <List className={"listRoot"}>
-          <ul className={"ul"}>
+          <ul className="ul" style={{ margin: "0" }}>
             {projects
               .sort((a, b) => a.frontmatter.id < b.frontmatter.id)
               .map(project => (
@@ -234,7 +268,11 @@ class ProjectsList extends Component {
                     this.props.onChangeVisibility(project.frontmatter.id);
                   }}
                 >
-                  <Button className="projectLink">
+                  <Button
+                    className="projectLink"
+                    disableRipple={true}
+                    disableTouchRipple={true}
+                  >
                     {project.frontmatter.title}
                   </Button>
                   <Typography className="badges" variant="caption">
@@ -248,9 +286,6 @@ class ProjectsList extends Component {
                     id={`actionButtons_${project.frontmatter.id}`}
                   >
                     <Button
-                      size="small"
-                      color="primary"
-                      variant="outlined"
                       onClick={() =>
                         this.handleNavigate(project.frontmatter.path)
                       }
@@ -260,9 +295,6 @@ class ProjectsList extends Component {
                       <InfoIcon />
                     </Button>
                     <Button
-                      size="small"
-                      color="secondary"
-                      variant="outlined"
                       onClick={() =>
                         window.open(project.frontmatter.website, "_blank")
                       }
