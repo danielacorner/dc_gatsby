@@ -53,30 +53,33 @@
 }
 
 @keyframes swooshInLeft {
-  0% {
+  from {
     transform: translateX(20px);
     opacity: 0;
   }
-  30% {
-    transform: translateX(10px);
-    opacity: 0.5;
+  to {
+    transform: translateX(0px);
+    opacity: 1;
   }
-  100% {
+}
+
+@keyframes swooshInRight {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
     transform: translateX(0px);
     opacity: 1;
   }
 }
 
 @keyframes swooshOutLeft {
-  0% {
+  from {
     transform: translateX(0px);
     opacity: 1;
   }
-  30% {
-    transform: translateX(10px);
-    opacity: 0.5;
-  }
-  100% {
+  to {
     transform: translateX(20px);
     opacity: 0;
   }

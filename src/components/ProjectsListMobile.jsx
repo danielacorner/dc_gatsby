@@ -198,9 +198,9 @@ class ProjectsListMobile extends Component {
   }
   handleNavigate = path => {
     // add swoosh animation then navigate
-    const projectsGrid = document.getElementById("projectsGrid");
-    projectsGrid.addEventListener("transitionend", () => navigateTo(path));
-    projectsGrid.classList.add("swoosh");
+    const projectsList = document.getElementById("projectsListMobile");
+    projectsList.addEventListener("transitionend", () => navigateTo(path));
+    projectsList.classList.add("swoosh");
   };
   render() {
     const { projects, classes, popup, moreInfo, visibleButtonsID } = this.props;
@@ -212,7 +212,7 @@ class ProjectsListMobile extends Component {
     const years = projects.map(p => p.frontmatter.year).filter(onlyUnique);
 
     return (
-      <Wrapper className={popup && "enter"}>
+      <Wrapper className={popup && "enter"} id="projectsListMobile">
         {/* listRoot > ul > listItem > projectTitle + badges */}
         <List className="listRoot">
           <ul className="ul" style={{ margin: "0" }}>

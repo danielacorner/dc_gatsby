@@ -27,9 +27,9 @@ const ProjectPage = styled.main`
     url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
   /* place-items: center center; */
   .wrapper {
-    animation: swooshInLeft 0.25s ease-in;
+    animation: swooshInLeft 0.25s cubic-bezier(0.26, 1.02, 0.98, 0.94);
     &.unmounting {
-      animation: swooshOutLeft 0.25s ease-in;
+      animation: swooshOutLeft 0.25s cubic-bezier(0.4, 0.56, 0.11, 0.96);
     }
 
     padding: 5%;

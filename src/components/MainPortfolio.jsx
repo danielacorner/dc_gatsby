@@ -6,7 +6,7 @@ import ProjectsListMobile from "./ProjectsListMobile";
 import Contact from "./Contact";
 import Header from "./Header";
 import D3Wrapper from "./D3Wrapper";
-import _ from "lodash";
+// import _ from "lodash";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
@@ -47,6 +47,13 @@ const Portfolio = styled.div`
   }
   .header {
     width: 100%;
+  }
+  #projectsListMobile {
+    transition: all 0.25s cubic-bezier(0.4, 0.56, 0.11, 0.96);
+    &.swoosh {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
   }
 `;
 
@@ -107,8 +114,9 @@ export default class MainPortfolio extends Component {
     popup: false,
     lastScrollTop: 0,
     visibleButtonsID: null,
-    isMobileWidth: null,
+    isMobile: false,
   };
+
   getCookie = cname => {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -131,22 +139,26 @@ export default class MainPortfolio extends Component {
     // const shallowClone = d => Object.assign({}, ...d);
     const newNodes = deepClone(edges.map(d => d.node.frontmatter));
 
-    const isMobileWidth = window.innerWidth <= 480;
-    console.log({ isMobileWidth });
-
     this.setState({
       nodes: newNodes,
-      isMobileWidth: isMobileWidth,
     });
+  };
+
+  throttledHandleWindowResize = () => {
+    // _.throttle(() => {
+    this.setState({ isMobile: window.innerWidth <= 480 });
+    // }, 200);
   };
 
   componentWillUnmount = () => {
     window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("resize", this.throttledHandleWindowResize);
   };
 
   componentDidMount = () => {
     window.addEventListener("scroll", this.handleScroll);
-
+    window.addEventListener("resize", this.throttledHandleWindowResize);
+    this.throttledHandleWindowResize();
     // check scroll height if navigating to page already-scrolled
     this.handleScroll();
 
@@ -159,8 +171,15 @@ export default class MainPortfolio extends Component {
 
     // if navigating from project page, scroll back to projects grid
     const previousUrl = this.getCookie("previousUrl");
+
     previousUrl !== "" &&
-      setTimeout(() => document.querySelector(".canvas").scrollIntoView(), 0);
+      setTimeout(() => {
+        const listRoot = document.querySelector(".listRoot");
+        listRoot.style.animation =
+          "swooshInRight 0.25s cubic-bezier(0.26, 1.02, 0.98, 0.94)";
+        listRoot.scrollIntoView();
+        // listRoot.style.transition = 'all 0.5s cubic-bezier(0.26, 1.02, 0.98, 0.94)';
+      }, 0);
     // clear cookie (to only scroll after navigating back from project)
     document.cookie = `previousUrl=; path=/;`;
   };
@@ -269,13 +288,7 @@ export default class MainPortfolio extends Component {
 
   render() {
     const { data, scrollFraction } = this.props;
-    const {
-      nodes,
-      popup,
-      simStart,
-      visibleButtonsID,
-      isMobileWidth,
-    } = this.state;
+    const { nodes, popup, simStart, visibleButtonsID, isMobile } = this.state;
 
     const projects = data.allMarkdownRemark.edges
       .map(p => p.node)
@@ -292,7 +305,7 @@ export default class MainPortfolio extends Component {
           Here's what I've been working on:
         </LatestWorkTitle>
 
-        {!isMobileWidth && (
+        {!isMobile && (
           <GridLeftRight id="projectsGrid">
             {/* sticky projects list aside (left on desktop, bottom on mobile) */}
             <ProjectsList
@@ -311,7 +324,7 @@ export default class MainPortfolio extends Component {
             </div>
           </GridLeftRight>
         )}
-        {isMobileWidth && (
+        {isMobile && (
           <ProjectsListMobile
             popup={popup}
             projects={projects}
