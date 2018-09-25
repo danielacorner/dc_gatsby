@@ -87,6 +87,8 @@ const Wrapper = styled.aside`
           .caption {
             opacity: 0;
             height: 0;
+            font-size: 14px;
+            font-family: Roboto, Helvetica, Arial, sans-serif;
             padding: 0 20px;
             color: #eaeaea;
             transition: all 0.25s ease-in-out;
