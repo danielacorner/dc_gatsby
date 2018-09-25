@@ -6,7 +6,6 @@ import ProjectsListMobile from "./ProjectsListMobile";
 import Contact from "./Contact";
 import Header from "./Header";
 import D3Wrapper from "./D3Wrapper";
-// import _ from "lodash";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
@@ -282,8 +281,13 @@ export default class MainPortfolio extends Component {
     }
   };
 
-  handleChangeVisibility = id => {
-    this.setState({ visibleButtonsID: id });
+  handleExpandProjectListItem = d => {
+    const opened = document.querySelector(".open");
+    opened && opened.classList.remove("open");
+
+    document.querySelector(`#listItem_${d.id}`).classList.add("open");
+
+    this.setState({ visibleButtonsID: d.id });
   };
 
   render() {
@@ -312,26 +316,21 @@ export default class MainPortfolio extends Component {
               popup={popup}
               projects={projects}
               visibleButtonsID={visibleButtonsID}
-              onChangeVisibility={id => this.handleChangeVisibility(id)}
+              onClickListItem={d => this.handleExpandProjectListItem(d)}
             />
 
             <div className="gridVerticalSimulation">
               <D3Wrapper
-                onNodeClick={id => this.handleChangeVisibility(id)}
+                onNodeClick={d => {
+                  this.handleExpandProjectListItem(d);
+                }}
                 nodes={nodes}
                 simStart={simStart}
               />
             </div>
           </GridLeftRight>
         )}
-        {isMobile && (
-          <ProjectsListMobile
-            popup={popup}
-            projects={projects}
-            visibleButtonsID={visibleButtonsID}
-            onChangeVisibility={id => this.handleChangeVisibility(id)}
-          />
-        )}
+        {isMobile && <ProjectsListMobile popup={popup} projects={projects} />}
         <Contact className="contact" />
       </Portfolio>
     );

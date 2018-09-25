@@ -48,7 +48,7 @@ const Wrapper = styled.aside`
       margin-left: 0px;
       &:first-child {
         display: grid;
-        grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+        /* grid-template-rows: repeat(auto-fit, auto); */
         @media (max-height: 860px) {
           grid-template-rows: none;
           height: auto;
@@ -72,10 +72,11 @@ const Wrapper = styled.aside`
             border: none;
             background: none;
             padding-left: 16px;
-            margin-bottom: 5px;
+            padding-bottom: 0;
             font-family: "Roboto", "Helvetica", "Arial", sans-serif;
             font-size: 14px;
             text-align: left;
+            margin-bottom: -5px;
             text-transform: none;
             text-decoration: none;
             color: #eaeaea;
@@ -83,9 +84,28 @@ const Wrapper = styled.aside`
               background-color: rgba(0, 0, 0, 0);
             }
           }
+          .caption {
+            opacity: 0;
+            height: 0;
+            padding: 0 20px;
+            color: #eaeaea;
+            transition: all 0.25s ease-in-out;
+          }
           div.actionButtons {
             transition: all 0.15s ease-in-out;
             transform: translateX(0px);
+          }
+          &.open {
+            .projectLink {
+              transition: all 0.25 ease-in-out;
+              font-size: 16px;
+              color: #ffca2d;
+              text-decoration: underline;
+            }
+            .caption {
+              opacity: 1;
+              height: auto;
+            }
           }
           &.glow {
             div.actionButtons {
@@ -97,7 +117,6 @@ const Wrapper = styled.aside`
             /* margin-right: -10px; */
             background: rgba(255, 255, 255, 0.1);
             .projectLink {
-              text-decoration: underline;
             }
           }
           &.selected {
@@ -224,7 +243,7 @@ class ProjectsList extends Component {
 
     listItems.forEach(item => {
       item.addEventListener("mouseover", this.highlightProject);
-      item.addEventListener("mouseout", this.unhighlightProject);
+      // item.addEventListener("mouseout", this.unhighlightProject);
     });
   }
   highlightProject(e) {
@@ -283,7 +302,7 @@ class ProjectsList extends Component {
                   id={`listItem_${project.frontmatter.id}`}
                   data-circle={`circle_${project.frontmatter.id}`}
                   onClick={() => {
-                    this.props.onChangeVisibility(project.frontmatter.id);
+                    this.props.onClickListItem(project.frontmatter);
                   }}
                 >
                   <Button
@@ -293,6 +312,9 @@ class ProjectsList extends Component {
                   >
                     {project.frontmatter.title}
                   </Button>
+                  <Typography className="caption" variant="caption">
+                    {project.frontmatter.caption}
+                  </Typography>
                   <Typography className="badges" variant="caption">
                     {project.frontmatter.tools.map(tool => {
                       return <SvgIcons key={tool.toString()} tool={tool} />;

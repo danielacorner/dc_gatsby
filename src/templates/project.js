@@ -58,11 +58,18 @@ const ProjectPage = styled.main`
       grid-auto-flow: column;
       justify-items: center;
       align-items: center;
+      * {
+        margin-bottom: 0;
+      }
     }
     p {
       margin: 16px 8px;
       font-family: "Roboto", sans-serif;
       color: rgba(255, 255, 255, 0.8);
+      a {
+        margin: 0;
+        color: #569cd6;
+      }
     }
     .tools {
       font-family: "Roboto", sans-serif;

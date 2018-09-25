@@ -56,6 +56,7 @@ const ContactForm = styled.div`
     align-items: center;
     justify-items: center;
     grid-gap: 0;
+    justify-content: normal;
     span {
       justify-self: right;
     }

@@ -2,6 +2,8 @@
 - on desktop (only?), increase spacing after header
 - apply to jobs!!!
 
+- append tooltip with action buttons on click
+
 - fix canvas circle radii on resize
 
 

@@ -13,7 +13,7 @@ website: "https://public.tableau.com/profile/daniel.corner#!/vizhome/PavePrototy
 
 An interactive data visualization of Canada's jobs.
 
-Using Tableau, this prototype is the third-place winner of the [Student Pathways Challenge](https://studentpathwayschallenge.ca/), a design competition to help high school students make an informed decision about their professional pursuits.
+Using Tableau, this prototype is the third-place winner of the [Student Pathways Challenge](https://studentpathwayschallenge.ca/), a design competition to help high school students make an informed decision about their future.
 
 My team performed user research, competitive analysis of existing solutions, and two rounds of user testing. Our research revealed that in contrast to the prescriptive '20-minute career quiz' approach, students would benefit from a low-commitment, user-first, and engaging exploration of the available career landscape.
 
