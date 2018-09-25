@@ -55,9 +55,12 @@ const ContactForm = styled.div`
     grid-auto-flow: column;
     align-items: center;
     justify-items: center;
-    grid-gap: 20px;
+    grid-gap: 0;
+    span {
+      justify-self: right;
+    }
     svg {
-      margin-right: -20px;
+      margin-right: 0;
     }
   }
   button {

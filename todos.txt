@@ -2,16 +2,7 @@
 - on desktop (only?), increase spacing after header
 - apply to jobs!!!
 
-responsive:
-- check mobile, tablet, wide desktop views
--desktop: set max-width of canvas to prevent link breaks
-- size main page grid container
-- size projects pages
-u
-
-
-
-
+- fix canvas circle radii on resize
 
 
 finally:
