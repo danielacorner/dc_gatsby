@@ -57,6 +57,7 @@ class Layout extends Component {
             },
           ]}
         >
+          <link rel="icon" type="image/png" href="../images/logos/react.png" />
           <link
             href="https://fonts.googleapis.com/css?family=Oxygen+Mono"
             rel="stylesheet"
