@@ -12,17 +12,12 @@ import InfoIcon from "@material-ui/icons/InfoOutlined";
 import OpenIcon from "@material-ui/icons/OpenInNewOutlined";
 
 const Wrapper = styled.aside`
-  /* todo: increase mobile perspective */
-  perspective: 800px;
-  @media (max-width: 540px) {
-    perspective: 600px;
-  }
   .listRoot {
-    transform: rotateY(90deg) translateZ(-200px) translateX(50px);
+    /* transform: rotateY(90deg) translateZ(-200px) translateX(50px); */
   }
   &.enter {
     .listRoot {
-      transform: rotateY(0) translateX(-5px) translateZ(0);
+      /* transform: rotateY(0) translateX(-5px) translateZ(0); */
     }
   }
   .listRoot {
@@ -30,137 +25,85 @@ const Wrapper = styled.aside`
     --lightgreyborder: 3px solid rgba(114, 114, 114, 0.9);
     padding: 0;
     margin-left: 0;
-    background: var(--grey);
-    position: sticky;
-    top: 0;
-    height: 99.9vh;
-    max-height: 99.9vh;
-    @media (max-height: 860px) {
-    }
-    overflow-y: hidden;
-    overflow-x: hidden;
     transition: all 0.5s ease-in-out;
-    display: grid;
-    /* listRoot > ul > listItem > projectLink + badges */
+    /* listRoot > ul > listItem > projectTitle + badges */
     .ul {
-      height: 100%;
+      padding: 120px 20px;
+      display: grid;
+      grid-gap: 130px;
+      justify-content: center;
+      /* grid-template-rows: repeat(auto-fill, auto); */
       margin: 0;
       margin-left: 0px;
-      &:first-child {
+      .listItem {
+        background: var(--grey);
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+          0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        opacity: 1;
         display: grid;
-        grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
-        @media (max-height: 860px) {
-          grid-template-rows: none;
-          height: auto;
-        }
-        .listItem {
-          opacity: 1;
-          display: grid;
-          grid-template-rows: repeat(auto-fit, auto);
-          grid-gap: 0px;
-          justify-items: start;
-          align-content: space-evenly;
-          padding: 0 0 0 4px;
+        grid-template-rows: 90px auto auto auto;
+        grid-gap: 10px;
+        justify-content: center;
+        justify-items: center;
+        align-content: start;
+        text-align: center;
+        padding: 0 30px 20px 30px;
+        margin: 0;
+        height: auto;
+        transition: all ease-in-out 0.15s;
+        .heroImg {
+          box-shadow: 0 -2px 16px 2px rgba(0, 0, 0, 0.24);
+          width: 180px;
+          height: 180px;
           margin: 0;
-          transition: all ease-in-out 0.15s;
-          @media (max-height: 860px) {
-            /* grid-template-rows: repeat(auto-fit, minmax(100px, 1fr)); */
-            height: auto;
-          }
-          .projectLink {
-            cursor: default;
-            border: none;
-            background: none;
-            padding-left: 16px;
-            margin-bottom: 5px;
-            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-            font-size: 14px;
-            text-align: left;
-            text-transform: none;
-            text-decoration: none;
-            color: #eaeaea;
-            &:hover {
-              background-color: rgba(0, 0, 0, 0);
-            }
-          }
-          div.actionButtons {
-            transition: all 0.15s ease-in-out;
-            transform: translateX(0px);
-          }
-          &.glow {
-            div.actionButtons {
-              transform: translateX(-5px);
-            }
-            box-sizing: border-box;
-            transform: translateX(5px);
-            border-left: 5px solid #ffca2d;
-            /* margin-right: -10px; */
-            background: rgba(255, 255, 255, 0.1);
-            .projectLink {
-              text-decoration: underline;
-            }
-          }
-          &.selected {
-            color: black;
-          }
-          .badges {
-            padding-left: 16px;
-            display: grid;
-            grid-template-rows: 24px;
-            grid-auto-flow: column;
-            grid-column-gap: 5px;
-            justify-items: center;
-            justify-content: center;
+          margin-top: -90px;
+          border-radius: 100%;
+        }
+        .projectTitle {
+          padding: 0;
+          cursor: default;
+          border: none;
+          background: none;
+          font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+          font-size: 18px;
+          text-align: center;
+          text-transform: none;
+          text-decoration: none;
+          color: #eaeaea;
+          &:hover {
+            background-color: rgba(0, 0, 0, 0);
           }
         }
-      }
-    }
-    width: 255px;
-    @media (max-width: 540px) {
-      width: 225px;
-      .listItem {
-        padding: 0;
-        transform: translateX(-5px) scale(0.85);
-        .projectLink {
-          max-width: 200px;
+        .badges {
+          padding-bottom: 5px;
+          display: grid;
+          grid-template-rows: 24px;
+          grid-auto-flow: column;
+          grid-column-gap: 5px;
+          justify-items: center;
+          justify-content: center;
         }
-      }
-    }
-    @media (max-height: 860px) {
-      overflow-y: scroll;
-      .listItem {
-        transform: translateX(-5px) scale(0.85);
+        .caption {
+          color: #eaeaea;
+          padding-bottom: 5px;
+        }
       }
     }
   }
 `;
 
 const ActionButtons = styled.div`
-  height: 0px;
-  opacity: 0;
   transition: all 0.1s ease-in-out;
-  pointer-events: none;
-  &.visible {
-    pointer-events: auto;
-    margin-top: 10px;
-    height: 38px;
-    opacity: 1;
-  }
   display: grid;
   grid-auto-flow: column;
   grid-gap: 10px;
-  margin-left: 18px;
   @media (max-width: 540px) {
-    grid-gap: 0px;
-    margin-left: 5px;
-    button {
-      transform: scale(0.9);
-    }
+    grid-gap: 20px;
+    place-items: center center;
     span {
-      font-size: 12px;
-      svg {
-        transform: scale(0.8);
-      }
+      font-size: 18px;
     }
   }
   button {
@@ -168,10 +111,9 @@ const ActionButtons = styled.div`
     padding: 0;
     border-radius: 4px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 14px;
     border-radius: 4px;
-    width: 105px;
-    height: 38px;
+    width: 145px;
+    height: 45px;
     text-transform: none;
     background: rgba(255, 255, 255, 0.08);
     color: lightpink;
@@ -200,10 +142,11 @@ const ActionButtons = styled.div`
         height: 24px;
         color: inherit;
         margin-top: -1px;
-        margin-right: -2px;
+        margin-left: 0px;
+        margin-right: -15px;
       }
       display: grid;
-      grid-gap: 2px;
+      grid-gap: 10px;
       grid-template-columns: auto auto;
     }
     .jss72 {
@@ -214,7 +157,7 @@ const ActionButtons = styled.div`
 
 const styles = {};
 
-class ProjectsList extends Component {
+class ProjectsListMobile extends Component {
   state = {
     visibleButtonsID: null,
   };
@@ -270,7 +213,7 @@ class ProjectsList extends Component {
 
     return (
       <Wrapper className={popup && "enter"}>
-        {/* listRoot > ul > listItem > projectLink + badges */}
+        {/* listRoot > ul > listItem > projectTitle + badges */}
         <List className="listRoot">
           <ul className="ul" style={{ margin: "0" }}>
             {projects
@@ -286,8 +229,9 @@ class ProjectsList extends Component {
                     this.props.onChangeVisibility(project.frontmatter.id);
                   }}
                 >
+                  <img className="heroImg" src={project.frontmatter.imgThumb} />
                   <Button
-                    className="projectLink"
+                    className="projectTitle"
                     disableRipple={true}
                     disableTouchRipple={true}
                   >
@@ -298,9 +242,11 @@ class ProjectsList extends Component {
                       return <SvgIcons key={tool.toString()} tool={tool} />;
                     })}
                   </Typography>
+                  <Typography className="caption" variant="subheading">
+                    {project.frontmatter.caption}
+                  </Typography>
                   <ActionButtons
-                    className={`${visibleButtonsID === project.frontmatter.id &&
-                      `visible`} actionButtons`}
+                    className={`visible actionButtons`}
                     id={`actionButtons_${project.frontmatter.id}`}
                   >
                     <Button
@@ -334,4 +280,4 @@ class ProjectsList extends Component {
   }
 }
 
-export default withStyles(styles)(ProjectsList);
+export default withStyles(styles)(ProjectsListMobile);

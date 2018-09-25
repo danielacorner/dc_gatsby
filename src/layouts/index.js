@@ -49,7 +49,7 @@ class Layout extends Component {
             {
               name: "description",
               content:
-                "This is a web developer portfolio page for Daniel Corner, using Gatsby and React.",
+                "Web developer portfolio page for Daniel Corner, using Gatsby and React.",
             },
             {
               name: "keywords",

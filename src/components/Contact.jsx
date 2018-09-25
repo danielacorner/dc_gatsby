@@ -90,9 +90,9 @@ const ContactForm = styled.div`
       background: rgba(255, 255, 255, 0.125);
       color: rgba(0, 0, 0, 0.6);
     }
-    .jss72 {
-      display: none;
-    }
+  }
+  #sendButton .jss72 {
+    display: none;
   }
 `;
 

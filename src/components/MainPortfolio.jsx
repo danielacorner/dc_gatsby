@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 // import { withStyles } from "@material-ui/core";
 import ProjectsList from "./ProjectsList";
+import ProjectsListMobile from "./ProjectsListMobile";
 import Contact from "./Contact";
 import Header from "./Header";
 import D3Wrapper from "./D3Wrapper";
@@ -32,6 +33,11 @@ const Portfolio = styled.div`
   grid-template-rows:
     minmax(1400px, 135vh) minmax(90px, 10vh) minmax(1333px, 150vh)
     minmax(888px, 100vh);
+  @media (max-width: 481px) {
+    grid-template-rows:
+      minmax(1400px, 135vh) minmax(90px, 10vh) auto
+      minmax(888px, 100vh);
+  }
 
   grid-template-columns: 1fr;
   #hero {
@@ -47,9 +53,10 @@ const Portfolio = styled.div`
 const LatestWorkTitle = styled.h2`
   transition: opacity 0.5s;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 30px 0;
   color: #ffca2d;
   font-family: "Oxygen Mono", monospace;
+  font-size: 20px;
   align-self: end;
   opacity: 0;
   &.simStart {
@@ -100,6 +107,7 @@ export default class MainPortfolio extends Component {
     popup: false,
     lastScrollTop: 0,
     visibleButtonsID: null,
+    isMobileWidth: null,
   };
   getCookie = cname => {
     var name = cname + "=";
@@ -123,8 +131,12 @@ export default class MainPortfolio extends Component {
     // const shallowClone = d => Object.assign({}, ...d);
     const newNodes = deepClone(edges.map(d => d.node.frontmatter));
 
+    const isMobileWidth = window.innerWidth <= 480;
+    console.log({ isMobileWidth });
+
     this.setState({
       nodes: newNodes,
+      isMobileWidth: isMobileWidth,
     });
   };
 
@@ -191,7 +203,8 @@ export default class MainPortfolio extends Component {
       document.getElementById("interest3").classList.remove("revealed");
     }
 
-    if (latestWorkTitle.top < window.innerHeight / 2) {
+    // show latest work title when it's above 1/3 height
+    if (latestWorkTitle.top < window.innerHeight / 3) {
       document.querySelector(".latestWorkTitle").classList.add("simStart");
     } else {
       document.querySelector(".latestWorkTitle").classList.remove("simStart");
@@ -256,7 +269,13 @@ export default class MainPortfolio extends Component {
 
   render() {
     const { data, scrollFraction } = this.props;
-    const { nodes, popup, simStart, visibleButtonsID } = this.state;
+    const {
+      nodes,
+      popup,
+      simStart,
+      visibleButtonsID,
+      isMobileWidth,
+    } = this.state;
 
     const projects = data.allMarkdownRemark.edges
       .map(p => p.node)
@@ -270,26 +289,36 @@ export default class MainPortfolio extends Component {
         <Header className={"header"} popup={popup} />
 
         <LatestWorkTitle className="latestWorkTitle">
-          Some of my latest work...
+          Here's what I've been working on:
         </LatestWorkTitle>
 
-        <GridLeftRight id="projectsGrid">
-          {/* sticky projects list aside (left on desktop, bottom on mobile) */}
-          <ProjectsList
+        {!isMobileWidth && (
+          <GridLeftRight id="projectsGrid">
+            {/* sticky projects list aside (left on desktop, bottom on mobile) */}
+            <ProjectsList
+              popup={popup}
+              projects={projects}
+              visibleButtonsID={visibleButtonsID}
+              onChangeVisibility={id => this.handleChangeVisibility(id)}
+            />
+
+            <div className="gridVerticalSimulation">
+              <D3Wrapper
+                onNodeClick={id => this.handleChangeVisibility(id)}
+                nodes={nodes}
+                simStart={simStart}
+              />
+            </div>
+          </GridLeftRight>
+        )}
+        {isMobileWidth && (
+          <ProjectsListMobile
             popup={popup}
             projects={projects}
             visibleButtonsID={visibleButtonsID}
             onChangeVisibility={id => this.handleChangeVisibility(id)}
           />
-
-          <div className="gridVerticalSimulation">
-            <D3Wrapper
-              onNodeClick={id => this.handleChangeVisibility(id)}
-              nodes={nodes}
-              simStart={simStart}
-            />
-          </div>
-        </GridLeftRight>
+        )}
         <Contact className="contact" />
       </Portfolio>
     );
