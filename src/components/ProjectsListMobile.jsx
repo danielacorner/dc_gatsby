@@ -98,13 +98,10 @@ const ActionButtons = styled.div`
   transition: all 0.1s ease-in-out;
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 10px;
-  @media (max-width: 540px) {
-    grid-gap: 20px;
-    place-items: center center;
-    span {
-      font-size: 18px;
-    }
+  grid-gap: 20px;
+  place-items: center center;
+  span {
+    font-size: 18px;
   }
   button {
     cursor: pointer;
@@ -151,6 +148,13 @@ const ActionButtons = styled.div`
     }
     .jss72 {
       display: none;
+    }
+  }
+  @media (max-width: 410px) {
+    grid-auto-flow: row;
+    grid-gap: 10px;
+    button {
+      width: 50vw;
     }
   }
 `;
