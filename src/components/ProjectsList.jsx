@@ -68,6 +68,8 @@ const Wrapper = styled.aside`
             height: auto;
           }
           .projectLink {
+            transition: all 0.5s ease-in-out;
+            height: auto;
             cursor: default;
             border: none;
             background: none;
@@ -86,7 +88,8 @@ const Wrapper = styled.aside`
           }
           .caption {
             opacity: 0;
-            height: 0;
+            height: auto;
+            max-height: 0;
             font-size: 14px;
             font-family: Roboto, Helvetica, Arial, sans-serif;
             padding: 0 20px;
@@ -99,14 +102,13 @@ const Wrapper = styled.aside`
           }
           &.open {
             .projectLink {
-              transition: all 0.25 ease-in-out;
               font-size: 16px;
               color: #ffca2d;
               text-decoration: underline;
             }
             .caption {
               opacity: 1;
-              height: auto;
+              max-height: 500px;
             }
           }
           &.glow {
@@ -118,8 +120,6 @@ const Wrapper = styled.aside`
             border-left: 5px solid #ffca2d;
             /* margin-right: -10px; */
             background: rgba(255, 255, 255, 0.1);
-            .projectLink {
-            }
           }
           &.selected {
             color: black;
