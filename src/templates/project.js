@@ -52,6 +52,7 @@ const ProjectPage = styled.main`
       margin: auto auto 20px auto;
     }
     .badges {
+      height: 24px;
       margin: 0 10%;
       display: grid;
       grid-auto-flow: column;
@@ -59,7 +60,7 @@ const ProjectPage = styled.main`
       align-items: center;
     }
     p {
-      margin: 18px 0;
+      margin: 16px 8px;
       font-family: "Roboto", sans-serif;
       color: rgba(255, 255, 255, 0.8);
     }
@@ -87,6 +88,11 @@ const ProjectPage = styled.main`
       @media (min-width: 550px) {
         grid-gap: 50px;
       }
+      @media (max-width: 428px) {
+        margin: 0 10%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
     }
     button {
       &.visitSiteButton {
@@ -107,7 +113,6 @@ const ProjectPage = styled.main`
       }
       font-size: 16px;
       @media (max-width: 435px) {
-        font-size: 3vw;
       }
       height: 50px;
       text-transform: none;
@@ -126,6 +131,9 @@ const ProjectPage = styled.main`
 
 const HeroImg = styled.img`
   max-height: 500px;
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+
   /* width: auto; */
   /* position: absolute; */
   /* margin: 5vw 10vw 26px 10vw; */
