@@ -71,7 +71,7 @@ const Wrapper = styled.aside`
             height: auto;
           }
           .projectLink {
-            /* transition: all 0.5s ease-in-out; */
+            transition: all 0.4s ease-out;
             /* height: auto; */
             cursor: default;
             border: none;
