@@ -56,7 +56,7 @@ const Wrapper = styled.aside`
         .listItem {
           opacity: 1;
           display: grid;
-          grid-template-rows: repeat(auto-fit, auto);
+          /* grid-template-rows: repeat(auto-fit, auto); */
           grid-gap: 0px;
           justify-items: start;
           align-content: space-evenly;
@@ -68,8 +68,8 @@ const Wrapper = styled.aside`
             height: auto;
           }
           .projectLink {
-            transition: all 0.5s ease-in-out;
-            height: auto;
+            /* transition: all 0.5s ease-in-out; */
+            /* height: auto; */
             cursor: default;
             border: none;
             background: none;
@@ -94,10 +94,11 @@ const Wrapper = styled.aside`
             font-family: Roboto, Helvetica, Arial, sans-serif;
             padding: 0 20px;
             color: #eaeaea;
-            transition: all 0.25s ease-in-out;
+            transition: all 0.4s ease-out;
           }
           div.actionButtons {
-            transition: all 0.15s ease-in-out;
+            margin-top: 1px;
+            transition: all 0.4s ease-out;
             transform: translateX(0px);
           }
           &.open {
@@ -108,7 +109,7 @@ const Wrapper = styled.aside`
             }
             .caption {
               opacity: 1;
-              max-height: 500px;
+              max-height: 100px;
             }
           }
           &.glow {

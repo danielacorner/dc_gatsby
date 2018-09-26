@@ -8,6 +8,8 @@ import "./animations.css";
 import "./simulation.css";
 import SvgIcons from "../components/SvgIcons";
 
+import ReactPNG from "../images/logos/react.png";
+
 const Page = styled.div`
   width: 100%;
   display: grid;
@@ -57,7 +59,7 @@ class Layout extends Component {
             },
           ]}
         >
-          <link rel="icon" type="image/png" href="../images/logos/react.png" />
+          <link rel="icon" type="image/png" href={ReactPNG} />
           <link
             href="https://fonts.googleapis.com/css?family=Oxygen+Mono"
             rel="stylesheet"
