@@ -90,7 +90,7 @@ const Wrapper = styled.aside`
             }
           }
           .caption {
-            line-height: 1.4em;
+            line-height: 1.3em;
             opacity: 0;
             height: auto;
             max-height: 0;
