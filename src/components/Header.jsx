@@ -23,6 +23,9 @@ const HeroDiv = styled.div`
   transform: scale(1);
   place-items: center center;
   padding: 19% 0;
+  @media (min-width: 1050px) {
+    padding: 200px 0;
+  }
 
   grid-template-rows: 300px 1fr;
   div {
@@ -93,7 +96,7 @@ const HeroDiv = styled.div`
     overflow-wrap: initial;
     overflow: hidden;
     border-right: 0.5ch solid rgba(255, 255, 255, 0.75);
-    @media (max-width: 376px) {
+    @media (max-width: 460px) {
       font-size: 28px;
     }
     @media (max-width: 330px) {
@@ -137,12 +140,12 @@ class Header extends Component {
             <ul>
               <li id="interest1">
                 <p>Data visualization and wrangling</p>
-                <p className="listCaption">Excel | JavaScript</p>
+                <p className="listCaption">JavaScript | D3.js | Excel</p>
               </li>
               <li id="interest2">
                 <p>Front-end and CSS frameworks </p>
                 <p className="listCaption">
-                  React | Angular | Vue | Materialize | CSS Grid
+                  React | Angular | Materialize | CSS Grid
                 </p>
               </li>
               <li id="interest3">

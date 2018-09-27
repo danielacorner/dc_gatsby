@@ -10,12 +10,6 @@ export default class ForceSimulation extends Component {
   componentDidMount() {
     const { graph, onNodeClick } = this.props;
 
-    const tooltip = d3
-      .select("body")
-      .append("div")
-      .attr("class", "tooltip")
-      .style("opacity", 0);
-
     const canvas = document.querySelector(".canvas").getBoundingClientRect();
 
     const node = d3.select(".canvas").selectAll(".node");
@@ -216,7 +210,7 @@ export default class ForceSimulation extends Component {
         );
       }
       function dragstarted(d) {
-        onNodeClick(d.id);
+        onNodeClick(d);
 
         if (!d3.event.active) {
           simulation.alphaTarget(0.3).restart();

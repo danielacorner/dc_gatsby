@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 // import { withStyles } from "@material-ui/core";
 import ProjectsList from "./ProjectsList";
+import ProjectsListMobile from "./ProjectsListMobile";
 import Contact from "./Contact";
 import Header from "./Header";
 import D3Wrapper from "./D3Wrapper";
-import _ from "lodash";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
@@ -32,6 +32,11 @@ const Portfolio = styled.div`
   grid-template-rows:
     minmax(1400px, 135vh) minmax(90px, 10vh) minmax(1333px, 150vh)
     minmax(888px, 100vh);
+  @media (max-width: 481px) {
+    grid-template-rows:
+      minmax(1400px, 135vh) minmax(90px, 10vh) auto
+      minmax(888px, 100vh);
+  }
 
   grid-template-columns: 1fr;
   #hero {
@@ -42,14 +47,25 @@ const Portfolio = styled.div`
   .header {
     width: 100%;
   }
+  #projectsListMobile {
+    transition: all 0.25s cubic-bezier(0.4, 0.56, 0.11, 0.96);
+    &.swoosh {
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+  }
 `;
 
 const LatestWorkTitle = styled.h2`
   transition: opacity 0.5s;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 30px 0;
   color: #ffca2d;
   font-family: "Oxygen Mono", monospace;
+  font-size: 20px;
+  @media (min-width: 800px) {
+    font-size: 24px;
+  }
   align-self: end;
   opacity: 0;
   &.simStart {
@@ -100,7 +116,9 @@ export default class MainPortfolio extends Component {
     popup: false,
     lastScrollTop: 0,
     visibleButtonsID: null,
+    isMobile: false,
   };
+
   getCookie = cname => {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -128,13 +146,21 @@ export default class MainPortfolio extends Component {
     });
   };
 
+  throttledHandleWindowResize = () => {
+    // _.throttle(() => {
+    this.setState({ isMobile: window.innerWidth <= 480 });
+    // }, 200);
+  };
+
   componentWillUnmount = () => {
     window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("resize", this.throttledHandleWindowResize);
   };
 
   componentDidMount = () => {
     window.addEventListener("scroll", this.handleScroll);
-
+    window.addEventListener("resize", this.throttledHandleWindowResize);
+    this.throttledHandleWindowResize();
     // check scroll height if navigating to page already-scrolled
     this.handleScroll();
 
@@ -147,8 +173,15 @@ export default class MainPortfolio extends Component {
 
     // if navigating from project page, scroll back to projects grid
     const previousUrl = this.getCookie("previousUrl");
+
     previousUrl !== "" &&
-      setTimeout(() => document.querySelector(".canvas").scrollIntoView(), 0);
+      setTimeout(() => {
+        const listRoot = document.querySelector(".listRoot");
+        listRoot.style.animation =
+          "swooshInRight 0.25s cubic-bezier(0.26, 1.02, 0.98, 0.94)";
+        listRoot.scrollIntoView();
+        // listRoot.style.transition = 'all 0.5s cubic-bezier(0.26, 1.02, 0.98, 0.94)';
+      }, 0);
     // clear cookie (to only scroll after navigating back from project)
     document.cookie = `previousUrl=; path=/;`;
   };
@@ -191,7 +224,8 @@ export default class MainPortfolio extends Component {
       document.getElementById("interest3").classList.remove("revealed");
     }
 
-    if (latestWorkTitle.top < window.innerHeight / 2) {
+    // show latest work title when it's above 1/3 height
+    if (latestWorkTitle.top < window.innerHeight / 3) {
       document.querySelector(".latestWorkTitle").classList.add("simStart");
     } else {
       document.querySelector(".latestWorkTitle").classList.remove("simStart");
@@ -250,13 +284,18 @@ export default class MainPortfolio extends Component {
     }
   };
 
-  handleChangeVisibility = id => {
-    this.setState({ visibleButtonsID: id });
+  handleExpandProjectListItem = d => {
+    const opened = document.querySelector(".open");
+    opened && opened.classList.remove("open");
+
+    document.querySelector(`#listItem_${d.id}`).classList.add("open");
+
+    this.setState({ visibleButtonsID: d.id });
   };
 
   render() {
     const { data, scrollFraction } = this.props;
-    const { nodes, popup, simStart, visibleButtonsID } = this.state;
+    const { nodes, popup, simStart, visibleButtonsID, isMobile } = this.state;
 
     const projects = data.allMarkdownRemark.edges
       .map(p => p.node)
@@ -270,26 +309,31 @@ export default class MainPortfolio extends Component {
         <Header className={"header"} popup={popup} />
 
         <LatestWorkTitle className="latestWorkTitle">
-          Some of my latest work...
+          Here's what I've been working on:
         </LatestWorkTitle>
 
-        <GridLeftRight id="projectsGrid">
-          {/* sticky projects list aside (left on desktop, bottom on mobile) */}
-          <ProjectsList
-            popup={popup}
-            projects={projects}
-            visibleButtonsID={visibleButtonsID}
-            onChangeVisibility={id => this.handleChangeVisibility(id)}
-          />
-
-          <div className="gridVerticalSimulation">
-            <D3Wrapper
-              onNodeClick={id => this.handleChangeVisibility(id)}
-              nodes={nodes}
-              simStart={simStart}
+        {!isMobile && (
+          <GridLeftRight id="projectsGrid">
+            {/* sticky projects list aside (left on desktop, bottom on mobile) */}
+            <ProjectsList
+              popup={popup}
+              projects={projects}
+              visibleButtonsID={visibleButtonsID}
+              onClickListItem={d => this.handleExpandProjectListItem(d)}
             />
-          </div>
-        </GridLeftRight>
+
+            <div className="gridVerticalSimulation">
+              <D3Wrapper
+                onNodeClick={d => {
+                  this.handleExpandProjectListItem(d);
+                }}
+                nodes={nodes}
+                simStart={simStart}
+              />
+            </div>
+          </GridLeftRight>
+        )}
+        {isMobile && <ProjectsListMobile popup={popup} projects={projects} />}
         <Contact className="contact" />
       </Portfolio>
     );

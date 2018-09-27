@@ -8,6 +8,8 @@ import "./animations.css";
 import "./simulation.css";
 import SvgIcons from "../components/SvgIcons";
 
+import ReactPNG from "../images/logos/react.png";
+
 const Page = styled.div`
   width: 100%;
   display: grid;
@@ -49,7 +51,7 @@ class Layout extends Component {
             {
               name: "description",
               content:
-                "This is a web developer portfolio page for Daniel Corner, using Gatsby and React.",
+                "Web developer portfolio page for Daniel Corner, using Gatsby and React.",
             },
             {
               name: "keywords",
@@ -57,6 +59,7 @@ class Layout extends Component {
             },
           ]}
         >
+          <link rel="icon" type="image/png" href={ReactPNG} />
           <link
             href="https://fonts.googleapis.com/css?family=Oxygen+Mono"
             rel="stylesheet"

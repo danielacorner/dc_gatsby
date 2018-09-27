@@ -31,13 +31,13 @@
     "develop": "gatsby develop",
     "format": "prettier --write 'src/**/*.js'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "gatsby build && gh-pages -d public -b master"
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
   },
   "devDependencies": {
     "prettier": "^1.13.7"
   },
   "repository": {
     "type": "git",
-    "url": "https://dcorn068.github.io/"
+    "url": "https://dcorn068.github.io/dc_gatsby/"
   }
 }

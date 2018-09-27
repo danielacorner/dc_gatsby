@@ -27,9 +27,9 @@ const ProjectPage = styled.main`
     url("https://image.ibb.co/eUQPcK/ep_naturalblack.png");
   /* place-items: center center; */
   .wrapper {
-    animation: swooshInLeft 0.25s ease-in;
+    animation: swooshInLeft 0.25s cubic-bezier(0.26, 1.02, 0.98, 0.94);
     &.unmounting {
-      animation: swooshOutLeft 0.25s ease-in;
+      animation: swooshOutLeft 0.25s cubic-bezier(0.4, 0.56, 0.11, 0.96);
     }
 
     padding: 5%;
@@ -52,16 +52,24 @@ const ProjectPage = styled.main`
       margin: auto auto 20px auto;
     }
     .badges {
+      height: 24px;
       margin: 0 10%;
       display: grid;
       grid-auto-flow: column;
       justify-items: center;
       align-items: center;
+      * {
+        margin-bottom: 0;
+      }
     }
     p {
-      margin: 18px 0;
+      margin: 16px 8px;
       font-family: "Roboto", sans-serif;
       color: rgba(255, 255, 255, 0.8);
+      a {
+        margin: 0;
+        color: #569cd6;
+      }
     }
     .tools {
       font-family: "Roboto", sans-serif;
@@ -87,6 +95,11 @@ const ProjectPage = styled.main`
       @media (min-width: 550px) {
         grid-gap: 50px;
       }
+      @media (max-width: 428px) {
+        margin: 0 10%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
     }
     button {
       &.visitSiteButton {
@@ -107,7 +120,6 @@ const ProjectPage = styled.main`
       }
       font-size: 16px;
       @media (max-width: 435px) {
-        font-size: 3vw;
       }
       height: 50px;
       text-transform: none;
@@ -126,6 +138,9 @@ const ProjectPage = styled.main`
 
 const HeroImg = styled.img`
   max-height: 500px;
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+
   /* width: auto; */
   /* position: absolute; */
   /* margin: 5vw 10vw 26px 10vw; */

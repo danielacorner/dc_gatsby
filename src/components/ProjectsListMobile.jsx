@@ -12,19 +12,11 @@ import InfoIcon from "@material-ui/icons/InfoOutlined";
 import OpenIcon from "@material-ui/icons/OpenInNewOutlined";
 
 const Wrapper = styled.aside`
-  /* todo: increase mobile perspective */
-  perspective: 800px;
-  @media (max-width: 540px) {
-    perspective: 600px;
-  }
   .listRoot {
-    transform: translateX(-250px);
-    transition: all 0.4s cubic-bezier(0.25, 1.03, 0.88, 1.11);
     /* transform: rotateY(90deg) translateZ(-200px) translateX(50px); */
   }
   &.enter {
     .listRoot {
-      transform: translateX(-5px);
       /* transform: rotateY(0) translateX(-5px) translateZ(0); */
     }
   }
@@ -33,174 +25,92 @@ const Wrapper = styled.aside`
     --lightgreyborder: 3px solid rgba(114, 114, 114, 0.9);
     padding: 0;
     margin-left: 0;
-    background: var(--grey);
-    position: sticky;
-    top: 0;
-    height: 99.9vh;
-    max-height: 99.9vh;
-    @media (max-height: 860px) {
-    }
-    overflow-y: hidden;
-    overflow-x: hidden;
-    display: grid;
-    /* listRoot > ul > listItem > projectLink + badges */
+    transition: all 0.5s ease-in-out;
+    /* listRoot > ul > listItem > projectTitle + badges */
     .ul {
-      height: 100%;
+      padding: 120px 20px;
+      display: grid;
+      grid-gap: 130px;
+      justify-content: center;
+      /* grid-template-rows: repeat(auto-fill, auto); */
       margin: 0;
       margin-left: 0px;
-      &:first-child {
+      .listItem {
+        background: var(--grey);
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+          0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        opacity: 1;
         display: grid;
-        /* grid-template-rows: repeat(auto-fit, auto); */
-        @media (max-height: 860px) {
-          grid-template-rows: none;
-          height: auto;
-        }
-        .listItem {
-          perspective: 500px;
-          opacity: 1;
-          display: grid;
-          /* grid-template-rows: repeat(auto-fit, auto); */
-          grid-gap: 0px;
-          justify-items: start;
-          align-content: space-evenly;
-          padding: 0 0 0 4px;
+        grid-template-rows: 90px auto auto auto;
+        grid-gap: 10px;
+        justify-content: center;
+        justify-items: center;
+        align-content: start;
+        text-align: center;
+        padding: 0 30px 20px 30px;
+        margin: 0;
+        height: auto;
+        transition: all ease-in-out 0.15s;
+        .heroImg {
+          box-shadow: 0 -2px 16px 2px rgba(0, 0, 0, 0.24);
+          width: 180px;
+          height: 180px;
           margin: 0;
-          transition: all ease-in-out 0.15s;
-          @media (max-height: 860px) {
-            /* grid-template-rows: repeat(auto-fit, minmax(100px, 1fr)); */
-            height: auto;
-          }
-          .projectLink {
-            height: auto;
-            transition: all 0.4s ease-out;
-            /* height: auto; */
-            cursor: default;
-            border: none;
-            background: none;
-            padding-left: 16px;
-            padding-bottom: 0;
-            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-            font-size: 14px;
-            text-align: left;
-            margin-bottom: -5px;
-            text-transform: none;
-            text-decoration: none;
-            color: #eaeaea;
-            &:hover {
-              background-color: rgba(0, 0, 0, 0);
-            }
-          }
-          .caption {
-            line-height: 1.3em;
-            opacity: 0;
-            height: auto;
-            max-height: 0;
-            transform: rotateX(90deg);
-            font-size: 14px;
-            font-family: Roboto, Helvetica, Arial, sans-serif;
-            padding: 0 20px;
-            color: #eaeaea;
-            transition: all 0.4s ease-out;
-          }
-          div.actionButtons {
-            margin-top: 1px;
-            transition: all 0.4s ease-out;
-            transform: translateX(0px);
-          }
-          &.open {
-            .projectLink {
-              font-size: 16px;
-              color: #ffca2d;
-              text-decoration: underline;
-            }
-            .caption {
-              transform: rotateX(0);
-              opacity: 1;
-              max-height: 100px;
-            }
-          }
-          &.glow {
-            div.actionButtons {
-              transform: translateX(-5px);
-            }
-            box-sizing: border-box;
-            transform: translateX(5px);
-            border-left: 5px solid #ffca2d;
-            /* margin-right: -10px; */
-            background: rgba(255, 255, 255, 0.1);
-          }
-          &.selected {
-            color: black;
-          }
-          .badges {
-            padding-left: 16px;
-            display: grid;
-            grid-template-rows: 24px;
-            grid-auto-flow: column;
-            grid-column-gap: 5px;
-            justify-items: center;
-            justify-content: center;
+          margin-top: -90px;
+          border-radius: 100%;
+        }
+        .projectTitle {
+          padding: 0;
+          cursor: default;
+          border: none;
+          background: none;
+          font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+          font-size: 18px;
+          text-align: center;
+          text-transform: none;
+          text-decoration: none;
+          color: #eaeaea;
+          &:hover {
+            background-color: rgba(0, 0, 0, 0);
           }
         }
-      }
-    }
-    width: 255px;
-    @media (max-width: 540px) {
-      width: 225px;
-      .listItem {
-        padding: 0;
-        transform: translateX(-5px) scale(0.85);
-        .projectLink {
-          max-width: 200px;
+        .badges {
+          padding-bottom: 5px;
+          display: grid;
+          grid-template-rows: 24px;
+          grid-auto-flow: column;
+          grid-column-gap: 5px;
+          justify-items: center;
+          justify-content: center;
         }
-      }
-    }
-    @media (max-height: 860px) {
-      overflow-y: scroll;
-      .listItem {
-        transform: translateX(-5px) scale(0.85);
+        .caption {
+          color: #eaeaea;
+          padding-bottom: 5px;
+        }
       }
     }
   }
 `;
 
 const ActionButtons = styled.div`
-  height: 0px;
-  opacity: 0;
   transition: all 0.1s ease-in-out;
-  pointer-events: none;
-  &.visible {
-    pointer-events: auto;
-    margin-top: 10px;
-    height: 38px;
-    opacity: 1;
-  }
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 10px;
-  margin-left: 18px;
-  @media (max-width: 540px) {
-    grid-gap: 0px;
-    margin-left: 5px;
-    button {
-      transform: scale(0.9);
-    }
-    span {
-      font-size: 12px;
-      svg {
-        transform: scale(0.8);
-      }
-    }
+  grid-gap: 20px;
+  place-items: center center;
+  span {
+    font-size: 18px;
   }
   button {
     cursor: pointer;
     padding: 0;
     border-radius: 4px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 14px;
     border-radius: 4px;
-    width: 105px;
-    height: 38px;
+    width: 145px;
+    height: 45px;
     text-transform: none;
     background: rgba(255, 255, 255, 0.08);
     color: lightpink;
@@ -222,9 +132,6 @@ const ActionButtons = styled.div`
         background: #00008033;
       }
     }
-    .jss35 {
-      margin-bottom: 0;
-    }
     span {
       align-items: center;
       place-content: center center;
@@ -232,21 +139,29 @@ const ActionButtons = styled.div`
         height: 24px;
         color: inherit;
         margin-top: -1px;
-        margin-right: -2px;
+        margin-left: 0px;
+        margin-right: -15px;
       }
       display: grid;
-      grid-gap: 2px;
+      grid-gap: 10px;
       grid-template-columns: auto auto;
     }
     .jss72 {
       display: none;
     }
   }
+  @media (max-width: 410px) {
+    grid-auto-flow: row;
+    grid-gap: 10px;
+    button {
+      width: 50vw;
+    }
+  }
 `;
 
 const styles = {};
 
-class ProjectsList extends Component {
+class ProjectsListMobile extends Component {
   state = {
     visibleButtonsID: null,
   };
@@ -256,7 +171,7 @@ class ProjectsList extends Component {
 
     listItems.forEach(item => {
       item.addEventListener("mouseover", this.highlightProject);
-      // item.addEventListener("mouseout", this.unhighlightProject);
+      item.addEventListener("mouseout", this.unhighlightProject);
     });
   }
   highlightProject(e) {
@@ -287,9 +202,9 @@ class ProjectsList extends Component {
   }
   handleNavigate = path => {
     // add swoosh animation then navigate
-    const projectsGrid = document.getElementById("projectsGrid");
-    projectsGrid.addEventListener("transitionend", () => navigateTo(path));
-    projectsGrid.classList.add("swoosh");
+    const projectsList = document.getElementById("projectsListMobile");
+    projectsList.addEventListener("transitionend", () => navigateTo(path));
+    projectsList.classList.add("swoosh");
   };
   render() {
     const { projects, classes, popup, moreInfo, visibleButtonsID } = this.props;
@@ -301,8 +216,8 @@ class ProjectsList extends Component {
     const years = projects.map(p => p.frontmatter.year).filter(onlyUnique);
 
     return (
-      <Wrapper className={popup && "enter"}>
-        {/* listRoot > ul > listItem > projectLink + badges */}
+      <Wrapper className={popup && "enter"} id="projectsListMobile">
+        {/* listRoot > ul > listItem > projectTitle + badges */}
         <List className="listRoot">
           <ul className="ul" style={{ margin: "0" }}>
             {projects
@@ -315,27 +230,27 @@ class ProjectsList extends Component {
                   id={`listItem_${project.frontmatter.id}`}
                   data-circle={`circle_${project.frontmatter.id}`}
                   onClick={() => {
-                    this.props.onClickListItem(project.frontmatter);
+                    this.props.onChangeVisibility(project.frontmatter.id);
                   }}
                 >
-                  <p
-                    className="projectLink"
-                    // disableRipple={true}
-                    // disableTouchRipple={true}
+                  <img className="heroImg" src={project.frontmatter.imgThumb} />
+                  <Button
+                    className="projectTitle"
+                    disableRipple={true}
+                    disableTouchRipple={true}
                   >
                     {project.frontmatter.title}
-                  </p>
-                  <Typography className="caption" variant="caption">
-                    {project.frontmatter.caption}
-                  </Typography>
+                  </Button>
                   <Typography className="badges" variant="caption">
                     {project.frontmatter.tools.map(tool => {
                       return <SvgIcons key={tool.toString()} tool={tool} />;
                     })}
                   </Typography>
+                  <Typography className="caption" variant="subheading">
+                    {project.frontmatter.caption}
+                  </Typography>
                   <ActionButtons
-                    className={`${visibleButtonsID === project.frontmatter.id &&
-                      `visible`} actionButtons`}
+                    className={`visible actionButtons`}
                     id={`actionButtons_${project.frontmatter.id}`}
                   >
                     <Button
@@ -369,4 +284,4 @@ class ProjectsList extends Component {
   }
 }
 
-export default withStyles(styles)(ProjectsList);
+export default withStyles(styles)(ProjectsListMobile);

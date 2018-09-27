@@ -42,7 +42,7 @@ export default class SvgIcons extends Component {
     switch (tool) {
       case "Tableau":
         return (
-          <Tooltip title="Tableau">
+          <Tooltip enterTouchDelay={0} title="Tableau">
             <TableauImg>
               <img src={tableau} alt="Tableau" />
             </TableauImg>
@@ -51,49 +51,49 @@ export default class SvgIcons extends Component {
         break;
       case "GraphQL":
         return (
-          <Tooltip title="GraphQL">
+          <Tooltip enterTouchDelay={0} title="GraphQL">
             <IconImg src={graphql} alt="GraphQL" />
           </Tooltip>
         );
         break;
       case "es6":
         return (
-          <Tooltip title="ES6">
+          <Tooltip enterTouchDelay={0} title="ES6">
             <IconImg src={es6} alt="ES6" />
           </Tooltip>
         );
         break;
       case "MongoDB":
         return (
-          <Tooltip title="MongoDB">
+          <Tooltip enterTouchDelay={0} title="MongoDB">
             <IconImg src={mongodb} alt="MongoDB" />
           </Tooltip>
         );
         break;
       case "Node.js":
         return (
-          <Tooltip title="Node.js">
+          <Tooltip enterTouchDelay={0} title="Node.js">
             <IconImg src={nodejs} alt="Node.js" />
           </Tooltip>
         );
         break;
       case "React":
         return (
-          <Tooltip title="React">
+          <Tooltip enterTouchDelay={0} title="React">
             <IconImg src={react} alt="React" />
           </Tooltip>
         );
         break;
       case "Angular":
         return (
-          <Tooltip title="Angular">
+          <Tooltip enterTouchDelay={0} title="Angular">
             <IconImg src={angular} alt="Angular" />
           </Tooltip>
         );
         break;
       case "JavaScript":
         return (
-          <Tooltip title="JavaScript">
+          <Tooltip enterTouchDelay={0} title="JavaScript">
             <IconImg src={javascript} alt="JavaScript" />
           </Tooltip>
         );
@@ -101,7 +101,7 @@ export default class SvgIcons extends Component {
       case "CSS":
       case "CSS3":
         return (
-          <Tooltip title="CSS3">
+          <Tooltip enterTouchDelay={0} title="CSS3">
             <IconImg src={css3} alt="CSS3" />
           </Tooltip>
         );
@@ -109,28 +109,28 @@ export default class SvgIcons extends Component {
       case "HTML":
       case "HTML5":
         return (
-          <Tooltip title="HTML5">
+          <Tooltip enterTouchDelay={0} title="HTML5">
             <IconImg src={html5} alt="HTML5" />
           </Tooltip>
         );
         break;
       case "Excel":
         return (
-          <Tooltip title="Excel">
+          <Tooltip enterTouchDelay={0} title="Excel">
             <IconImg src={excel} alt="Excel" />
           </Tooltip>
         );
         break;
       case "Materialize CSS":
         return (
-          <Tooltip title="Materialize CSS">
+          <Tooltip enterTouchDelay={0} title="Materialize CSS">
             <IconImg src={materializecss} alt="Materialize CSS" />
           </Tooltip>
         );
         break;
       case "Material-UI":
         return (
-          <Tooltip title="Material-UI">
+          <Tooltip enterTouchDelay={0} title="Material-UI">
             <IconImg src={materialui} alt="Material-UI" />
           </Tooltip>
         );
@@ -138,21 +138,21 @@ export default class SvgIcons extends Component {
       case "Sass":
       case "SCSS":
         return (
-          <Tooltip title="Sass">
+          <Tooltip enterTouchDelay={0} title="Sass">
             <IconImg src={sass} alt="Sass" />
           </Tooltip>
         );
         break;
       case "D3.js":
         return (
-          <Tooltip title="D3.js">
+          <Tooltip enterTouchDelay={0} title="D3.js">
             <IconImg src={d3js} alt="D3.js" />
           </Tooltip>
         );
         break;
       case "jQuery":
         return (
-          <Tooltip title="jQuery">
+          <Tooltip enterTouchDelay={0} title="jQuery">
             <IconImg src={jquery} alt="jQuery" />
           </Tooltip>
         );

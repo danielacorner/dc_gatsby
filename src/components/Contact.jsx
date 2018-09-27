@@ -16,6 +16,9 @@ const ContactForm = styled.div`
     margin: auto 0;
     width: 100%;
   }
+  @media (min-width: 1370px) {
+    margin-bottom: 19vw;
+  }
   border-radius: 4px;
 
   display: grid;
@@ -53,8 +56,19 @@ const ContactForm = styled.div`
   #sendButton span {
     display: grid;
     grid-auto-flow: column;
-    place-items: center stretch;
-    margin-top: 1px;
+    align-items: center;
+    justify-items: center;
+    grid-gap: 0;
+    justify-content: normal;
+    span {
+      justify-self: right;
+    }
+    svg {
+      margin-right: 0;
+    }
+    .jss35 {
+      margin: 8px 0;
+    }
   }
   button {
     pointer-events: auto;
@@ -70,7 +84,7 @@ const ContactForm = styled.div`
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 14px;
     border-radius: 4px;
-    width: 200px;
+    width: 150px;
     margin: 10px auto 20px auto;
     display: grid;
     place-items: center center;
@@ -81,7 +95,6 @@ const ContactForm = styled.div`
       height: 24px;
       margin-bottom: 0;
       justify-self: center;
-      margin-right: -76px;
     }
     &:hover {
       background: rgb(6, 140, 251, 0.7);
@@ -90,9 +103,9 @@ const ContactForm = styled.div`
       background: rgba(255, 255, 255, 0.125);
       color: rgba(0, 0, 0, 0.6);
     }
-    .jss72 {
-      display: none;
-    }
+  }
+  #sendButton .jss72 {
+    display: none;
   }
 `;
 
