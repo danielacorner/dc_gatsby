@@ -13,6 +13,5 @@ module.exports = {
         name: "pages",
       },
     },
-  ],
-  pathPrefix: `/dc_gatsby`,
+  ]
 };
