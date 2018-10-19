@@ -140,7 +140,15 @@ export default class MainPortfolio extends Component {
     const { edges } = this.props.data.allMarkdownRemark;
     const deepClone = d => JSON.parse(JSON.stringify(d));
     // const shallowClone = d => Object.assign({}, ...d);
-    const newNodes = deepClone(edges.map(d => d.node.frontmatter));
+    const newNodes = deepClone(
+      edges
+        .map(d => d.node.frontmatter)
+        // assign [1-7] to id
+        .map((d, idx) => {
+          d.id = idx + 1;
+          return d;
+        })
+    );
 
     this.setState({
       nodes: newNodes,
@@ -318,8 +326,9 @@ export default class MainPortfolio extends Component {
         </LatestWorkTitle>
 
         {!isMobile && (
-          <GridLeftRight id="projectsGrid"
-            style={{pointerEvents: popup ? 'auto' : 'none'}}
+          <GridLeftRight
+            id="projectsGrid"
+            style={{ pointerEvents: popup ? "auto" : "none" }}
           >
             {/* sticky projects list aside (left on desktop, bottom on mobile) */}
             <ProjectsList
@@ -341,7 +350,7 @@ export default class MainPortfolio extends Component {
           </GridLeftRight>
         )}
         {isMobile && <ProjectsListMobile popup={popup} projects={projects} />}
-          <Contact className="contact" />
+        <Contact className="contact" />
       </Portfolio>
     );
   }
