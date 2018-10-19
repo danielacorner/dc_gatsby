@@ -15,4 +15,4 @@ An interactive data visualization of Canada's jobs, Pave takes overwhelming data
 
 This design is for high school students, and it intends to remain fun and engaging while helping students make the 'decision of their life'.
 
-This is the second-iteration prototype, and it served as my introduction to web development.
+This is the second-iteration prototype, and it served as my introduction to web development. You might notice that, as a saucy 6000-line tangle of JavaScript spaghetti, it's... not very performant.

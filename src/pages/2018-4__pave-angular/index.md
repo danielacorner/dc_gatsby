@@ -13,6 +13,6 @@ website: "https://dcorn068.github.io/pave-angular/"
 
 An interactive data visualization of Canada's jobs, Pave takes overwhelming data and allows users to quickly drill down into the areas that interest them.
 
-Now targeting international students and users of all ages, this design is more mature and compact.
+Now targeting users of all ages and backgrounds, this design is more mature and compact. My team is also beginning to focus on accessibility -- you'll notice a toggle switch at the bottom for a mobile-friendly static viz.
 
-Using the Angular front-end framework, this project incorporates the paradigms of functional programming by remaining abstract and composable, and of object-oriented programming by encapsulating components into independent modules.
+Using the Angular front-end framework, this iteration incorporates the paradigms of functional programming by remaining abstract and composable, and of object-oriented programming by encapsulating components into independent modules.

@@ -39,6 +39,7 @@ const ProjectPage = styled.main`
     position: relative;
     grid-template-rows: auto auto auto 1fr;
     h1 {
+      line-height: 1.5em;
       text-align: center;
       color: #ffca2d;
       font-family: "Oxygen Mono", monospace;
@@ -49,7 +50,7 @@ const ProjectPage = styled.main`
       @media (max-width: 500px) {
         font-size: 20px;
       }
-      margin: auto auto 20px auto;
+      margin: auto auto 0.6em auto;
     }
     .badges {
       height: 24px;
@@ -158,7 +159,9 @@ export default function Template({ data }) {
     <ProjectPage id="projectPage">
       <div className="wrapper">
         <HeroImg src={project.frontmatter.image} />
-        <h1>{project.frontmatter.title}</h1>
+        <h1 style={{ lineHeight: "1.5em", marginBottom: "0.4em" }}>
+          {project.frontmatter.title}
+        </h1>
         <Typography className="badges" variant="caption">
           {project.frontmatter.tools.map(tool => {
             return <SvgIcons key={tool.toString()} tool={tool} />;
@@ -180,7 +183,9 @@ export default function Template({ data }) {
 
                 const wrapper = document.querySelector(".wrapper");
 
-                wrapper.addEventListener("animationend", () => navigateTo("/"));
+                wrapper.addEventListener("animationend", () =>
+                  navigateTo("/dc_gatsby/")
+                );
 
                 wrapper.classList.add("unmounting");
               }}

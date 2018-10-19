@@ -6,6 +6,7 @@ import ProjectsListMobile from "./ProjectsListMobile";
 import Contact from "./Contact";
 import Header from "./Header";
 import D3Wrapper from "./D3Wrapper";
+import Navbar from "./Navbar";
 
 // Portfolio contains header, aside, projects
 const Portfolio = styled.div`
@@ -63,6 +64,9 @@ const LatestWorkTitle = styled.h2`
   color: #ffca2d;
   font-family: "Oxygen Mono", monospace;
   font-size: 20px;
+  @media (min-width: 800px) {
+    font-size: 24px;
+  }
   align-self: end;
   opacity: 0;
   &.simStart {
@@ -152,6 +156,7 @@ export default class MainPortfolio extends Component {
   componentWillUnmount = () => {
     window.removeEventListener("scroll", this.handleScroll);
     window.removeEventListener("resize", this.throttledHandleWindowResize);
+    window.removeEventListener("transitionend", this.handleTransitionend);
   };
 
   componentDidMount = () => {
@@ -177,7 +182,8 @@ export default class MainPortfolio extends Component {
         listRoot.style.animation =
           "swooshInRight 0.25s cubic-bezier(0.26, 1.02, 0.98, 0.94)";
         listRoot.scrollIntoView();
-        // listRoot.style.transition = 'all 0.5s cubic-bezier(0.26, 1.02, 0.98, 0.94)';
+        // start simulation
+        this.handleTransitionend();
       }, 0);
     // clear cookie (to only scroll after navigating back from project)
     document.cookie = `previousUrl=; path=/;`;
@@ -302,15 +308,19 @@ export default class MainPortfolio extends Component {
       <Portfolio>
         <EarthIMG src="https://image.ibb.co/ehP91e/earth_crop_burned.png" />
         {/* contains: header, aside, projects */}
-        {/* header */}
-        <Header className={"header"} popup={popup} />
+        <div>
+          <Navbar />
+          <Header className={"header"} popup={popup} />
+        </div>
 
         <LatestWorkTitle className="latestWorkTitle">
           Here's what I've been working on:
         </LatestWorkTitle>
 
         {!isMobile && (
-          <GridLeftRight id="projectsGrid">
+          <GridLeftRight id="projectsGrid"
+            style={{pointerEvents: popup ? 'auto' : 'none'}}
+          >
             {/* sticky projects list aside (left on desktop, bottom on mobile) */}
             <ProjectsList
               popup={popup}
@@ -331,7 +341,7 @@ export default class MainPortfolio extends Component {
           </GridLeftRight>
         )}
         {isMobile && <ProjectsListMobile popup={popup} projects={projects} />}
-        <Contact className="contact" />
+          <Contact className="contact" />
       </Portfolio>
     );
   }

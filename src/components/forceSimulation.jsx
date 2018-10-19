@@ -4,8 +4,34 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
 export default class ForceSimulation extends Component {
+  state = {
+    // circleTransform: null,
+    ticks: 0,
+  };
+
   render() {
     return null;
+  }
+  handleMouseover(d) {
+    // function(d) {
+    // remove all glows and floats
+    document.querySelectorAll(".glow").forEach(item => {
+      Array.from(item.classList).includes("glow") &&
+        item.classList.remove("glow");
+    });
+
+    d3.selectAll(".projectCircle").style("filter", null);
+
+    // add glow on mouseover
+    d3.select(this).style("filter", "url(#glow)");
+
+    document.getElementById(`listItem_${d.id}`) &&
+      // (!Array.from(
+      //   document.getElementById(`listItem_${d.id}`).classList
+      // ).includes("glow") &&
+      document.getElementById(`listItem_${d.id}`).classList.add("glow");
+    // );
+    // }
   }
   componentDidMount() {
     const { graph, onNodeClick } = this.props;
@@ -53,6 +79,12 @@ export default class ForceSimulation extends Component {
     // draw nodes
     let circles = d3
       .select(".canvas")
+      .append("g")
+      .style(
+        "transform",
+        `translate(${canvas.width / 2}px,${canvas.height / 2}px`
+      )
+      .attr("class", "circlesG")
       .selectAll("circle")
       // fix the initial positions of the nodes
       .data(graph.nodes)
@@ -60,40 +92,16 @@ export default class ForceSimulation extends Component {
       .append("circle")
       .attr("id", d => "circle_" + d.id)
       .attr("r", "0px")
-      .style(
-        "cursor",
-        "url('http://www.rw-designer.com/cursor-view/54513.png'), pointer"
-      )
+      .style("cursor", "url('../images/cursor.png'), pointer")
       .attr("fill", d => `url(#pattern_${d.id})`)
       .attr("class", "projectCircle")
-      .style(
-        "transform",
-        `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
-      )
-      .on("mouseover", function(d) {
-        // remove all glows
-        document.querySelectorAll(".glow").forEach(item => {
-          Array.from(item.classList).includes("glow") &&
-            item.classList.remove("glow");
-        });
-        d3.selectAll(".projectCircle").style("filter", null);
-        // add glow on mouseover
-        d3.select(this).style("filter", "url(#glow)");
-        // bug: this doesn't work...
-        // yellow glow
-        // document.getElementById(`circle_${d.id}`) &&
-        //   // (!Array.from(
-        //   //   document.getElementById(`circle_${d.id}`).classList
-        //   // ).includes("glow") &&
-        //   document.getElementById(`circle_${d.id}`).classList.add("glow");
-        // );
-        document.getElementById(`listItem_${d.id}`) &&
-          // (!Array.from(
-          //   document.getElementById(`listItem_${d.id}`).classList
-          // ).includes("glow") &&
-          document.getElementById(`listItem_${d.id}`).classList.add("glow");
-        // );
-      })
+      // .attr("x", canvas.width / 2 + "px")
+      // .attr("y", canvas.height / 2 + "px")
+      // .style(
+      //   "transform",
+      //   `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
+      // )
+      .on("mouseover", this.handleMouseover)
       .on("mouseout", d => {
         // remove all glows
         document.querySelectorAll(".glow").forEach(item => {
@@ -128,17 +136,17 @@ export default class ForceSimulation extends Component {
     // .slice(1);
 
     const links = d3
-      .select(".canvas")
+      .select(".circlesG")
       .selectAll("line")
       .data(graph.links)
       .enter()
       .append("line")
       .attr("class", "link")
-      .attr("id", d => `link_${d.target.id - 1}`)
-      .style(
-        "transform",
-        `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
-      );
+      .attr("id", d => `link_${d.target.id - 1}`);
+    // .style(
+    //   "transform",
+    //   `translate(${canvas.width / 2}px, ${canvas.height / 2}px)`
+    // );
 
     // connect the dots
     links.each(link => {
@@ -154,12 +162,27 @@ export default class ForceSimulation extends Component {
     }
 
     // redraw the nodes over the links with a "use" element
-    d3.select(".canvas")
+    d3.select(".circlesG")
       .selectAll("use")
       .data(graph.nodes)
       .enter()
       .append("use")
-      .attr("xlink:href", d => `#circle_${d.id}`);
+      .attr("href", d => `#circle_${d.id}`)
+      .on("click", d => {
+        //! too slow!
+        // remove all floats
+        // document.querySelectorAll(".float").forEach(item => {
+        //   Array.from(item.classList).includes("float") &&
+        //     item.classList.remove("float");
+        // });
+
+        // const circ = document.getElementById(`circle_${d.id}`);
+        // // add float
+        // !Array.from(circ.classList).includes("float") &&
+        //   circ.classList.add("float");
+
+        onNodeClick(d);
+      });
 
     function updateLinks() {
       links
@@ -186,49 +209,51 @@ export default class ForceSimulation extends Component {
             return d;
           })
         )
-        .velocityDecay(0.75)
+        .velocityDecay(1)
         .alphaTarget(0)
         .force("collide", d3.forceCollide().radius(d => d.radius * 1.04))
         .force("link", d3.forceLink(links).distance(200))
         .force("x", d3.forceX().strength(0.0045 * FORCE_MULTIPLIER))
         .force("y", d3.forceY().strength(0.003 * FORCE_MULTIPLIER))
         .on("tick", () => {
+          if (this.state.ticks >= 1) {
+            return;
+          }
+          this.setState({ ticks: this.state.ticks + 1 });
           updateNodes();
           updateLinks();
         });
 
-      // add dragging behavior to nodes
-      applyDragBehaviour(circles);
+      // // add dragging behavior to nodes
+      // applyDragBehaviour(circles);
 
-      function applyDragBehaviour(node) {
-        node.call(
-          d3
-            .drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended)
-        );
-      }
-      function dragstarted(d) {
-        onNodeClick(d);
-
-        if (!d3.event.active) {
-          simulation.alphaTarget(0.3).restart();
-        }
-        d.fx = d.x;
-        d.fy = d.y;
-      }
-      function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-      }
-      function dragended(d) {
-        if (!d3.event.active) {
-          simulation.alphaTarget(0);
-        }
-        d.fx = null;
-        d.fy = null;
-      }
+      // function applyDragBehaviour(node) {
+      //   node.call(
+      //     d3
+      //       .drag()
+      //       .on("start", dragstarted)
+      //       .on("drag", dragged)
+      //       .on("end", dragended)
+      //   );
+      // }
+      // function dragstarted(d) {
+      //   if (!d3.event.active) {
+      //     simulation.alphaTarget(0.3).restart();
+      //   }
+      //   d.fx = d.x;
+      //   d.fy = d.y;
+      // }
+      // function dragged(d) {
+      //   d.fx = d3.event.x;
+      //   d.fy = d3.event.y;
+      // }
+      // function dragended(d) {
+      //   if (!d3.event.active) {
+      //     simulation.alphaTarget(0);
+      //   }
+      //   d.fx = null;
+      //   d.fy = null;
+      // }
     }, 100);
   }
 }

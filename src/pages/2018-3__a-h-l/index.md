@@ -14,4 +14,4 @@ website: "https://dcorn068.github.io/a-h-l/"
 This basic portfolio site was my second foray into the world of HTML/CSS, with a sprinkle of JavaScript to make things work.
 
 > "If you're not embarrassed by the first version of your product, you've launched too late."
-> *-Reid Hoffman*
+> _-Reid Hoffman_

@@ -47,6 +47,7 @@ const HeroDiv = styled.div`
   p {
     color: #a6cfd5;
     font-size: 20px;
+    font-weight: 300;
     font-family: "Roboto", sans-serif;
     /* max-width: 40vw; */
   }
@@ -105,7 +106,7 @@ const HeroDiv = styled.div`
   }
   .anim-typewriter {
     animation: typewriter 1.3s steps(14) 1s 1 normal both,
-      blinkTextCursor 500ms cubic-bezier(1, 0, 0, 1) infinite normal;
+      blinkTextCursor 700ms cubic-bezier(1, 0, 0, 1) infinite normal;
   }
 `;
 const HeroImg = styled.img``;
@@ -128,7 +129,7 @@ class Header extends Component {
           <div className="introText">
             <h1 className="title anim-typewriter">Hello world...</h1>
             <p style={{ marginTop: 30 }}>
-              I'm a Junior Front-end Engineer looking to get started in the
+              I'm a junior front-end engineer looking to get started in the
               industry. My background is in engineering (chemical and biotech)
               -- I like to make things work.
             </p>
@@ -140,12 +141,12 @@ class Header extends Component {
             <ul>
               <li id="interest1">
                 <p>Data visualization and wrangling</p>
-                <p className="listCaption">Excel | JavaScript</p>
+                <p className="listCaption">JavaScript | D3.js | Excel</p>
               </li>
               <li id="interest2">
                 <p>Front-end and CSS frameworks </p>
                 <p className="listCaption">
-                  React | Angular | Vue | Materialize | CSS Grid
+                  React | Angular | Materialize | CSS Grid
                 </p>
               </li>
               <li id="interest3">

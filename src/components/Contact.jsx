@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import SendIcon from "@material-ui/icons/SendRounded";
+import SocialMedia from './SocialMedia';
 
 const ContactForm = styled.div`
   --darkgrey: rgba(255, 255, 255, 0.06);
@@ -15,6 +16,9 @@ const ContactForm = styled.div`
   @media (max-width: 435px) {
     margin: auto 0;
     width: 100%;
+  }
+  @media (min-width: 1370px) {
+    margin-bottom: 19vw;
   }
   border-radius: 4px;
 
@@ -32,6 +36,7 @@ const ContactForm = styled.div`
       font-size: 20px;
     }
   }
+
   form {
     border-radius: 4px;
     margin: 0 40px 10px 40px;
@@ -57,6 +62,7 @@ const ContactForm = styled.div`
     justify-items: center;
     grid-gap: 0;
     justify-content: normal;
+    letter-spacing: 1px;
     span {
       justify-self: right;
     }
@@ -100,6 +106,9 @@ const ContactForm = styled.div`
   }
   #sendButton .jss72 {
     display: none;
+  }
+  #sendButton .jss35 {
+    margin: 8px 0;
   }
 `;
 
@@ -160,6 +169,7 @@ export default class Contact extends Component {
     return (
       <ContactForm id="contactForm">
         <h2>✨ Get in touch! 🚀</h2>
+        <SocialMedia className="social"/>
         <form noValidate autoComplete="off">
           <TextField
             id="name"

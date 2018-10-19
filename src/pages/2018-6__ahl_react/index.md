@@ -13,4 +13,4 @@ website: "https://dcorn068.github.io/ahl_react/"
 
 This basic portfolio site uses React components and a handful of styling libraries for a fully responsive layout. This was my first project using React.
 
-Coming from Angular, my first impression was a good one -- React is much faster for building small projects with minimal interaction, scaffolding out your requirements as you go.
+Coming from Angular, my first impression was a good one -- React is much faster for building small projects, starting with minimal complexity, and scaffolding out your requirements as you go.

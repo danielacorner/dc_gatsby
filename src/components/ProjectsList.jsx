@@ -56,6 +56,7 @@ const Wrapper = styled.aside`
           height: auto;
         }
         .listItem {
+          cursor: pointer;
           perspective: 500px;
           opacity: 1;
           display: grid;
@@ -71,9 +72,10 @@ const Wrapper = styled.aside`
             height: auto;
           }
           .projectLink {
+            cursor: pointer;
+            height: auto;
             transition: all 0.4s ease-out;
             /* height: auto; */
-            cursor: default;
             border: none;
             background: none;
             padding-left: 16px;
@@ -221,6 +223,9 @@ const ActionButtons = styled.div`
         background: #00008033;
       }
     }
+    .jss35 {
+      margin-bottom: 0;
+    }
     span {
       align-items: center;
       place-content: center center;
@@ -314,13 +319,13 @@ class ProjectsList extends Component {
                     this.props.onClickListItem(project.frontmatter);
                   }}
                 >
-                  <Button
+                  <p
                     className="projectLink"
-                    disableRipple={true}
-                    disableTouchRipple={true}
+                    // disableRipple={true}
+                    // disableTouchRipple={true}
                   >
                     {project.frontmatter.title}
-                  </Button>
+                  </p>
                   <Typography className="caption" variant="caption">
                     {project.frontmatter.caption}
                   </Typography>
