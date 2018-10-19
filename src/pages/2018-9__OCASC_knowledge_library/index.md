@@ -7,7 +7,7 @@ caption: "User-friendly database for the Ottawa-Cartleton Assembly of School Cou
 radius: "5"
 image: "https://image.ibb.co/e6E330/OCASC-login.png"
 imgThumb: "https://image.ibb.co/fBfnVf/OCASC-login-thumb.png"
-tools: ["figma", "angular", "HTML5", "CSS3"]
+tools: ["Figma", "Angular", "HTML5", "CSS3"]
 website: "https://www.figma.com/file/y5s8Fgd3MQobMQhtA9UE53/OCASC?node-id=1%3A2"
 ---
 

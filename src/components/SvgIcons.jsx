@@ -17,6 +17,8 @@ import nodejs from "../images/logos/nodejs.svg";
 import react from "../images/logos/react.svg";
 import excel from "../images/logos/excel.svg";
 import tableau from "../images/logos/tableau.svg";
+import figma from "../images/logos/figma.svg";
+import wordpress from "../images/logos/wordpress.svg";
 import gatsby from "../images/logos/gatsby.svg";
 
 import Tooltip from "@material-ui/core/Tooltip";
@@ -154,6 +156,20 @@ export default class SvgIcons extends Component {
         return (
           <Tooltip enterTouchDelay={0} title="jQuery">
             <IconImg src={jquery} alt="jQuery" />
+          </Tooltip>
+        );
+        break;
+      case "Figma":
+        return (
+          <Tooltip enterTouchDelay={0} title="Figma">
+            <IconImg src={figma} alt="Figma" />
+          </Tooltip>
+        );
+        break;
+      case "WordPress":
+        return (
+          <Tooltip enterTouchDelay={0} title="WordPress">
+            <IconImg src={wordpress} alt="WordPress" />
           </Tooltip>
         );
         break;

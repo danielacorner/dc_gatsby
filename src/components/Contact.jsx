@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import SendIcon from "@material-ui/icons/SendRounded";
-import SocialMedia from './SocialMedia';
+import SocialMedia from "./SocialMedia";
 
 const ContactForm = styled.div`
   --darkgrey: rgba(255, 255, 255, 0.06);
@@ -74,7 +74,8 @@ const ContactForm = styled.div`
     pointer-events: auto;
     border: none;
     font-size: 17px;
-    background: rgb(6, 140, 251, 0.9);
+    background: rgb(6, 140, 251, 0.7);
+
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     text-transform: uppercase;
@@ -88,8 +89,6 @@ const ContactForm = styled.div`
     margin: 10px auto 20px auto;
     display: grid;
     place-items: center center;
-    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
-      0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
     svg {
       fill: rgba(255, 255, 255, 0.6);
       height: 24px;
@@ -97,7 +96,9 @@ const ContactForm = styled.div`
       justify-self: center;
     }
     &:hover {
-      background: rgb(6, 140, 251, 0.7);
+      background: rgb(6, 140, 251, 0.9);
+      box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+        0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
     }
     &.sent {
       background: rgba(255, 255, 255, 0.125);
@@ -169,7 +170,7 @@ export default class Contact extends Component {
     return (
       <ContactForm id="contactForm">
         <h2>✨ Get in touch! 🚀</h2>
-        <SocialMedia className="social"/>
+        <SocialMedia className="social" />
         <form noValidate autoComplete="off">
           <TextField
             id="name"
