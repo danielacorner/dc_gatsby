@@ -5,13 +5,29 @@ import TextField from "@material-ui/core/TextField";
 import SendIcon from "@material-ui/icons/SendRounded";
 import SocialMedia from "./SocialMedia";
 
+const Container = styled.div`
+  display: grid;
+  justify-items: center;
+  grid-template-rows: auto 1fr;
+  h3 {
+    margin: 0 auto 40px auto;
+    padding: 20px;
+    color: #ffca2d;
+    font-family: "Oxygen Mono", monospace;
+    align-self: end;
+    font-size: 24px;
+    @media (max-width: 435px) {
+      font-size: 20px;
+    }
+  }
+`;
 const ContactForm = styled.div`
   --darkgrey: rgba(255, 255, 255, 0.06);
   --lightgrey: rgba(255, 255, 255, 0.6);
   --lightestgrey: rgba(255, 255, 255, 0.5);
   width: 80%;
   max-width: 800px;
-  margin: auto;
+  margin: 0 auto auto auto;
   justify-self: center;
   @media (max-width: 435px) {
     margin: auto 0;
@@ -75,7 +91,7 @@ const ContactForm = styled.div`
     border: none;
     font-size: 17px;
     background: rgb(6, 140, 251, 0.7);
-
+    transition: 0.15s ease-in-out;
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     text-transform: uppercase;
@@ -168,60 +184,63 @@ export default class Contact extends Component {
 
   render() {
     return (
-      <ContactForm id="contactForm">
-        <h2>✨ Get in touch! 🚀</h2>
-        <SocialMedia className="social" />
-        <form noValidate autoComplete="off">
-          <TextField
-            id="name"
-            label="Name"
-            className="textField"
-            value={this.state.name}
-            onChange={this.handleChange("name")}
-            margin="normal"
-            fullWidth={true}
-            required={true}
-          />
-          <TextField
-            id="email"
-            label="Email"
-            className="textField"
-            value={this.state.email}
-            onChange={this.handleChange("email")}
-            margin="normal"
-            fullWidth={true}
-            required={true}
-          />
-          <TextField
-            id="message"
-            label="Message"
-            multiline
-            rows="10"
-            className="textField textFieldMultiline"
-            value={this.state.message}
-            onChange={this.handleChange("message")}
-            margin="normal"
-            fullWidth={true}
-            required={true}
-          />
-        </form>
-        <Button
-          id="sendButton"
-          className={"sendButton " + (this.state.emailSent && "sent")}
-          type="submit"
-          disabled={this.state.emailSent}
-          onClick={this.handleSubmit}
-        >
-          {!this.state.formSubmitted ? (
-            <span>Send</span>
-          ) : !this.state.emailSent ? (
-            <span>Sending</span>
-          ) : (
-            <span>Sent</span>
-          )}
-          <SendIcon />
-        </Button>
-      </ContactForm>
+      <Container>
+        <h3>Got a project that matches my skillset?</h3>
+        <ContactForm id="contactForm">
+          <h2>✨ Get in touch! 🚀</h2>
+          <SocialMedia className="social" />
+          <form noValidate autoComplete="off">
+            <TextField
+              id="name"
+              label="Name"
+              className="textField"
+              value={this.state.name}
+              onChange={this.handleChange("name")}
+              margin="normal"
+              fullWidth={true}
+              required={true}
+            />
+            <TextField
+              id="email"
+              label="Email"
+              className="textField"
+              value={this.state.email}
+              onChange={this.handleChange("email")}
+              margin="normal"
+              fullWidth={true}
+              required={true}
+            />
+            <TextField
+              id="message"
+              label="Message"
+              multiline
+              rows="10"
+              className="textField textFieldMultiline"
+              value={this.state.message}
+              onChange={this.handleChange("message")}
+              margin="normal"
+              fullWidth={true}
+              required={true}
+            />
+          </form>
+          <Button
+            id="sendButton"
+            className={"sendButton " + (this.state.emailSent && "sent")}
+            type="submit"
+            disabled={this.state.emailSent}
+            onClick={this.handleSubmit}
+          >
+            {!this.state.formSubmitted ? (
+              <span>Send</span>
+            ) : !this.state.emailSent ? (
+              <span>Sending</span>
+            ) : (
+              <span>Sent</span>
+            )}
+            <SendIcon />
+          </Button>
+        </ContactForm>
+      </Container>
     );
   }
 }
