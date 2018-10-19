@@ -1,4 +1,4 @@
-- add links to social, resume, github, linkedin
+- redirect from / to /dc_gatsby
 - on desktop (only?), increase spacing after header
 - apply to jobs!!!
 
