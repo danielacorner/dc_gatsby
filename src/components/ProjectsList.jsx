@@ -307,7 +307,7 @@ class ProjectsList extends Component {
         <List className="listRoot">
           <ul className="ul" style={{ margin: "0" }}>
             {projects
-              .sort((a, b) => a.frontmatter.id < b.frontmatter.id)
+              .sort((a, b) => (a.frontmatter.id < b.frontmatter.id ? 1 : -1))
               .map(project => (
                 <ListItem
                   key={JSON.stringify(project)}
